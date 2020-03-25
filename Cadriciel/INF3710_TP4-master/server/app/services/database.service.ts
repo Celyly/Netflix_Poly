@@ -11,8 +11,8 @@ export class DatabaseService {
     // A MODIFIER POUR VOTRE BD
     public connectionConfig: pg.ConnectionConfig = {
         user: "sysadmin",
-        database: "pg_exemple",
-        password: "1234",
+        database: "postgres",
+        password: "1",
         port: 5432,
         host: "127.0.0.1",
         keepAlive : true
@@ -27,34 +27,34 @@ export class DatabaseService {
 
         METHODES DE DEBUG
     */
-    public createSchema(): Promise<pg.QueryResult> {
+    public async createSchema(): Promise<pg.QueryResult> {
 
         return this.pool.query(schema);
     }
 
-    public populateDb(): Promise<pg.QueryResult> {
+    public async populateDb(): Promise<pg.QueryResult> {
 
         return this.pool.query(data);
     }
 
-    public getAllFromTable(tableName: string): Promise<pg.QueryResult> {
+    public async getAllFromTable(tableName: string): Promise<pg.QueryResult> {
 
         return this.pool.query(`SELECT * FROM HOTELDB.${tableName};`);
     }
 
     // HOTEL
-    public getHotels(): Promise<pg.QueryResult> {
+    public async getHotels(): Promise<pg.QueryResult> {
 
         return this.pool.query('SELECT * FROM HOTELDB.Hotel;');
     }
 
-    public getHotelNo(): Promise<pg.QueryResult> {
+    public async getHotelNo(): Promise<pg.QueryResult> {
 
         return this.pool.query('SELECT hotelNo FROM HOTELDB.Hotel;');
 
     }
 
-    public createHotel(hotelNo: string, hotelName: string, city: string): Promise<pg.QueryResult> {
+    public async createHotel(hotelNo: string, hotelName: string, city: string): Promise<pg.QueryResult> {
         const values: string[] = [
             hotelNo,
             hotelName,
@@ -65,12 +65,12 @@ export class DatabaseService {
         return this.pool.query(queryText, values);
     }
 	
-	public deleteHotel(/*Todo*/): void /*TODO*/  {
-		/*TODO*/
-	}
+	// public async deleteHotel(/*Todo*/): void /*TODO*/  {
+	// 	/*TODO*/
+	// }
 
     // ROOM
-    public getRoomFromHotel(hotelNo: string, roomType: string, price: number): Promise<pg.QueryResult> {
+    public async getRoomFromHotel(hotelNo: string, roomType: string, price: number): Promise<pg.QueryResult> {
 
         let query: string =
         `SELECT * FROM HOTELDB.room
@@ -88,7 +88,7 @@ export class DatabaseService {
         return this.pool.query(query);
     }
 
-    public getRoomFromHotelParams(params: object): Promise<pg.QueryResult> {
+    public async getRoomFromHotelParams(params: object): Promise<pg.QueryResult> {
 
         let query: string = 'SELECT * FROM HOTELDB.room \n';
         const keys: string[] = Object.keys(params);
@@ -114,7 +114,7 @@ export class DatabaseService {
 
     }
 
-    public createRoom(room: Room): Promise<pg.QueryResult> {
+    public async createRoom(room: Room): Promise<pg.QueryResult> {
         const values: string[] = [
             room.roomno,
             room.hotelno,
@@ -127,11 +127,7 @@ export class DatabaseService {
     }
 
     // GUEST
-    public createGuest(guestNo: string,
-                       nas: string,
-                       guestName: string,
-                       gender: string,
-                       guestCity: string): Promise<pg.QueryResult> {
+    public async createGuest(guestNo: string, nas: string, guestName: string, gender: string, guestCity: string): Promise<pg.QueryResult> {
         // this.pool.connect();
         const values: string[] = [
             guestNo,
@@ -146,11 +142,7 @@ export class DatabaseService {
     }
 
     // BOOKING
-    public createBooking(hotelNo: string,
-                         guestNo: string,
-                         dateFrom: Date,
-                         dateTo: Date,
-                         roomNo: string): Promise<pg.QueryResult> {
+    public async createBooking(hotelNo: string, guestNo: string, dateFrom: Date, dateTo: Date, roomNo: string): Promise<pg.QueryResult> {
         const values: string[] = [
             hotelNo,
             guestNo,
