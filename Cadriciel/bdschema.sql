@@ -42,17 +42,6 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.CreditCard (
     PRIMARY KEY (cardNo)
 );
 
-CREATE TABLE IF NOT EXISTS NETFLIXDB.Order (
-    orderNo             SERIAL                NOT NULL,
-    memberId            VARCHAR(50)           NOT NULL,
-    deliveryPrice       NUMERIC(9, 2)         NOT NULL,
-    deliveryDate        DATE                  NOT NULL,
-    -- distance            NUMERIC(9, 2)         NOT NULL,
-    FOREIGN KEY (memberId) REFERENCES NETFLIXDB.Member(memberId)
-    ON UPDATE CASCADE ON DELETE CASCADE,
-    PRIMARY KEY (orderNo)
-);
-
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Movie (
     movieNo         SERIAL                  NOT NULL,
     title           VARCHAR(50)             NOT NULL,
@@ -67,7 +56,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Viewing (
     movieNo         SERIAL               NOT NULL,
     memberId        VARCHAR(50)          NOT NULL,
     viewDate        DATE                 NOT NULL,
-    duration        INT                 NOT NULL,
+    duration        INT                  NOT NULL,
     FOREIGN KEY (memberId) REFERENCES NETFLIXDB.Member(memberId)
     ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (movieNo) REFERENCES NETFLIXDB.Movie(movieNo)
@@ -78,13 +67,24 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Viewing (
 
 CREATE TABLE IF NOT EXISTS NETFLIXDB.DVD (
     DVDNo           SERIAL        NOT NULL,
-    orderNo         SERIAL        NOT NULL,
     movieNo         SERIAL        NOT NULL,
-    FOREIGN KEY (orderNo) REFERENCES NETFLIXDB.Order(orderNo)
-    ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (movieNo) REFERENCES NETFLIXDB.Movie(movieNo)
     ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (DVDNo)
+);
+
+CREATE TABLE IF NOT EXISTS NETFLIXDB.Order (
+    orderNo             SERIAL                NOT NULL,
+    memberId            VARCHAR(50)           NOT NULL,
+    DVDNo               SERIAL                NOT NULL,
+    deliveryPrice       NUMERIC(9, 2)         NOT NULL,
+    deliveryDate        DATE                  NOT NULL,
+    -- distance            NUMERIC(9, 2)         NOT NULL,
+    FOREIGN KEY (memberId) REFERENCES NETFLIXDB.Member(memberId)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (DVDNo) REFERENCES NETFLIXDB.DVD(DVDNo)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    PRIMARY KEY (orderNo)
 );
 
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Person (
@@ -99,8 +99,13 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Person (
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Role (
     roleNo          SERIAL                  NOT NULL,
     personId        SERIAL                  NOT NULL,
+    movieNo         SERIAL                  NOT NULL,
     roleNom         VARCHAR(50)             NOT NULL,
     salary          NUMERIC(9,2)            NOT NULL,
+    FOREIGN KEY (personId) REFERENCES NETFLIXDB.Person(personId)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (movieNo) REFERENCES NETFLIXDB.Movie(movieNo)
+    ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (roleNo)
 );
 

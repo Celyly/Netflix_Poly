@@ -1,3 +1,6 @@
+SET search_path = 'NETFLIXDB';
+
+
 -- 1) Affichez toutes les informations sur un film spécifié par l'utilisateur (selon le titre)
 
 
@@ -11,9 +14,17 @@
 
 
 -- 4) Trouvez le nombre total de films groupés par réalisateur
+SELECT COUNT(m.movieNo) as nMovies, p.personName
+FROM NETFLIXDB.Movie m, NETFLIXDB.Person p, NETFLIXDB.Role r
+WHERE p.personId = r.personId AND r.roleNom = 'Réalisateur' AND m.movieNo = r.movieNo
+GROUP BY personName
+
 
 -- 5) Trouvez les noms des membres dont le coût total d’achat de DVD est plus élevé que la
 --    moyenne
+SELECT DISTINCT m.memberName
+FROM NETFLIXDB.Member m, NETFLIXDB.Order o
+WHERE m.memberId = o.memberId AND deliveryPrice > (SELECT AVG(deliveryPrice) FROM NETFLIXDB.Order)
 
 
 -- 6) Ordonnez et retournez les films en termes de quantité totale vendue (DVD) et en nombre de
