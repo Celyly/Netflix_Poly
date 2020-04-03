@@ -2,15 +2,23 @@ SET search_path = 'NETFLIXDB';
 
 
 -- 1) Affichez toutes les informations sur un film spécifié par l'utilisateur (selon le titre)
+SELECT *
+FROM NETFLIXDB.Movie
+WHERE title = '' -- ??
 
 
 -- 2) Pour chaque genre de film, listez tous les titres de films ainsi que la dernière date à laquelle
 --    un film a été acheté (DVD) ou visionné
 
 
+
 -- 3) Pour chaque genre de film, trouvez les noms et courriels des membres qui les ont visionnés le
 --    plus souvent. Par exemple, Amal Z est le membre qui a visionné le plus de documentaires
 --    animaliers
+SELECT genre, (MODE() WITHIN GROUP (ORDER BY memberName)), (MODE() WITHIN GROUP (ORDER BY email))
+FROM NETFLIXDB.Member member, NETFLIXDB.Viewing v, NETFLIXDB.Movie m
+WHERE v.memberId = member.memberId AND v.movieNo = m.movieNo
+GROUP BY genre
 
 
 -- 4) Trouvez le nombre total de films groupés par réalisateur
@@ -29,6 +37,17 @@ WHERE m.memberId = o.memberId AND deliveryPrice > (SELECT AVG(deliveryPrice) FRO
 
 -- 6) Ordonnez et retournez les films en termes de quantité totale vendue (DVD) et en nombre de
 --    visionnements
+-- SELECT title, count(*)
+-- FROM NETFLIXDB.Movie m, NETFLIXDB.Viewing v
+-- WHERE (m.movieNo = v.movieNo)
+-- ORDER BY title
+-- UNION
+-- SELECT title, count(*)
+-- FROM NETFLIXDB.Movie m, NETFLIXDB.Order o, NETFLIXDB.DVD d
+-- (o.DVDNo = d.DVDNo AND d.movieNo = m.movieNo)
+-- ORDER BY title
+
+-- GROUP BY title
 
 
 -- 7) Trouvez le titre et le prix des films qui n’ont jamais été commandés sous forme de DVD mais

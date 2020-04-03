@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Movie (
     title           VARCHAR(50)             NOT NULL,
     genre           VARCHAR(50)             NOT NULL,
     productionDate  DATE                    NOT NULL,
-    duration        INT                    NOT NULL,
+    duration        INT                     NOT NULL,
     PRIMARY KEY (movieNo)
 );
 
