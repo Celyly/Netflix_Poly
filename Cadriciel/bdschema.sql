@@ -1,6 +1,6 @@
 SET search_path = 'NETFLIXDB';
 
-DROP SCHEMA IF EXISTS FLOTTEDB CASCADE;
+DROP SCHEMA IF EXISTS NETFLIXDB CASCADE;
 CREATE SCHEMA NETFLIXDB;
 
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Member (
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Order (
     memberId            SERIAL                NOT NULL,
     deliveryPrice       NUMERIC(9, 2)         NOT NULL,
     deliveryDate        DATE                  NOT NULL,
-    distance            NUMERIC(9, 2)         NOT NULL,
+    -- distance            NUMERIC(9, 2)         NOT NULL,
     FOREIGN KEY (memberId) REFERENCES NETFLIXDB.Member(memberId)
     ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (orderNo)
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Movie (
     title           VARCHAR(20)             NOT NULL,
     genre           VARCHAR(20)             NOT NULL,
     productionDate  DATE                    NOT NULL,
-    duration        NUMERIC(9,2)            NOT NULL,
+    duration        TIME                    NOT NULL,
     PRIMARY KEY (movieNo)
 );
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Viewing (
     movieNo         SERIAL               NOT NULL,
     memberId        SERIAL               NOT NULL,
     viewDate        DATE                 NOT NULL,
-    duration        NUMERIC(9, 2)        NOT NULL,
+    duration        TIME                 NOT NULL,
     FOREIGN KEY (memberId) REFERENCES NETFLIXDB.Member(memberId)
     ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (movieNo) REFERENCES NETFLIXDB.Movie(movieNo)
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.DVD (
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Person (
     personId        SERIAL                  NOT NULL,
     personName      VARCHAR(20)             NOT NULL,
-    age             INT                     NOT NULL,
+    dateNaissance   DATE                    NOT NULL,
     sex             CHAR                    DEFAULT 'M' CHECK (sex IN ('M', 'F')),
     nationality     VARCHAR(20),
     PRIMARY KEY (personId)
@@ -100,6 +100,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Person (
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Role (
     roleNo          SERIAL                  NOT NULL,
     personId        SERIAL                  NOT NULL,
+    roleNom         VARCHAR(50)             NOT NULL,
     salary          NUMERIC(9,2)            NOT NULL,
     PRIMARY KEY (personId)
 );
@@ -107,7 +108,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Role (
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Ceremony (
     ceremonyNo      SERIAL                  NOT NULL,
     host            VARCHAR(20)             NOT NULL,
-    category        VARCHAR(20)             NOT NULL,
+    -- category        VARCHAR(20)             NOT NULL,
     PRIMARY KEY (ceremonyNo)
 );
 
