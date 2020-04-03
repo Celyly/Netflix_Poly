@@ -1,0 +1,32 @@
+*{
+    color:white;
+    
+}
+
+#form-title{
+    font-size: x-large;
+    font-weight: bold;
+}
+
+button {
+    width: 80%;
+    left: 50%;
+}
+.signin-forms{
+    background-color: rgba(0, 0, 0, 0.644);
+    border-radius: 5%;
+    text-align: center;
+    position: absolute;
+    height: 75%;
+    width: 30%;
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+form {
+    margin-top: 5%;
+    margin-left: 10%;
+    text-align: left;
+    width: 80%;
+}

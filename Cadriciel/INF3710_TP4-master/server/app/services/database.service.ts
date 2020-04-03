@@ -7,6 +7,7 @@ import {data} from "../populateDB";
 
 @injectable()
 export class DatabaseService {
+    private DB_NAME: string = 'HOTELDB';
 
     // A MODIFIER POUR VOTRE BD
     public connectionConfig: pg.ConnectionConfig = {
@@ -21,12 +22,20 @@ export class DatabaseService {
     private pool: pg.Pool = new pg.Pool(this.connectionConfig);
 
     public constructor() {
-        this.pool.connect();
+        this.pool.connect()
+        .then(() => {
+            console.log('CONNECTION SUCCESSFULLY ESTABLISHED.');
+        })
+        .catch(() => {
+            console.error('CONNECTION ERROR. EXITING PROCESS');
+            process.exit(1);
+        });
     }
-    /*
 
-        METHODES DE DEBUG
-    */
+    // /*
+
+    //     METHODES DE DEBUG
+    // */
     public async createSchema(): Promise<pg.QueryResult> {
 
         return this.pool.query(schema);
@@ -39,18 +48,18 @@ export class DatabaseService {
 
     public async getAllFromTable(tableName: string): Promise<pg.QueryResult> {
 
-        return this.pool.query(`SELECT * FROM HOTELDB.${tableName};`);
+        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.${tableName};`);
     }
 
     // HOTEL
     public async getHotels(): Promise<pg.QueryResult> {
 
-        return this.pool.query('SELECT * FROM HOTELDB.Hotel;');
+        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Hotel;`);
     }
 
     public async getHotelNo(): Promise<pg.QueryResult> {
 
-        return this.pool.query('SELECT hotelNo FROM HOTELDB.Hotel;');
+        return this.pool.query(`SELECT hotelNo FROM ${this.DB_NAME}.Hotel;`);
 
     }
 
@@ -60,7 +69,7 @@ export class DatabaseService {
             hotelName,
             city
         ];
-        const queryText: string = `INSERT INTO HOTELDB.Hotel VALUES($1, $2, $3);`;
+        const queryText: string = `INSERT INTO ${this.DB_NAME}.Hotel VALUES($1, $2, $3);`;
 
         return this.pool.query(queryText, values);
     }
@@ -73,7 +82,7 @@ export class DatabaseService {
     public async getRoomFromHotel(hotelNo: string, roomType: string, price: number): Promise<pg.QueryResult> {
 
         let query: string =
-        `SELECT * FROM HOTELDB.room
+        `SELECT * FROM ${this.DB_NAME}.room
         WHERE hotelno=\'${hotelNo}\'`;
         if (roomType !== undefined) {
             query = query.concat('AND ');
@@ -90,7 +99,7 @@ export class DatabaseService {
 
     public async getRoomFromHotelParams(params: object): Promise<pg.QueryResult> {
 
-        let query: string = 'SELECT * FROM HOTELDB.room \n';
+        let query: string = `SELECT * FROM ${this.DB_NAME}.room \n`;
         const keys: string[] = Object.keys(params);
         if (keys.length > 0) {
             query = query.concat(`WHERE ${keys[0]} =\'${params[keys[0]]}\'`);
@@ -121,7 +130,7 @@ export class DatabaseService {
             room.typeroom,
             room.price.toString()
         ];
-        const queryText: string = `INSERT INTO HOTELDB.ROOM VALUES($1,$2,$3,$4);`;
+        const queryText: string = `INSERT INTO ${this.DB_NAME}.ROOM VALUES($1,$2,$3,$4);`;
 
         return this.pool.query(queryText, values);
     }
@@ -136,7 +145,7 @@ export class DatabaseService {
             gender,
             guestCity
         ];
-        const queryText: string = `INSERT INTO HOTELDB.ROOM VALUES($1,$2,$3,$4,$5);`;
+        const queryText: string = `INSERT INTO ${this.DB_NAME}.ROOM VALUES($1,$2,$3,$4,$5);`;
 
         return this.pool.query(queryText, values);
     }
@@ -150,7 +159,7 @@ export class DatabaseService {
             dateTo.toString(),
             roomNo
         ];
-        const queryText: string = `INSERT INTO HOTELDB.ROOM VALUES($1,$2,$3,$4,$5);`;
+        const queryText: string = `INSERT INTO ${this.DB_NAME}.ROOM VALUES($1,$2,$3,$4,$5);`;
 
         return this.pool.query(queryText, values);
         }
