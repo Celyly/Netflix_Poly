@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Viewing (
 CREATE TABLE IF NOT EXISTS NETFLIXDB.DVD (
     DVDNo           SERIAL        NOT NULL,
     movieNo         SERIAL        NOT NULL,
+    dvdPrice        SERIAL        NOT NULL,
     FOREIGN KEY (movieNo) REFERENCES NETFLIXDB.Movie(movieNo)
     ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (DVDNo, movieNo) -- ??
