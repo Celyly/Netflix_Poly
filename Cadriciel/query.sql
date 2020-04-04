@@ -2,27 +2,43 @@ SET search_path = 'NETFLIXDB';
 
 
 -- 1) Affichez toutes les informations sur un film spécifié par l'utilisateur (selon le titre)
+--    Par exemple, l'utilisateur désire afficher les informations sur le film 'The Mini Katana'
 SELECT *
 FROM NETFLIXDB.Movie
-WHERE title = '' -- ??
+WHERE title = 'The Mini Katana'
 
-
+-- **
 -- 2) Pour chaque genre de film, listez tous les titres de films ainsi que la dernière date à laquelle
 --    un film a été acheté (DVD) ou visionné
-
+SELECT genre, title, (
+SELECT MAX(maxDate)
+FROM
+    (SELECT MAX(v.viewDate) as maxDate
+    FROM NETFLIXDB.Movie movie, NETFLIXDB.Viewing v
+    WHERE movie.movieNo = v.movieNo
+    GROUP BY movie.movieNo
+    HAVING movie.movieNo = m.movieNo
+    UNION ALL
+    SELECT MAX(o.deliveryDate) as maxDate
+    FROM NETFLIXDB.Movie movie, NETFLIXDB.Order o, NETFLIXDB.DVD d
+    WHERE o.DVDNo = d.DVDNo AND d.movieNo = movie.movieNo
+    GROUP BY movie.movieNo
+    HAVING movie.movieNo = m.movieNo) tableDate
+    ) recentDate
+FROM NETFLIXDB.Movie m
 
 
 -- 3) Pour chaque genre de film, trouvez les noms et courriels des membres qui les ont visionnés le
 --    plus souvent. Par exemple, Amal Z est le membre qui a visionné le plus de documentaires
 --    animaliers
-SELECT genre, (MODE() WITHIN GROUP (ORDER BY memberName)), (MODE() WITHIN GROUP (ORDER BY email))
+SELECT genre, (MODE() WITHIN GROUP (ORDER BY memberName)) as memberName, (MODE() WITHIN GROUP (ORDER BY email)) as email
 FROM NETFLIXDB.Member member, NETFLIXDB.Viewing v, NETFLIXDB.Movie m
 WHERE v.memberId = member.memberId AND v.movieNo = m.movieNo
 GROUP BY genre
 
 
 -- 4) Trouvez le nombre total de films groupés par réalisateur
-SELECT COUNT(m.movieNo) as nMovies, p.personName
+SELECT COUNT(m.movieNo) as nbTotalFilms, p.personName as realisateur
 FROM NETFLIXDB.Movie m, NETFLIXDB.Person p, NETFLIXDB.Role r
 WHERE p.personId = r.personId AND r.roleNom = 'Réalisateur' AND m.movieNo = r.movieNo
 GROUP BY personName
@@ -30,28 +46,56 @@ GROUP BY personName
 
 -- 5) Trouvez les noms des membres dont le coût total d’achat de DVD est plus élevé que la
 --    moyenne
-SELECT DISTINCT m.memberName
-FROM NETFLIXDB.Member m, NETFLIXDB.Order o
-WHERE m.memberId = o.memberId AND deliveryPrice > (SELECT AVG(deliveryPrice) FROM NETFLIXDB.Order)
+SELECT m.memberName
+FROM NETFLIXDB.Member m, NETFLIXDB.Order o, NETFLIXDB.DVD d
+WHERE m.memberId = o.memberId AND o.DVDNo = d.DVDNo AND o.movieNo = d.movieNo
+GROUP BY m.memberName, m.memberId
+HAVING SUM(o.deliveryPrice + d.dvdPrice) >
+    (SELECT AVG(shippingPrice + moviePrice) as averagePrice
+    FROM
+        (SELECT SUM(deliveryPrice) as shippingPrice, SUM(dvdPrice) as moviePrice
+        FROM NETFLIXDB.Order o, NETFLIXDB.DVD d
+        WHERE o.movieNo = d.movieNo AND o.dvdNo = d.dvdNo
+        GROUP BY o.memberId
+        ) totalPrice
+    )
 
 
 -- 6) Ordonnez et retournez les films en termes de quantité totale vendue (DVD) et en nombre de
 --    visionnements
--- SELECT title, count(*)
--- FROM NETFLIXDB.Movie m, NETFLIXDB.Viewing v
--- WHERE (m.movieNo = v.movieNo)
--- ORDER BY title
--- UNION
--- SELECT title, count(*)
--- FROM NETFLIXDB.Movie m, NETFLIXDB.Order o, NETFLIXDB.DVD d
--- (o.DVDNo = d.DVDNo AND d.movieNo = m.movieNo)
--- ORDER BY title
-
--- GROUP BY title
+SELECT m.movieNo, title, (
+SELECT SUM(qte)
+FROM
+    (SELECT COUNT(*) as qte
+    FROM NETFLIXDB.Movie movie, NETFLIXDB.Viewing v
+    WHERE (movie.movieNo = v.movieNo)
+    GROUP BY movie.movieNo
+    HAVING movie.movieNo = m.movieNo
+    UNION ALL
+    SELECT COUNT(*) as qte
+    FROM NETFLIXDB.Movie movie, NETFLIXDB.Order o, NETFLIXDB.DVD d
+    WHERE (o.DVDNo = d.DVDNo AND d.movieNo = movie.movieNo AND movie.movieNo = o.movieNo)
+    GROUP BY movie.movieNo
+    HAVING movie.movieNo = m.movieNo) tableQte
+) qteTotal
+FROM NETFLIXDB.Movie m
+ORDER BY qteTotal
 
 
 -- 7) Trouvez le titre et le prix des films qui n’ont jamais été commandés sous forme de DVD mais
 --    qui ont été visionnés plus de 10 fois
+SELECT m.title
+FROM NETFLIXDB.Movie m, NETFLIXDB.Viewing v
+WHERE m.movieNo = v.movieNo
+AND 10 < (SELECT COUNT(movie.movieNo)
+        FROM NETFLIXDB.Movie movie, NETFLIXDB.Viewing viewing
+        WHERE movie.movieNo = viewing.movieNo
+        GROUP BY viewing.movieNo
+        HAVING viewing.movieNo = m.movieNo)
+AND m.movieNo NOT IN (SELECT movie.movieNo 
+                       FROM NETFLIXDB.Order o, NETFLIXDB.DVD d, NETFLIXDB.Movie movie
+                       WHERE o.DVDNo = d.DVDNo AND d.movieNo = movie.movieNo)
+GROUP BY m.movieNo
 
 
 -- 8) Trouvez le nom et date de naissance des acteurs qui jouent dans les films qui sont visionnés
