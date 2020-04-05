@@ -1,5 +1,6 @@
 SET search_path = 'NETFLIXDB';
 
+INSERT INTO NETFLIXDB.Member VALUES ('admin01', 'Admin', 'admin', 'admin@netflixpoly.com', 'H4H2P6');
 INSERT INTO NETFLIXDB.Member VALUES ('member01', 'Phineas Flynn', 'agentperry', 'phineas1999@trimail.com', 'H4K2B6');
 INSERT INTO NETFLIXDB.Member VALUES ('member02', 'Ferb Fletcher', 'gitchigoo', 'ferbfletcher@trimail.com', 'H4K2B6');
 INSERT INTO NETFLIXDB.Member VALUES ('member03', 'Candance Flynn', 'jeremy', 'ribbonsrcool@hotmail.com', 'H3C1E8');
