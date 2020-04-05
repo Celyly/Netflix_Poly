@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import {Hotel} from "../../../common/tables/Hotel";
 // tslint:disable-next-line:ordered-imports
-import { of, Observable,concat, Subject } from "rxjs";
+import { of, Observable, concat, Subject } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { Room } from "../../../common/tables/Room";
 
@@ -22,6 +22,11 @@ export class CommunicationService {
        this._listners.next(filterBy);
     }
 
+    public login(email: string, password: string): Observable<string> {
+        console.log(this.http.post<string>(this.BASE_URL + "/login", {email, password}));
+
+        return this.http.post<string>(this.BASE_URL + "/login", {email, password});
+    }
 
     public getHotels(): Observable<any[]> {
 
@@ -51,7 +56,6 @@ export class CommunicationService {
 
     public deleteHotel(): void {
     }
-    
 
     public setUpDatabase(): Observable<any> {
         return concat(this.http.post<any>(this.BASE_URL + "/createSchema", []),

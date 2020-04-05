@@ -3,6 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Hotel } from "../../../common/tables/Hotel";
 import { CommunicationService } from "./communication.service";
+import { LoggedUser } from "./logged-user";
 
 @Component({
   selector: "app-root",
@@ -11,15 +12,13 @@ import { CommunicationService } from "./communication.service";
 })
 export class AppComponent implements OnInit {
     public route: string;
+    public loggedUser: LoggedUser;
 
     public constructor(private communicationService: CommunicationService, location: Location, router: Router) {
-        router.events.subscribe((val) => {
-            if (location.path() !== "") {
-              this.route = location.path();
-            } else {
-              this.route = "";
-            }
+        router.events.subscribe(() => {
+            (location.path() !== "") ? this.route = location.path() : this.route = "";
           });
+        this.loggedUser = new LoggedUser();
     }
 
     public readonly title: string = "INF3710 TP5";

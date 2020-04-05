@@ -1,8 +1,4 @@
-<!--The content below is only a placeholder and can be replaced.-->
-
-
-<!-- <nav class="navbar navbar-expand-lg navbar-dark mb-3 main-navbar" style="background-color: rgba(17, 17, 17, 0);"> -->
-<nav class="navbar navbar-expand-lg navbar-dark mb-3 main-navbar" [ngStyle]="{'background-color': (route === '' || route === '/login') ? 'rgba(17, 17, 17, 0)' : 'rgba(17, 17, 17, 0.7)'}">  
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark mb-3 main-navbar" [ngStyle]="{'background-color' : (route === '' || route === '/login') ? 'rgba(17, 17, 17, 0)' : 'rgba(17, 17, 17, 0.7)'}">  
   <a class="navbar-brand title" href="/"><img src="../assets/logo.png" height="25" width="140" style="margin-left: 5%" /></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -10,23 +6,24 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item">
-        <a *ngIf="route === '/login'" class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a *ngIf="route === '/login'" class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a *ngIf="route !== '' && route !== '/login'" class="nav-link" href="/member">Member</a>
+        <a *ngIf="loggedUser.role === 'USER'" class="nav-link" href="/member">Member</a>
       </li>
       <li class="nav-item">
-        <a *ngIf="route !== '' && route !== '/login'" class="nav-link" href="/admin">Admin</a>
+        <a *ngIf="loggedUser.role === 'ADMIN'" class="nav-link" href="/admin">Admin</a>
       </li>
       <li class="nav-item">
-        <a *ngIf="route !== '' && route !== '/login'" class="nav-link" href="/movies">Movies</a>
+        <a *ngIf="loggedUser.role === 'USER'" class="nav-link" href="/movies">Movies</a>
       </li>
     </ul>
-    <!-- <form class="form-inline my-2 my-lg-0">
+    <!-- SEARCH BAR -->
+    <!-- <form class="form-inline my-2 my-lg-0 searchBar">
       <input class="form-control mr-sm-2" type="search" placeholder="Search">
       <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
     </form> -->
-    <button type="button" class="btn btn-danger my-sm-0" style="color:white; width: 8%;" routerLink="/login">
+    <button *ngIf="loggedUser.role === 'GUEST'" type="button" class="btn btn-danger my-sm-0" style="color:white; width: 8%;" routerLink="/login">
       Sign in
     </button>
   </div>
