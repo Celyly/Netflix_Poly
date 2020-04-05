@@ -10,7 +10,10 @@ import { CommunicationService } from "./communication.service";
 import { HotelComponent } from "./hotel/hotel.component";
 import { LoginComponent } from "./login/login.component";
 import { MemberComponent } from "./member/member.component";
+import { RegisterPlanComponent } from "./registration/register-plan/register-plan.component";
+import { RegisterComponent } from "./registration/register/register.component";
 import { RoomComponent } from "./room/room.component";
+import { RegisterPaymentComponent } from './registration/register-payment/register-payment.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,9 @@ import { RoomComponent } from "./room/room.component";
     AdminComponent,
     MemberComponent,
     LoginComponent,
+    RegisterComponent,
+    RegisterPlanComponent,
+    RegisterPaymentComponent,
   ],
   imports: [
     CommonModule,

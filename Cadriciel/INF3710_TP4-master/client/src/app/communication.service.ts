@@ -22,7 +22,7 @@ export class CommunicationService {
        this._listners.next(filterBy);
     }
 
-    public login(email: string, password: string): Observable<string> {
+    public auth(email: string, password: string): Observable<string> {
         console.log(this.http.post<string>(this.BASE_URL + "/login", {email, password}));
 
         return this.http.post<string>(this.BASE_URL + "/login", {email, password});

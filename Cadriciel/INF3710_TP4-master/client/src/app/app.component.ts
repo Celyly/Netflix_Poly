@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
             (location.path() !== "") ? this.route = location.path() : this.route = "";
           });
         this.loggedUser = new LoggedUser();
+        this.loggedUser.role = "ADMIN";
     }
 
     public readonly title: string = "INF3710 TP5";

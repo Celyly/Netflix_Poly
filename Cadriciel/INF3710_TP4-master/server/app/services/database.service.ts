@@ -58,6 +58,10 @@ export class DatabaseService {
         return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Member m WHERE m.email = '${email}' AND m.memberPassword = '${password}'`);
     }
 
+    public async getNbMember(): Promise<pg.QueryResult> {
+        return this.pool.query(`SELECT COUNT(*) FROM ${this.DB_NAME}.Member m WHERE m.memberId LIKE 'member%'`);
+    }
+
     // // HOTEL
     // public async getHotels(): Promise<pg.QueryResult> {
 
