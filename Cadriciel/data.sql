@@ -1,12 +1,20 @@
 SET search_path = 'NETFLIXDB';
 
-INSERT INTO NETFLIXDB.Member VALUES ('admin01', 'Admin', '352#355#364#360#365', 'admin@netflixpoly.com', 'H4H2P6');
-INSERT INTO NETFLIXDB.Member VALUES ('member01', 'Phineas Flynn', '352#358#356#365#371#367#356#369#369#376', 'phineas1999@trimail.com', 'H4K2B6');
-INSERT INTO NETFLIXDB.Member VALUES ('member02', 'Ferb Fletcher', '358#360#371#354#359#360#358#366#366', 'ferbfletcher@trimail.com', 'H4K2B6');
-INSERT INTO NETFLIXDB.Member VALUES ('member03', 'Candance Flynn', '361#356#369#356#364#376', 'ribbonsrcool@hotmail.com', 'H3C1E8');
-INSERT INTO NETFLIXDB.Member VALUES ('member04', 'Perry The Platypus', '362#369#369#369#369#369', 'agentp@owca.com', 'H3H1X2');
-INSERT INTO NETFLIXDB.Member VALUES ('member05', 'Heinz Doofenshmirtz', '367#352#370#370#374#366#369#355#360#365#352#371#366#369', 'heinzinator@evil.inc', 'H2W2N4');
-INSERT INTO NETFLIXDB.Member VALUES ('member06', 'Isabella Garcia-Shapiro', '360#363#366#373#356#367#359#360#365#356#352#370', 'izzyshapiro@fireside.com', 'H2J1L7');
+-- INSERT INTO NETFLIXDB.Member VALUES ('admin01', 'Admin', 'admin', 'admin@netflixpoly.com', 'H4H2P6');
+-- INSERT INTO NETFLIXDB.Member VALUES ('member01', 'Phineas Flynn', 'agentperry', 'phineas1999@trimail.com', 'H4K2B6');
+-- INSERT INTO NETFLIXDB.Member VALUES ('member02', 'Ferb Fletcher', 'gitchigoo', 'ferbfletcher@trimail.com', 'H4K2B6');
+-- INSERT INTO NETFLIXDB.Member VALUES ('member03', 'Candance Flynn', 'jeremy', 'ribbonsrcool@hotmail.com', 'H3C1E8');
+-- INSERT INTO NETFLIXDB.Member VALUES ('member04', 'Perry The Platypus', 'krrrrr', 'agentp@owca.com', 'H3H1X2');
+-- INSERT INTO NETFLIXDB.Member VALUES ('member05', 'Heinz Doofenshmirtz', 'passwordinator', 'heinzinator@evil.inc', 'H2W2N4');
+-- INSERT INTO NETFLIXDB.Member VALUES ('member06', 'Isabella Garcia-Shapiro', 'ilovephineas', 'izzyshapiro@fireside.com', 'H2J1L7');
+
+INSERT INTO NETFLIXDB.Member VALUES ('admin01', 'Admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin@netflixpoly.com', 'H4H2P6');
+INSERT INTO NETFLIXDB.Member VALUES ('member01', 'Phineas Flynn', '162ddfb0027fd6df06301425f6aa5fca4e0fc60a2497b1eb1cf90b8a011fe1a7', 'phineas1999@trimail.com', 'H4K2B6');
+INSERT INTO NETFLIXDB.Member VALUES ('member02', 'Ferb Fletcher', 'efa406e9784da1feedc52ab578ebcede86d6c90b447267976136c4d2d25fe84a', 'ferbfletcher@trimail.com', 'H4K2B6');
+INSERT INTO NETFLIXDB.Member VALUES ('member03', 'Candance Flynn', '73ecb4b9d82c620a68d517119881d21eaaf808307da44ea47836893e551f9d51', 'ribbonsrcool@hotmail.com', 'H3C1E8');
+INSERT INTO NETFLIXDB.Member VALUES ('member04', 'Perry The Platypus', '23731fa9133fb2f42085cf64044c554b0f2ef468f6fe02f19e95205672001782', 'agentp@owca.com', 'H3H1X2');
+INSERT INTO NETFLIXDB.Member VALUES ('member05', 'Heinz Doofenshmirtz', '1d0b3b8ab8f46610a8784061a5e47558beb1dc2c02829fb1f00c2ef65d7aca0a', 'heinzinator@evil.inc', 'H2W2N4');
+INSERT INTO NETFLIXDB.Member VALUES ('member06', 'Isabella Garcia-Shapiro', 'a8b4ae7797b8b55be4bd24c8a002471c4cb7049e04d28a1f0274d05202d7a44b', 'izzyshapiro@fireside.com', 'H2J1L7');
 
 INSERT INTO NETFLIXDB.MemberMonthly VALUES ('member03', 5, '2016-05-19', '2020-04-20');
 INSERT INTO NETFLIXDB.MemberMonthly VALUES ('member05', 9, '2014-09-23', '2020-04-25');

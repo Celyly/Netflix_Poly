@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { sha256 } from "js-sha256";
 import { Member } from "../../../../common/Member";
 import { CommunicationService } from "../communication.service";
-import { EncryptionService } from "../encryption.service";
 import { LoggedUser } from "../logged-user";
 
 @Component({
@@ -16,22 +16,17 @@ export class LoginComponent implements OnInit {
 
   public loggedUser: LoggedUser;
 
-  public constructor(private communicationService: CommunicationService, private encryptionService: EncryptionService, public router: Router) {
+  public constructor(private communicationService: CommunicationService, public router: Router) {
     this.loggedUser = new LoggedUser();
   }
 
-  public ngOnInit(): void {
-  }
+  public ngOnInit(): void {}
 
   // tslint:disable-next-line: max-func-body-length
   public login(): void {
     // Encryption
-    const encryptedData: string = this.encryptionService.encrypt(this.password);
-    console.log(encryptedData);
-    // console.log(this.encryptionService.decrypt(encryptedData));
-
+    const encryptedData: string = sha256(this.password);
     this.communicationService.auth(this.email, encryptedData).subscribe((res: any) => {
-      // console.log(res);
       this.changePermissions(res);
     });
 

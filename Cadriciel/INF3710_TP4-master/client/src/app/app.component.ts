@@ -3,8 +3,8 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Hotel } from "../../../common/tables/Hotel";
 import { CommunicationService } from "./communication.service";
-import { LoggedUserService } from "./logged-user.service";
 import { LoggedUser } from "./logged-user";
+import { LoggedUserService } from "./logged-user.service";
 
 @Component({
   selector: "app-root",
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
     public readonly title: string = "INF3710 TP5";
     public hotels: Hotel[] = [];
     public ngOnInit(): void {
-        this.communicationService.listen().subscribe((m:any) => {
+        this.communicationService.listen().subscribe((m: any) => {
             console.log(m);
             // this.getHotels();
         });

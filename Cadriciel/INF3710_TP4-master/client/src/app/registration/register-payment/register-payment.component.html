@@ -56,7 +56,7 @@
                 <label>CCV</label>
                 <input type="text" class="form-control" maxlength="3" [(ngModel)]="creditCard.ccv" name="ccv" placeholder="XXX">
             </div>
-        <button type="button" class="btn btn-danger" (click)="finish()" routerLink="/">Finish</button>
+        <button type="button" class="btn btn-danger" [routerLink]="" (click)="finish()">Finish</button>
     </form>
 
 </div>

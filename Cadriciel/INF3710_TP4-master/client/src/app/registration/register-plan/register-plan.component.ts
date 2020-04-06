@@ -13,11 +13,7 @@ export class RegisterPlanComponent implements OnInit {
   public constructor(public registerMemberService: RegisterMemberService) {
   }
 
-  public ngOnInit(): void {
-    // if (this.loggedUser.role !== "ADMIN") {
-    //   window.location.href = "/";
-    // }
-  }
+  public ngOnInit(): void {}
 
   public sendPlan(name: string): void {
     this.registerMemberService.setPlan(name);

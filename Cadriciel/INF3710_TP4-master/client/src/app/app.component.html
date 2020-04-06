@@ -9,13 +9,13 @@
         <a *ngIf="route === '/login'" class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
-        <a  class="nav-link" *ngIf="loggedUser.role == 'MEMBER'" [routerLink]="" (click)="goToMember()">Member</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" *ngIf="loggedUser.role == 'ADMIN'" [routerLink]="" (click)="goToAdmin()">Admin</a>
+        <a class="nav-link" *ngIf="loggedUser.role == 'MEMBER'" [routerLink]="" (click)="goToMember()">Member</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" *ngIf="loggedUser.role == 'MEMBER'" [routerLink]="" (click)="goToMovies()">Movies</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="loggedUser.role == 'ADMIN'" [routerLink]="" (click)="goToAdmin()">Admin</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" *ngIf="loggedUser.role == 'ADMIN'" [routerLink]="" (click)="goToRegister()" >Register a member</a>
@@ -50,7 +50,7 @@
     </button>
   </span>
 </div>
-  <router-outlet></router-outlet>
+<router-outlet></router-outlet>
 
 
 <!-- 

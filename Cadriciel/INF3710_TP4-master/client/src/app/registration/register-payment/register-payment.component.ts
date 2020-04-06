@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { CommunicationService } from "src/app/communication.service";
 import { LoggedUser } from "src/app/logged-user";
 import { RegisterMemberService } from "src/app/register-member.service";
@@ -21,7 +22,7 @@ export class RegisterPaymentComponent implements OnInit {
 
   public loggedUser: LoggedUser;
 
-  public constructor(private communicationService: CommunicationService, public registerMemberService: RegisterMemberService) {
+  public constructor(private communicationService: CommunicationService, public registerMemberService: RegisterMemberService, public router: Router) {
     this.expiration = ["", "", ""];
     this.cardNumber = ["", "", "", ""];
     this.creditCard = {
@@ -35,9 +36,6 @@ export class RegisterPaymentComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    // if (this.loggedUser.role !== "ADMIN") {
-    //   window.location.href = "/";
-    // }
     console.log(this.plan);
     console.log(this.member);
   }
@@ -53,8 +51,13 @@ export class RegisterPaymentComponent implements OnInit {
       this.member.id = id;
       this.communicationService.insertMember(this.plan, this.member).subscribe((res: any) => {
         console.log(res);
+        this.goToAdmin();
       });
     });
+  }
+
+  public goToAdmin(): void {
+    this.router.navigate(["/admin"], { state: { role: "ADMIN" } });
   }
 
 }
