@@ -1,7 +1,10 @@
+import { CreditCard } from "./CreditCard";
+
 export interface Member {
-    id: number;
+    id: string;
     name: string;
     password: string;
     email: string;
-    deliveryAddress: string;
+    zip: string;
+    creditCard: CreditCard | null
 }

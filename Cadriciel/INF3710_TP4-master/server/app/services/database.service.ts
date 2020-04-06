@@ -1,6 +1,9 @@
 import { injectable } from "inversify";
 import * as pg from "pg";
 import "reflect-metadata";
+import { CreditCard } from "../../../common/CreditCard";
+import { Member } from "../../../common/Member";
+
 // import { Room } from "../../../common/tables/Room";
 import {schema} from "../createSchema";
 import {data} from "../populateDB";
@@ -8,6 +11,7 @@ import {data} from "../populateDB";
 @injectable()
 export class DatabaseService {
     private DB_NAME: string = 'NETFLIXDB';
+    private PRICE: number = 9.99;
 
     // A MODIFIER POUR VOTRE BD
     public connectionConfig: pg.ConnectionConfig = {
@@ -31,23 +35,21 @@ export class DatabaseService {
             process.exit(1);
         });
     }
-    public async createSchema(): Promise<pg.QueryResult> {
 
+    public async createSchema(): Promise<pg.QueryResult> {
         return this.pool.query(schema);
     }
 
     public async populateDb(): Promise<pg.QueryResult> {
-
         return this.pool.query(data);
     }
 
     public async getAllFromTable(tableName: string): Promise<pg.QueryResult> {
-
         return this.pool.query(`SELECT * FROM ${this.DB_NAME}.${tableName};`);
     }
 
     public async getMovieDescription(movieName: string): Promise<pg.QueryResult> {
-        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Movie WHERE movieName = '${movieName}'`)
+        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Movie WHERE movieName = '${movieName}'`);
     }
 
     public async getMembers(): Promise<pg.QueryResult> {
@@ -60,6 +62,27 @@ export class DatabaseService {
 
     public async getNbMember(): Promise<pg.QueryResult> {
         return this.pool.query(`SELECT COUNT(*) FROM ${this.DB_NAME}.Member m WHERE m.memberId LIKE 'member%'`);
+    }
+
+    // Insert Member and CreditCard
+    public async createMember(plan: string, member: Member): Promise<pg.QueryResult> {
+        let zero: string = '0';
+        if (member.id.length > 1) {
+            zero = '';
+        }
+        const credit: CreditCard = member.creditCard as CreditCard;
+        const memberId: string = `member${zero}${member.id}`;
+        // tslint:disable-next-line: max-line-length
+        const queryCredit: string = `INSERT INTO ${this.DB_NAME}.CreditCard VALUES('${credit.cardNo}', '${memberId}', '${credit.ccv}', '${credit.ownerCard}', '${credit.expirationDate}');`;
+        let queryPlan: string = '';
+        if (plan === 'monthly') {
+            queryPlan = `INSERT INTO ${this.DB_NAME}.MemberMonthly VALUES('${memberId}', '${this.PRICE}', CURRENT_DATE, CURRENT_DATE + 30)`;
+        } else if (plan === 'payperview') {
+            queryPlan = `INSERT INTO ${this.DB_NAME}.MemberPayPerView VALUES('${memberId}', 0)`;
+        }
+
+        // tslint:disable-next-line: max-line-length
+        return this.pool.query(`INSERT INTO ${this.DB_NAME}.Member VALUES('${memberId}', '${member.name}', '${member.password}', '${member.email}', '${member.zip}'); ${queryCredit} ${queryPlan}`);
     }
 
     // // HOTEL

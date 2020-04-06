@@ -1,10 +1,11 @@
+// tslint:disable: no-any
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import {Hotel} from "../../../common/tables/Hotel";
-// tslint:disable-next-line:ordered-imports
-import { of, Observable, concat, Subject } from "rxjs";
+import { concat, of, Observable, Subject } from "rxjs";
 import { catchError } from "rxjs/operators";
-import { Room } from "../../../common/tables/Room";
+import { Member } from "../../../common/Member";
+// import {Hotel} from "../../../common/tables/Hotel";
+// import { Room } from "../../../common/tables/Room";
 
 @Injectable()
 export class CommunicationService {
@@ -23,39 +24,48 @@ export class CommunicationService {
     }
 
     public auth(email: string, password: string): Observable<string> {
-        console.log(this.http.post<string>(this.BASE_URL + "/login", {email, password}));
-
         return this.http.post<string>(this.BASE_URL + "/login", {email, password});
     }
 
-    public getHotels(): Observable<any[]> {
-
-        return this.http.get<Hotel[]>(this.BASE_URL + "/hotel").pipe(
-            catchError(this.handleError<Hotel[]>("getHotels")),
+    public getNbMember(): Observable<string> {
+        return this.http.get<string>(this.BASE_URL + "/register/payment").pipe(
+            catchError(this.handleError<string>("insertMember")),
         );
     }
 
-    public getHotelPKs(): Observable<string[]> {
-
-        return this.http.get<string[]>(this.BASE_URL + "/hotel/hotelNo").pipe(
-            catchError(this.handleError<string[]>("getHotelPKs")),
+    public insertMember(plan: string, member: Member): Observable<string> {
+        return this.http.post<string>(this.BASE_URL + "/register/payment", {plan, member}).pipe(
+            catchError(this.handleError<string>("insertMember")),
         );
     }
 
-    public insertHotel(hotel: any): Observable<number> {
-        return this.http.post<number>(this.BASE_URL + "/hotel/insert", hotel).pipe(
-            catchError(this.handleError<number>("inserHotel")),
-        );
-    }
+    // public getHotels(): Observable<any[]> {
+    //     return this.http.get<Hotel[]>(this.BASE_URL + "/hotel").pipe(
+    //         catchError(this.handleError<Hotel[]>("getHotels")),
+    //     );
+    // }
 
-    public insertRoom(room: Room): Observable<number> {
-        return this.http.post<number>(this.BASE_URL + "/rooms/insert", room).pipe(
-            catchError(this.handleError<number>("inserHotel")),
-        );
-    }
+    // public getHotelPKs(): Observable<string[]> {
 
-    public deleteHotel(): void {
-    }
+    //     return this.http.get<string[]>(this.BASE_URL + "/hotel/hotelNo").pipe(
+    //         catchError(this.handleError<string[]>("getHotelPKs")),
+    //     );
+    // }
+
+    // public insertHotel(hotel: any): Observable<number> {
+    //     return this.http.post<number>(this.BASE_URL + "/hotel/insert", hotel).pipe(
+    //         catchError(this.handleError<number>("inserHotel")),
+    //     );
+    // }
+
+    // public insertRoom(room: Room): Observable<number> {
+    //     return this.http.post<number>(this.BASE_URL + "/rooms/insert", room).pipe(
+    //         catchError(this.handleError<number>("inserHotel")),
+    //     );
+    // }
+
+    // public deleteHotel(): void {
+    // }
 
     public setUpDatabase(): Observable<any> {
         return concat(this.http.post<any>(this.BASE_URL + "/createSchema", []),

@@ -6,26 +6,26 @@
     <form>
         <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="inputFirstName4">First name</label>
-              <input type="text" class="form-control" id="inputFirstName4" placeholder="First name">
+              <label>First name</label>
+              <input type="text" class="form-control" [(ngModel)]="fName" name="fName" placeholder="First name">
             </div>
             <div class="form-group col-md-6">
-              <label for="inputLastName4">Last name</label>
-              <input type="text" class="form-control" id="inputLastName4" placeholder="Last name">
+              <label>Last name</label>
+              <input type="text" class="form-control" [(ngModel)]="lName" name="lName" placeholder="Last name">
             </div>
         </div>
         <div class="form-group">
-          <label for="inputEmail4">Email</label>
-          <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+          <label>Email</label>
+          <input type="email" class="form-control"  [(ngModel)]="member.email" name="email" placeholder="Email">
         </div>
         <div class="form-group">
-          <label for="inputPassword4">Password</label>
-          <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+          <label>Password</label>
+          <input type="password" class="form-control" [(ngModel)]="member.password" name="password" placeholder="Password">
         </div>
         <div class="form-group">
-          <label for="inputZip">ZIP code</label>
-          <input type="text" class="form-control" id="inputZip">
+          <label>ZIP code</label>
+          <input type="text" class="form-control" [(ngModel)]="member.zip" name="zip">
         </div>
-        <button type="button" class="btn btn-danger" routerLink="/register/payment">Continue</button>
+        <button type="button" class="btn btn-danger" (click)="sendMember()" routerLink="/register/payment">Continue</button>
     </form>
 </div>

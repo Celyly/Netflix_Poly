@@ -56,9 +56,28 @@ export class DatabaseController {
                     console.log('Account found!', result.rows);
                 } else {
                     console.log('No account found!');
+                    res.json(-1);
                 }
             }).catch((e: Error) => {
                 console.error(e.stack);
+            });
+        });
+
+        router.get("/register/payment",
+                   (req: Request, res: Response, next: NextFunction) => {
+                    this.databaseService.getNbMember().then((result: pg.QueryResult) => {
+                    res.json(result.rows[0].count);
+                }).catch((e: Error) => {
+                    console.error(e.stack);
+                });
+        });
+
+        router.post("/register/payment", (req: Request, res: Response, next: NextFunction) => {
+            this.databaseService.createMember(req.body.plan, req.body.member).then((result: pg.QueryResult) => {
+                res.json(result.rowCount);
+            }).catch((e: Error) => {
+                console.error(e.stack);
+                res.json(-1);
             });
         });
 

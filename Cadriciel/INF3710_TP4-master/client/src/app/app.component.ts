@@ -27,19 +27,19 @@ export class AppComponent implements OnInit {
     public ngOnInit(): void {
         this.communicationService.listen().subscribe((m:any) => {
             console.log(m);
-            this.getHotels();
+            // this.getHotels();
         });
     }
 
-    public getHotels(): void {
-        this.communicationService.getHotels().subscribe((hotels: Hotel[]) => {
-            this.hotels = hotels;
-        });
-    }
+    // public getHotels(): void {
+    //     this.communicationService.getHotels().subscribe((hotels: Hotel[]) => {
+    //         this.hotels = hotels;
+    //     });
+    // }
 
-    public deleteHotel(): void {
-        // TODO
-    }
+    // public deleteHotel(): void {
+    //     // TODO
+    // }
 
     public createDB(): void {
         this.communicationService.setUpDatabase().subscribe((res: any) => {
