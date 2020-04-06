@@ -3,6 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Hotel } from "../../../common/tables/Hotel";
 import { CommunicationService } from "./communication.service";
+import { LoggedUserService } from "./logged-user.service";
 import { LoggedUser } from "./logged-user";
 
 @Component({
@@ -14,12 +15,12 @@ export class AppComponent implements OnInit {
     public route: string;
     public loggedUser: LoggedUser;
 
-    public constructor(private communicationService: CommunicationService, location: Location, router: Router) {
+    public constructor(private communicationService: CommunicationService, location: Location, public router: Router,
+                       public loggedService: LoggedUserService) {
         router.events.subscribe(() => {
             (location.path() !== "") ? this.route = location.path() : this.route = "";
-          });
-        this.loggedUser = new LoggedUser();
-        this.loggedUser.role = "ADMIN";
+        });
+        this.loggedService.loggedUser.subscribe((user) => this.loggedUser = user);
     }
 
     public readonly title: string = "INF3710 TP5";
@@ -29,6 +30,38 @@ export class AppComponent implements OnInit {
             console.log(m);
             // this.getHotels();
         });
+    }
+
+    public goToHome(): void {
+        if (this.loggedUser.role === "ADMIN") {
+            this.goToAdmin();
+        } else if (this.loggedUser.role === "MEMBER") {
+            this.goToMember();
+        } else {
+            this.router.navigate(["/"]);
+        }
+    }
+
+    public goToMember(): void {
+        this.router.navigate(["/member"], { state: { role: "MEMBER" } });
+    }
+
+    public goToMovies(): void {
+        this.router.navigate(["/movies"], { state: { role: "MEMBER" } });
+    }
+
+    public goToAdmin(): void {
+        this.router.navigate(["/admin"], { state: { role: "ADMIN" } });
+    }
+
+    public goToRegister(): void {
+        this.router.navigate(["/register"], { state: { role: "ADMIN" } });
+    }
+
+    public logout(): void {
+        this.loggedUser.role = "GUEST";
+        this.loggedService.setLoggedUser(this.loggedUser);
+        this.router.navigate(["/"], { state: { role: "GUEST" } });
     }
 
     // public getHotels(): void {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { EncryptionService } from "src/app/encryption.service";
+import { LoggedUser } from "src/app/logged-user";
 import { RegisterMemberService } from "src/app/register-member.service";
 import { Member } from "../../../../../common/Member";
 
@@ -13,6 +14,8 @@ export class RegisterComponent implements OnInit {
   public lName: string;
   public member: Member;
 
+  public loggedUser: LoggedUser;
+
   public constructor(public registerMemberService: RegisterMemberService, private encryptionService: EncryptionService) {
     this.member = {
       id: "",
@@ -25,6 +28,9 @@ export class RegisterComponent implements OnInit {
    }
 
   public ngOnInit(): void {
+    // if (this.loggedUser.role !== "ADMIN") {
+    //   window.location.href = "/";
+    // }
   }
 
   public sendMember(): void {

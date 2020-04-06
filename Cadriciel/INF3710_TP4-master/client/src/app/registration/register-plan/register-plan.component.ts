@@ -1,18 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { RegisterMemberService } from 'src/app/register-member.service';
+import { Component, OnInit } from "@angular/core";
+import { LoggedUser } from "src/app/logged-user";
+import { RegisterMemberService } from "src/app/register-member.service";
 
 @Component({
-  selector: 'app-register-plan',
-  templateUrl: './register-plan.component.html',
-  styleUrls: ['./register-plan.component.css']
+  selector: "app-register-plan",
+  templateUrl: "./register-plan.component.html",
+  styleUrls: ["./register-plan.component.css"]
 })
 export class RegisterPlanComponent implements OnInit {
+  public loggedUser: LoggedUser;
 
-  constructor(public registerMemberService: RegisterMemberService) { 
-
+  public constructor(public registerMemberService: RegisterMemberService) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
+    // if (this.loggedUser.role !== "ADMIN") {
+    //   window.location.href = "/";
+    // }
   }
 
   public sendPlan(name: string): void {

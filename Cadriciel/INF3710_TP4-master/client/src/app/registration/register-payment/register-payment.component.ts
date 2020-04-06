@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { CommunicationService } from "src/app/communication.service";
+import { LoggedUser } from "src/app/logged-user";
 import { RegisterMemberService } from "src/app/register-member.service";
 import { CreditCard } from "../../../../../common/CreditCard";
 import { Member } from "../../../../../common/Member";
@@ -18,6 +19,8 @@ export class RegisterPaymentComponent implements OnInit {
   public cardNumber: string[];
   public creditCard: CreditCard;
 
+  public loggedUser: LoggedUser;
+
   public constructor(private communicationService: CommunicationService, public registerMemberService: RegisterMemberService) {
     this.expiration = ["", "", ""];
     this.cardNumber = ["", "", "", ""];
@@ -32,6 +35,9 @@ export class RegisterPaymentComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    // if (this.loggedUser.role !== "ADMIN") {
+    //   window.location.href = "/";
+    // }
     console.log(this.plan);
     console.log(this.member);
   }

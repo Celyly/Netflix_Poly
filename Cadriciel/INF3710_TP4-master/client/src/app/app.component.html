@@ -1,24 +1,24 @@
 <nav class="navbar navbar-expand-lg sticky-top navbar-dark mb-3 main-navbar" [ngStyle]="{'background-color' : (route === '' || route === '/login') ? 'rgba(17, 17, 17, 0)' : 'rgba(17, 17, 17, 1)'}">  
-  <a class="navbar-brand title" href="/"><img src="../assets/logo.png" height="25" width="140" style="margin-left: 5%" /></a>
+  <a class="navbar-brand title" [routerLink]="" (click)="goToHome()"><img src="../assets/logo.png" height="25" width="140" style="margin-left: 5%" /></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item">
-        <a *ngIf="route === '/login'" class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        <a *ngIf="route === '/login'" class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
-        <a *ngIf="loggedUser.role === 'USER'" class="nav-link" href="/member">Member</a>
+        <a  class="nav-link" *ngIf="loggedUser.role == 'MEMBER'" [routerLink]="" (click)="goToMember()">Member</a>
       </li>
       <li class="nav-item">
-        <a *ngIf="loggedUser.role === 'ADMIN'" class="nav-link" href="/admin">Admin</a>
+        <a class="nav-link" *ngIf="loggedUser.role == 'ADMIN'" [routerLink]="" (click)="goToAdmin()">Admin</a>
       </li>
       <li class="nav-item">
-        <a *ngIf="loggedUser.role === 'USER'" class="nav-link" href="/movies">Movies</a>
+        <a class="nav-link" *ngIf="loggedUser.role == 'MEMBER'" [routerLink]="" (click)="goToMovies()">Movies</a>
       </li>
       <li class="nav-item">
-        <a *ngIf="loggedUser.role === 'ADMIN'" class="nav-link" href="/register">Register a member</a>
+        <a class="nav-link" *ngIf="loggedUser.role == 'ADMIN'" [routerLink]="" (click)="goToRegister()" >Register a member</a>
       </li>
     </ul>
     <!-- SEARCH BAR -->
@@ -26,8 +26,11 @@
       <input class="form-control mr-sm-2" type="search" placeholder="Search">
       <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
     </form> -->
-    <button *ngIf="loggedUser.role === 'GUEST'" type="button" class="btn btn-danger my-sm-0" style="color:white; width: 8%;" routerLink="/login">
+    <button  *ngIf="loggedUser.role === 'GUEST'"  type="button" class="btn btn-danger my-sm-0" style="color:white; width: 8%;" routerLink="/login">
       Sign in
+    </button>
+    <button *ngIf="loggedUser.role !== 'GUEST'" type="button" class="btn btn-danger my-sm-0" style="color:white; width: 8%;" routerLink="" (click)="logout()">
+      Sign out
     </button>
   </div>
 </nav>
@@ -43,7 +46,7 @@
     <br>
     <br>
     <button type="button" class="btn btn-danger my-sm-0" style="color:white; width: 65%;" routerLink="/login">
-      JOIN FOR FREE
+      JOIN RIGHT NOW
     </button>
   </span>
 </div>
