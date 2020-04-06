@@ -17,14 +17,22 @@ export class LoginComponent implements OnInit {
   }
 
   public login(): void {
-    // this.communicationService.auth(this.email, this.password).subscribe((res: any) => {
-    //     console.log(res);
-    // });
-    // this.encryptionService.encrypt(this.password);
     // Encryption
     const encryptedData: string = this.encryptionService.encrypt(this.password);
+    // console.log(encryptedData);
+    // console.log(this.encryptionService.decrypt(encryptedData));
+
     this.communicationService.auth(this.email, encryptedData).subscribe((res: any) => {
         console.log(res);
+        if (res !== -1) {
+          if (this.email === "admin@netflixpoly.com") {
+            // change permissions rights
+            console.log("You have admins rights!");
+          } else {
+            // regular user
+            console.log("You are a regular customer!");
+          }
+        }
     });
   }
 

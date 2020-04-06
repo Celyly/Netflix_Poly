@@ -1,12 +1,12 @@
 SET search_path = 'NETFLIXDB';
 
-INSERT INTO NETFLIXDB.Member VALUES ('admin01', 'Admin', 'admin', 'admin@netflixpoly.com', 'H4H2P6');
-INSERT INTO NETFLIXDB.Member VALUES ('member01', 'Phineas Flynn', 'agentperry', 'phineas1999@trimail.com', 'H4K2B6');
-INSERT INTO NETFLIXDB.Member VALUES ('member02', 'Ferb Fletcher', 'gitchigoo', 'ferbfletcher@trimail.com', 'H4K2B6');
-INSERT INTO NETFLIXDB.Member VALUES ('member03', 'Candance Flynn', 'jeremy', 'ribbonsrcool@hotmail.com', 'H3C1E8');
-INSERT INTO NETFLIXDB.Member VALUES ('member04', 'Perry The Platypus', 'krrrrr', 'agentp@owca.com', 'H3H1X2');
-INSERT INTO NETFLIXDB.Member VALUES ('member05', 'Heinz Doofenshmirtz', 'passwordinator', 'heinzinator@evil.inc', 'H2W2N4');
-INSERT INTO NETFLIXDB.Member VALUES ('member06', 'Isabella Garcia-Shapiro', 'ilovephineas', 'izzyshapiro@fireside.com', 'H2J1L7');
+INSERT INTO NETFLIXDB.Member VALUES ('admin01', 'Admin', '352#355#364#360#365', 'admin@netflixpoly.com', 'H4H2P6');
+INSERT INTO NETFLIXDB.Member VALUES ('member01', 'Phineas Flynn', '352#358#356#365#371#367#356#369#369#376', 'phineas1999@trimail.com', 'H4K2B6');
+INSERT INTO NETFLIXDB.Member VALUES ('member02', 'Ferb Fletcher', '358#360#371#354#359#360#358#366#366', 'ferbfletcher@trimail.com', 'H4K2B6');
+INSERT INTO NETFLIXDB.Member VALUES ('member03', 'Candance Flynn', '361#356#369#356#364#376', 'ribbonsrcool@hotmail.com', 'H3C1E8');
+INSERT INTO NETFLIXDB.Member VALUES ('member04', 'Perry The Platypus', '362#369#369#369#369#369', 'agentp@owca.com', 'H3H1X2');
+INSERT INTO NETFLIXDB.Member VALUES ('member05', 'Heinz Doofenshmirtz', '367#352#370#370#374#366#369#355#360#365#352#371#366#369', 'heinzinator@evil.inc', 'H2W2N4');
+INSERT INTO NETFLIXDB.Member VALUES ('member06', 'Isabella Garcia-Shapiro', '360#363#366#373#356#367#359#360#365#356#352#370', 'izzyshapiro@fireside.com', 'H2J1L7');
 
 INSERT INTO NETFLIXDB.MemberMonthly VALUES ('member03', 5, '2016-05-19', '2020-04-20');
 INSERT INTO NETFLIXDB.MemberMonthly VALUES ('member05', 9, '2014-09-23', '2020-04-25');

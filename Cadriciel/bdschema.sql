@@ -6,7 +6,7 @@ CREATE SCHEMA NETFLIXDB;
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Member (
 	memberId		    VARCHAR(50)             NOT NULL,
     memberName          VARCHAR(50)             NOT NULL,
-    memberPassword      VARCHAR(50)             NOT NULL, -- Doit être encrypté
+    memberPassword      VARCHAR(500)             NOT NULL, -- Doit être encrypté
     email               VARCHAR(50)             NOT NULL,
     deliveryAddress     VARCHAR(50)             NOT NULL,
     PRIMARY KEY (memberId)
