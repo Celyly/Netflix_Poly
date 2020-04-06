@@ -56,10 +56,10 @@ INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member06', 4, 4, 7, '2020-01-17');
 
 INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Woody Allen', '1935-12-01', 'M', 'Américain');
 INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Dylan Batista', '1998-05-09', 'M', 'Québécois');
-INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Céline Ly', '1999-02-28', 'F', 'Québécoise');
-INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Helena Ton-That', '1999-09-29', 'F', 'Québécoise');
+INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Céline Ly', '1999-02-28', 'F', 'Québécois');
+INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Helena Ton-That', '1999-09-29', 'F', 'Québécois');
 INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Behrt Behrnolds', '1978-10-23', 'M', 'Australien');
-INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Francine Françoise', '1981-07-27', 'F', 'Française');
+INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Francine Françoise', '1981-07-27', 'F', 'Français');
 
 INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 1, 1, 'Réalisateur', 38750);
 INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 1, 2, 'Réalisateur', 400345);

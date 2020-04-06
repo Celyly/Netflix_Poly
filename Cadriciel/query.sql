@@ -117,30 +117,70 @@ HAVING COUNT(v.movieNo) > (
 -- 9) Trouvez le nom du ou des réalisateurs qui ont réalisé les films qui ont le plus grand nombre
 --    de nominations aux oscars. Par exemple, Woody Allen et Steven Spielberg ont réalisé 10
 --    films qui ont été nominés aux oscars.
--- SELECT p.personName
--- FROM NETFLIXDB.Person p, NETFLIXDB.Role r, NETFLIXDB.Oscar
--- WHERE p.personId = r.personId AND r.roleNom = 'Réalisateur' AND r.movieNo = o.movieNo
--- HAVING COUNT(Oscar.oscarType) >= (
---     SELECT MAX(nNominations) FROM (
---         SELECT Oscar.oscarType, COUNT(Oscar.oscarType) as nNominations
---         FROM NETFLIXDB.Oscar
---         WHERE Oscar.oscarType = 'Nominee'
---         GROUP BY Oscar.oscarType
---     ) as viewTable
--- )
+SELECT p.personName
+FROM NETFLIXDB.Person p, NETFLIXDB.Role r, NETFLIXDB.Oscar o
+WHERE p.personId = r.personId AND r.roleNom = 'Réalisateur' AND r.movieNo = o.movieNo
+GROUP BY p.personName
+HAVING COUNT(o.movieNo) >= (
+    SELECT MAX(nNominations) FROM (
+        SELECT Oscar.movieNo, COUNT(Oscar.movieNo) as nNominations
+        FROM NETFLIXDB.Oscar
+        WHERE Oscar.oscarType = 'Nominee'
+        GROUP BY Oscar.movieNo
+    ) as viewTable
+)
 
 
 -- 10) Trouvez le nom des réalisateurs qui ont été le plus souvent nominés aux oscars mais qui
 --     n’ont jamais gagné d’oscar
+SELECT p.personName
+FROM NETFLIXDB.Person p, NETFLIXDB.Role r
+WHERE p.personId = r.personId AND r.roleNom = 'Réalisateur'
+GROUP BY p.personName
+HAVING COUNT(o.movieNo) >= (
+    SELECT MAX(nNominations) FROM (
+        SELECT Oscar.movieNo, COUNT(Oscar.movieNo) as nNominations
+        FROM NETFLIXDB.Oscar
+        WHERE Oscar.oscarType = 'Nominee'
+        GROUP BY Oscar.movieNo
+    ) as viewTable
+)
+-- je ne suis pas sure comment vérifié s'ils ont gagné déjà ou non
 
 
 -- 11) Trouvez les films (titre, année) qui ont gagné le plus d’oscars. Listez également leur
 --     réalisateurs et leurs acteurs ;
+SELECT m.title, m.productionDate, p.personName
+FROM NETFLIXDB.Movie m, NETFLIXDB.Person p, NETFLIXDB.Role r, NETFLIXDB.Oscar o
+WHERE p.personId = r.personId AND r.movieNo = m.movieNo AND m.movieNo = o.MovieNo AND o.oscarType = 'Winner'
+GROUP BY m.title, m.productionDate, p.personName
+HAVING COUNT(o.movieNo) >= (
+    SELECT MAX(nWins) FROM (
+        SELECT Oscar.movieNo, COUNT(Oscar.movieNo) as nWins
+        FROM NETFLIXDB.Oscar
+        WHERE Oscar.oscarType = 'Winner'
+        GROUP BY Oscar.movieNo
+    ) as viewTable
+)
 
 
 -- 12) Quelles paires de femmes québécoises ont le plus souvent travaillé ensemble dans différents
 --     films ?
+SELECT p1.personName
+FROM NETFLIXDB.Person p1, NETFLIXDB.Person p2, NETFLIXDB.Role r1, NETFLIXDB.Role r2
+WHERE p1.sex = 'F' AND p2.sex = 'F'
+AND p1.nationality = 'Québécoise' AND p2.nationality = 'Québécoise'
+AND p1.personId != p2.personId
+AND r1.personId = p1.personId AND r2.personId = r2.personID
+AND r1.movieNo = r2.movieNo
+GROUP BY p1.personName
+-- ahaha ça donne la bonne réponse mais je pense pas que c'est bon ahahahahahahahahahaha
 
 
 -- 13) Comment a évolué la carrière de Woody Allen ? (On veut connaitre tous ses rôles dans un
 --     film (réalisateur, acteur, etc.) du plus ancien au plus récent)
+SELECT m.productionDate, m.title, p.personName, r.roleNom
+FROM NETFLIXDB.Person p, NETFLIXDB.Role r, NETFLIXDB.Movie m
+WHERE p.personName = 'Woody Allen' AND p.personId = r.personId AND r.movieNo = m.movieNo
+GROUP BY m.productionDate, m.title, p.personName, r.roleNom
+ORDER BY m.productionDate
