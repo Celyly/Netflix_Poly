@@ -60,4 +60,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  public createDB(): void {
+    this.communicationService.setUpDatabase().subscribe((res: any) => {
+        console.log(res);
+    });
+}
+
 }

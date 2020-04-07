@@ -3,6 +3,15 @@
     
 }
 
+a {
+    text-decoration: underline;
+    color:rgb(218, 47, 64);
+}
+
+a:hover {
+    color:rgb(245, 57, 76);
+}
+
 #form-title{
     font-size: x-large;
     font-weight: bold;

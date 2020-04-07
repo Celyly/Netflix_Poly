@@ -1,12 +1,14 @@
-export const data: string = `
-SET search_path = 'NETFLIXDB';
+// tslint:disable: max-line-length
+export const data: string =
+`SET search_path = 'NETFLIXDB';
 
-INSERT INTO NETFLIXDB.Member VALUES ('member01', 'Phineas Flynn', 'agentperry', 'phineas1999@trimail.com', 'H4K2B6');
-INSERT INTO NETFLIXDB.Member VALUES ('member02', 'Ferb Fletcher', 'gitchigoo', 'ferbfletcher@trimail.com', 'H4K2B6');
-INSERT INTO NETFLIXDB.Member VALUES ('member03', 'Candance Flynn', 'jeremy', 'ribbonsrcool@hotmail.com', 'H3C1E8');
-INSERT INTO NETFLIXDB.Member VALUES ('member04', 'Perry The Platypus', 'krrrrr', 'agentp@owca.com', 'H3H1X2');
-INSERT INTO NETFLIXDB.Member VALUES ('member05', 'Heinz Doofenshmirtz', 'passwordinator', 'heinzinator@evil.inc', 'H2W2N4');
-INSERT INTO NETFLIXDB.Member VALUES ('member06', 'Isabella Garcia-Shapiro', 'ilovephineas', 'izzyshapiro@fireside.com', 'H2J1L7');
+INSERT INTO NETFLIXDB.Member VALUES ('admin01', 'Admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin@netflixpoly.com', 'H4H2P6');
+INSERT INTO NETFLIXDB.Member VALUES ('member01', 'Phineas Flynn', '162ddfb0027fd6df06301425f6aa5fca4e0fc60a2497b1eb1cf90b8a011fe1a7', 'phineas1999@trimail.com', 'H4K2B6');
+INSERT INTO NETFLIXDB.Member VALUES ('member02', 'Ferb Fletcher', 'efa406e9784da1feedc52ab578ebcede86d6c90b447267976136c4d2d25fe84a', 'ferbfletcher@trimail.com', 'H4K2B6');
+INSERT INTO NETFLIXDB.Member VALUES ('member03', 'Candance Flynn', '73ecb4b9d82c620a68d517119881d21eaaf808307da44ea47836893e551f9d51', 'ribbonsrcool@hotmail.com', 'H3C1E8');
+INSERT INTO NETFLIXDB.Member VALUES ('member04', 'Perry The Platypus', '23731fa9133fb2f42085cf64044c554b0f2ef468f6fe02f19e95205672001782', 'agentp@owca.com', 'H3H1X2');
+INSERT INTO NETFLIXDB.Member VALUES ('member05', 'Heinz Doofenshmirtz', '1d0b3b8ab8f46610a8784061a5e47558beb1dc2c02829fb1f00c2ef65d7aca0a', 'heinzinator@evil.inc', 'H2W2N4');
+INSERT INTO NETFLIXDB.Member VALUES ('member06', 'Isabella Garcia-Shapiro', 'a8b4ae7797b8b55be4bd24c8a002471c4cb7049e04d28a1f0274d05202d7a44b', 'izzyshapiro@fireside.com', 'H2J1L7');
 
 INSERT INTO NETFLIXDB.MemberMonthly VALUES ('member03', 5, '2016-05-19', '2020-04-20');
 INSERT INTO NETFLIXDB.MemberMonthly VALUES ('member05', 9, '2014-09-23', '2020-04-25');
@@ -31,25 +33,29 @@ INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'Time Is Forever', 'Romance', '2012
 INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'Finding Roxanne', 'Romance', '2007-04-30', 110);
 INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'The Prince''s PowerPoint Presentation', 'Drame', '1997-11-24', 123);
 
+INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 5, 'member01', '2019-12-18', 67);
+INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 5, 'member02', '2019-12-18', 67);
 INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 5, 'member03', '2019-12-18', 67);
 INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 5, 'member04', '2020-02-14', 105);
 INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 6, 'member04', '2020-03-02', 106);
 INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 7, 'member02', '2019-08-30', 121);
 INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 3, 'member06', '2020-03-29', 34);
 
-INSERT INTO NETFLIXDB.DVD VALUES (DEFAULT, 1);
-INSERT INTO NETFLIXDB.DVD VALUES (DEFAULT, 2);
-INSERT INTO NETFLIXDB.DVD VALUES (DEFAULT, 3);
-INSERT INTO NETFLIXDB.DVD VALUES (DEFAULT, 4);
+INSERT INTO NETFLIXDB.DVD VALUES (DEFAULT, 1, 5);
+INSERT INTO NETFLIXDB.DVD VALUES (1, 2, 5);
+INSERT INTO NETFLIXDB.DVD VALUES (DEFAULT, 2, 5);
+INSERT INTO NETFLIXDB.DVD VALUES (DEFAULT, 3, 6);
+INSERT INTO NETFLIXDB.DVD VALUES (DEFAULT, 4, 8);
+INSERT INTO NETFLIXDB.DVD VALUES (DEFAULT, 5, 8);
 
-INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member05', 1, 5, '2020-01-28');
-INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member02', 1, 5, '2020-02-04');
-INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member05', 2, 5, '2020-03-12');
-INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member01', 2, 5, '2020-03-19');
-INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member01', 3, 6, '2020-02-08');
-INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member04', 3, 6, '2020-03-21');
-INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member03', 4, 8, '2020-03-16');
-INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member06', 4, 7, '2020-01-17');
+INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member05', 1, 1, 5, '2020-01-28');
+INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member02', 1, 1, 5, '2020-02-04');
+INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member05', 2, 2, 5, '2020-03-12');
+INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member01', 2, 2, 5, '2020-03-19');
+INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member03', 3, 3, 6, '2020-02-08');
+INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member04', 5, 5, 6, '2020-03-21');
+INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member03', 4, 4, 8, '2020-03-16');
+INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member06', 4, 4, 7, '2020-01-17');
 
 INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Woody Allen', '1935-12-01', 'M', 'Américain');
 INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Dylan Batista', '1998-05-09', 'M', 'Québécois');
@@ -80,5 +86,4 @@ INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 1, 7, 'Musique', 'Nominee');
 INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 2, 3, 'Animation', 'Nominee');
 INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 2, 6, 'Romance', 'Winner');
 INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 3, 5, 'Romance', 'Winner');
-INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 4, 4, 'Drame', 'Nominee');
-`;
+INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 4, 4, 'Drame', 'Nominee');`;
