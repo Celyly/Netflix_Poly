@@ -34,10 +34,10 @@ INSERT INTO NETFLIXDB.CreditCard VALUES ('1234-5678-9101-1120', 'member06', 453,
 INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'The Mini Katana', 'Gore', '1982-01-08', 98);
 INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'The Peculiar Case of Adam Sandler', 'Comédie', '2004-05-22', 86);
 INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'My Best Friend Hates My Cat', 'Animation', '2008-09-17', 91);
-INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'Caillou''s Misfortune', 'Coming-Of-Age', '2018-07-15', 116);
+INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'Caillous Misfortune', 'Coming-Of-Age', '2018-07-15', 116);
 INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'Time Is Forever', 'Romance', '2012-02-14', 105);
 INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'Finding Roxanne', 'Romance', '2007-04-30', 110);
-INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'The Prince''s PowerPoint Presentation', 'Drame', '1997-11-24', 123);
+INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'The Princes PowerPoint Presentation', 'Drame', '1997-11-24', 123);
 
 INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 5, 'member01', '2019-12-18', 67);
 INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 5, 'member02', '2019-12-18', 67);
