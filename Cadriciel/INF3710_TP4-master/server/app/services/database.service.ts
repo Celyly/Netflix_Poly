@@ -7,6 +7,7 @@ import { Member } from "../../../common/Member";
 // import { Room } from "../../../common/tables/Room";
 import {schema} from "../createSchema";
 import {data} from "../populateDB";
+import { Movie } from "../../../common/Movie";
 
 @injectable()
 export class DatabaseService {
@@ -48,8 +49,26 @@ export class DatabaseService {
         return this.pool.query(`SELECT * FROM ${this.DB_NAME}.${tableName};`);
     }
 
-    public async getMovieDescription(movieName: string): Promise<pg.QueryResult> {
+    public async getMovies(): Promise<pg.QueryResult> {
+        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Movie`);
+    }
+
+    public async getMovie(movieName: string): Promise<pg.QueryResult> {
         return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Movie WHERE movieName = '${movieName}'`);
+    }
+
+    public async insertMovie(movie: Movie): Promise<pg.QueryResult> {
+        // tslint:disable-next-line: max-line-length
+        return this.pool.query(`INSERT INTO ${this.DB_NAME}.Movie VALUES(${movie.movieno}, '${movie.title}', '${movie.genre}', '${movie.productiondate}', ${movie.duration})`);
+    }
+
+    public async updateMovie(movie: Movie): Promise<pg.QueryResult> {
+        // tslint:disable-next-line: max-line-length
+        return this.pool.query(`UPDATE ${this.DB_NAME}.Movie SET movieNo=${movie.movieno}, title='${movie.title}', genre='${movie.genre}', productiondate='${movie.productiondate}', duration=${movie.duration} WHERE movieNo=${movie.movieno}`);
+    }
+
+    public async deleteMovie(movieno: number): Promise<pg.QueryResult> {
+        return this.pool.query(`DELETE FROM ${this.DB_NAME}.Movie WHERE movieNo = ${movieno}`);
     }
 
     public async getMembers(): Promise<pg.QueryResult> {

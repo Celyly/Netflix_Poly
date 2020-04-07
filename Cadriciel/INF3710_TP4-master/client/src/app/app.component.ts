@@ -74,9 +74,9 @@ export class AppComponent implements OnInit {
     //     // TODO
     // }
 
-    public createDB(): void {
-        this.communicationService.setUpDatabase().subscribe((res: any) => {
-            console.log(res);
-        });
-    }
+    // public createDB(): void {
+    //     this.communicationService.setUpDatabase().subscribe((res: any) => {
+    //         console.log(res);
+    //     });
+    // }
 }

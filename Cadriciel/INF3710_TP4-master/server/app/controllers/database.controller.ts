@@ -6,6 +6,7 @@ import * as pg from "pg";
 // import {Hotel} from "../../../common/tables/Hotel";
 // import {Room} from '../../../common/tables/Room';
 // import { Member } from "../../../common/Member";
+import { Movie } from "../../../common/Movie";
 import { DatabaseService } from "../services/database.service";
 import Types from "../types";
 
@@ -159,6 +160,48 @@ export class DatabaseController {
         //             });
         // });
 
+        router.post("/admin/movie/insert", (req: Request, res: Response, next: NextFunction) => {
+            this.databaseService.insertMovie(req.body.movie).then((result: pg.QueryResult) => {
+                res.json(result.rowCount);
+            }).catch((e: Error) => {
+                console.error(e.stack);
+                res.json(-1);
+            });
+        });
+
+        router.post("/admin/movie/update", (req: Request, res: Response, next: NextFunction) => {
+            this.databaseService.updateMovie(req.body.movie).then((result: pg.QueryResult) => {
+                res.json(result.rowCount);
+            }).catch((e: Error) => {
+                console.error(e.stack);
+                res.json(-1);
+            });
+        });
+
+        router.post("/admin/movie/delete", (req: Request, res: Response, next: NextFunction) => {
+            this.databaseService.deleteMovie(req.body.movieno).then((result: pg.QueryResult) => {
+                res.json(result.rowCount);
+            }).catch((e: Error) => {
+                console.error(e.stack);
+                res.json(-1);
+            });
+        });
+
+        router.get("/admin/movie", (req: Request, res: Response, next: NextFunction) => {
+            this.databaseService.getMovies().then((result: pg.QueryResult) => {
+                const movies: Movie[] = result.rows.map((movie: Movie) => ({
+                        movieno: movie.movieno,
+                        title: movie.title,
+                        genre: movie.genre,
+                        productiondate: String(movie.productiondate).substr(4, 11),
+                        duration: movie.duration
+                    }));
+                res.json(movies);
+            }).catch((e: Error) => {
+                console.error(e.stack);
+            });
+        });
+
         router.get("/tables/:tableName",
                    (req: Request, res: Response, next: NextFunction) => {
                 this.databaseService.getAllFromTable(req.params.tableName)
@@ -170,7 +213,7 @@ export class DatabaseController {
             });
 
         router.post("/movie/:movieName", (req: Request, res: Response, next: NextFunction) => {
-            this.databaseService.getMovieDescription(req.params.movieName)
+            this.databaseService.getMovie(req.params.movieName)
             .then((result: pg.QueryResult) => {
                 res.json(result.rows);
             }).catch((e: Error) => {

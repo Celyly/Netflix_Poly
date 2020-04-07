@@ -4,6 +4,7 @@ import { Injectable } from "@angular/core";
 import { concat, of, Observable, Subject } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { Member } from "../../../common/Member";
+import { Movie } from "../../../common/Movie";
 // import {Hotel} from "../../../common/tables/Hotel";
 // import { Room } from "../../../common/tables/Room";
 
@@ -25,6 +26,30 @@ export class CommunicationService {
 
     public auth(email: string, password: string): Observable<string> {
         return this.http.post<string>(this.BASE_URL + "/login", {email, password});
+    }
+
+    public insertMovie(movie: Movie): Observable<number> {
+        return this.http.post<number>(this.BASE_URL + "/admin/movie/insert", {movie}).pipe(
+            catchError(this.handleError<number>("insertMovie")),
+        );
+    }
+
+    public deleteMovie(movieno: number): Observable<number> {
+        return this.http.post<number>(this.BASE_URL + "/admin/movie/delete", {movieno}).pipe(
+            catchError(this.handleError<number>("deleteMovie")),
+        );
+    }
+
+    public updateMovie(movie: Movie): Observable<number> {
+        return this.http.post<number>(this.BASE_URL + "/admin/movie/update", {movie}).pipe(
+            catchError(this.handleError<number>("updateMovie")),
+        );
+    }
+
+    public getMovies(): Observable<Movie[]> {
+        return this.http.get<Movie[]>(this.BASE_URL + "/admin/movie").pipe(
+            catchError(this.handleError<Movie[]>("getMovies")),
+        );
     }
 
     public getNbMember(): Observable<string> {
