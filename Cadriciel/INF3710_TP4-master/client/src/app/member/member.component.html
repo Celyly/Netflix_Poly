@@ -1,1 +1,21 @@
-<p>member works!</p>
+ <!-- SEARCH BAR -->
+ <!-- <form class="form-inline my-2 my-lg-0 searchBar">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search for a movie title">
+    <button class="btn btn-danger my-2 my-sm-0" type="submit">Search</button>
+</form> -->
+
+<div class="form-group">
+  <label>LIST OF MOVIES</label>
+  <select multiple class="form-control" [(ngModel)]="selectedOption" (click)="test()">
+    <option *ngFor="let movie of movies">{{movie.title}}</option>
+  </select>
+</div>
+<div>
+  {{movie.movieno}}
+  {{movie.title}}
+  {{movie.genre}}
+  {{movie.productiondate}}
+  {{movie.duration}}
+</div>
+<button *ngIf="isContinuing()" type="button" class="btn btn-danger my-sm-0">Resume movie at {{watchtime}} mins</button>
+<button *ngIf="!isContinuing()" type="button" class="btn btn-danger my-sm-0">Watch movie</button>

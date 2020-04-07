@@ -46,10 +46,6 @@ export class AppComponent implements OnInit {
         this.router.navigate(["/member"], { state: { role: "MEMBER" } });
     }
 
-    public goToMovies(): void {
-        this.router.navigate(["/movies"], { state: { role: "MEMBER" } });
-    }
-
     public goToAdmin(): void {
         this.router.navigate(["/admin"], { state: { role: "ADMIN" } });
     }

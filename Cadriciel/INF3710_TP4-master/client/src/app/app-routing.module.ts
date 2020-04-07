@@ -8,7 +8,6 @@ import { AuthGuardService } from "./auth-guard/auth-guard.service";
 // import { HotelComponent } from "./hotel/hotel.component";
 import { LoginComponent } from "./login/login.component";
 import { MemberComponent } from "./member/member.component";
-import { MoviesComponent } from "./movies/movies.component";
 import { RegisterPaymentComponent } from "./registration/register-payment/register-payment.component";
 import { RegisterPlanComponent } from "./registration/register-plan/register-plan.component";
 import { RegisterComponent } from "./registration/register/register.component";
@@ -19,6 +18,7 @@ const routes: Routes = [
   // { path: "room", component: RoomComponent },
   // { path: "hotel", component: HotelComponent },
   { path: "login", component: LoginComponent },
+  // { path: "member", component: MemberComponent },
   { path: "member", canActivate: [AuthGuardService], component: MemberComponent },
   { path: "admin", canActivate: [AdminAuthGuardService], component: AdminComponent,  },
   {
@@ -31,7 +31,6 @@ const routes: Routes = [
       { path: "payment", component: RegisterPaymentComponent }
     ]
   },
-  { path: "movies", canActivate: [AuthGuardService], component: MoviesComponent },
 
 ];
 

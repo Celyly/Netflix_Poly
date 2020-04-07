@@ -202,6 +202,37 @@ export class DatabaseController {
             });
         });
 
+        router.post("/member/movie/get", (req: Request, res: Response, next: NextFunction) => {
+            this.databaseService.getMovie(req.body.title).then((result: pg.QueryResult) => {
+                const myMovie: Movie = result.rows.map((movie: Movie) => ({
+                    movieno: movie.movieno,
+                    title: movie.title,
+                    genre: movie.genre,
+                    productiondate: String(movie.productiondate).substr(4, 11),
+                    duration: movie.duration
+                }))[0];
+                res.json(myMovie);
+            }).catch((e: Error) => {
+                console.error(e.stack);
+            });
+        });
+
+        router.post("/member/movie/duration", (req: Request, res: Response, next: NextFunction) => {
+            this.databaseService.getMovieDuration(req.body.title).then((result: pg.QueryResult) => {
+                res.json(result.rows[0].duration);
+            }).catch((e: Error) => {
+                console.error(e.stack);
+            });
+        });
+
+        router.post("/member/movie/watch", (req: Request, res: Response, next: NextFunction) => {
+            this.databaseService.getWatchtime(req.body.title, req.body.memberName).then((result: pg.QueryResult) => {
+                res.json(result.rows[0]);
+            }).catch((e: Error) => {
+                console.error(e.stack);
+            });
+        });
+
         router.get("/tables/:tableName",
                    (req: Request, res: Response, next: NextFunction) => {
                 this.databaseService.getAllFromTable(req.params.tableName)

@@ -54,7 +54,7 @@ export class DatabaseService {
     }
 
     public async getMovie(movieName: string): Promise<pg.QueryResult> {
-        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Movie WHERE movieName = '${movieName}'`);
+        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Movie WHERE title = '${movieName}'`);
     }
 
     public async insertMovie(movie: Movie): Promise<pg.QueryResult> {
@@ -69,6 +69,15 @@ export class DatabaseService {
 
     public async deleteMovie(movieno: number): Promise<pg.QueryResult> {
         return this.pool.query(`DELETE FROM ${this.DB_NAME}.Movie WHERE movieNo = ${movieno}`);
+    }
+
+    public async getMovieDuration(title: string): Promise<pg.QueryResult> {
+        return this.pool.query(`SELECT duration FROM ${this.DB_NAME}.Movie WHERE title = '${title}'`);
+    }
+
+    public async getWatchtime(title: string, memberName: string): Promise<pg.QueryResult> {
+        // tslint:disable-next-line: max-line-length
+        return this.pool.query(`SELECT v.duration FROM ${this.DB_NAME}.Member member, ${this.DB_NAME}.Movie m, ${this.DB_NAME}.Viewing v WHERE m.title = '${title}' AND m.movieNo = v.movieNo AND v.memberId = member.memberId AND member.memberName = '${memberName}'`);
     }
 
     public async getMembers(): Promise<pg.QueryResult> {

@@ -28,6 +28,12 @@ export class CommunicationService {
         return this.http.post<string>(this.BASE_URL + "/login", {email, password});
     }
 
+    public getMovie(title: string): Observable<Movie> {
+        return this.http.post<Movie>(this.BASE_URL + "/member/movie/get", {title}).pipe(
+            catchError(this.handleError<Movie>("getMovie")),
+        );
+    }
+
     public insertMovie(movie: Movie): Observable<number> {
         return this.http.post<number>(this.BASE_URL + "/admin/movie/insert", {movie}).pipe(
             catchError(this.handleError<number>("insertMovie")),
@@ -49,6 +55,18 @@ export class CommunicationService {
     public getMovies(): Observable<Movie[]> {
         return this.http.get<Movie[]>(this.BASE_URL + "/admin/movie").pipe(
             catchError(this.handleError<Movie[]>("getMovies")),
+        );
+    }
+
+    public getMovieDuration(title: string): Observable<number> {
+        return this.http.post<number>(this.BASE_URL + "/member/movie/duration", {title}).pipe(
+            catchError(this.handleError<number>("getMovieDuration")),
+        );
+    }
+
+    public getWatchtime(title: string, memberName: string): Observable<any> {
+        return this.http.post<any>(this.BASE_URL + "/member/movie/watch", {title, memberName}).pipe(
+            catchError(this.handleError<any>("getMovieDuration")),
         );
     }
 

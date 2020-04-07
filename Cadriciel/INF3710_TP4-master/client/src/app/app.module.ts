@@ -14,7 +14,6 @@ import { MemberComponent } from "./member/member.component";
 import { RegisterPaymentComponent } from "./registration/register-payment/register-payment.component";
 import { RegisterPlanComponent } from "./registration/register-plan/register-plan.component";
 import { RegisterComponent } from "./registration/register/register.component";
-import { MoviesComponent } from './movies/movies.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +26,6 @@ import { MoviesComponent } from './movies/movies.component';
     RegisterComponent,
     RegisterPlanComponent,
     RegisterPaymentComponent,
-    MoviesComponent,
   ],
   imports: [
     CommonModule,
