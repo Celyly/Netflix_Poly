@@ -11,9 +11,10 @@ export class MemberComponent implements OnInit {
   public loggedUser: LoggedUser;
 
   public constructor(public loggedService: LoggedUserService) {
-    this.loggedUser = new LoggedUser();
-    this.loggedUser.role = "MEMBER";
-    this.loggedService.setLoggedUser(this.loggedUser);
+    this.loggedService.loggedUser.subscribe((user) => this.loggedUser = user);
+    // this.loggedUser = new LoggedUser();
+    // this.loggedUser.role = "MEMBER";
+    // this.loggedService.setLoggedUser(this.loggedUser);
   }
 
   public ngOnInit(): void {

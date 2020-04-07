@@ -11,12 +11,11 @@ export class AdminComponent implements OnInit {
   public loggedUser: LoggedUser;
 
   public constructor(public loggedService: LoggedUserService) {
-    this.loggedUser = new LoggedUser();
-    this.loggedUser.role = "ADMIN";
-    this.loggedService.setLoggedUser(this.loggedUser);
+    this.loggedService.loggedUser.subscribe((user) => this.loggedUser = user);
    }
 
   public ngOnInit(): void {
+    console.log(this.loggedUser);
   }
 
 }

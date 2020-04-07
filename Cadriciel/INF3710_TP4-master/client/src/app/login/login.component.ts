@@ -4,6 +4,7 @@ import { sha256 } from "js-sha256";
 import { Member } from "../../../../common/Member";
 import { CommunicationService } from "../communication.service";
 import { LoggedUser } from "../logged-user";
+import { LoggedUserService } from "../logged-user.service";
 
 @Component({
   selector: "app-login",
@@ -16,8 +17,9 @@ export class LoginComponent implements OnInit {
 
   public loggedUser: LoggedUser;
 
-  public constructor(private communicationService: CommunicationService, public router: Router) {
-    this.loggedUser = new LoggedUser();
+  public constructor(private communicationService: CommunicationService, public router: Router, public loggedService: LoggedUserService) {
+    // this.loggedUser = new LoggedUser();
+    this.loggedService.loggedUser.subscribe((user) => this.loggedUser = user);
   }
 
   public ngOnInit(): void {}
@@ -35,22 +37,24 @@ export class LoginComponent implements OnInit {
   public changePermissions(res: any): void {
     if (res !== -1) {
       const member: Member = {
-        id: res.memberId,
-        name: res.memberName,
-        password: res.memberPassword,
-        email: res.email,
-        zip: res.deliveryAddress,
+        id: res[0].memberid,
+        name: res[0].membername,
+        password: res[0].memberpassword,
+        email: res[0].email,
+        zip: res[0].deliveryaddress,
         creditCard: null
       };
       if (this.email === "admin@netflixpoly.com") {
         console.log("You have admins rights!");
         this.loggedUser.role = "ADMIN";
         this.loggedUser.member = member;
+        this.loggedService.setLoggedUser(this.loggedUser);
         this.router.navigate(["/admin"], { state: { role: "ADMIN" } });
       } else {
         console.log("You are a regular customer!");
-        this.loggedUser.role = "USER";
+        this.loggedUser.role = "MEMBER";
         this.loggedUser.member = member;
+        this.loggedService.setLoggedUser(this.loggedUser);
         this.router.navigate(["/member"], { state: { role: "MEMBER" } });
       }
     }

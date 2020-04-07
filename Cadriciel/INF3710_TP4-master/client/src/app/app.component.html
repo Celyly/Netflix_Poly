@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-lg sticky-top navbar-dark mb-3 main-navbar" [ngStyle]="{'background-color' : (route === '' || route === '/login') ? 'rgba(17, 17, 17, 0)' : 'rgba(17, 17, 17, 1)'}">  
   <a class="navbar-brand title" [routerLink]="" (click)="goToHome()"><img src="../assets/logo.png" height="25" width="140" style="margin-left: 5%" /></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+  <div class="collapse navbar-collapse" id="navbarToggler">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item">
         <a *ngIf="route === '/login'" class="nav-link" href="/">Home</a>
@@ -26,12 +26,26 @@
       <input class="form-control mr-sm-2" type="search" placeholder="Search">
       <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
     </form> -->
-    <button  *ngIf="loggedUser.role === 'GUEST'"  type="button" class="btn btn-danger my-sm-0" style="color:white; width: 8%;" routerLink="/login">
+    <!-- <button  *ngIf="loggedUser.role === 'GUEST'"  type="button" class="btn btn-danger my-sm-0" style="color:white; width: 8%;" routerLink="/login">
       Sign in
-    </button>
-    <button *ngIf="loggedUser.role !== 'GUEST'" type="button" class="btn btn-danger my-sm-0" style="color:white; width: 8%;" routerLink="" (click)="logout()">
-      Sign out
-    </button>
+    </button> -->
+    <div *ngIf="loggedUser.role !== 'GUEST'" class="user-dropdown">
+      <div class="profile">
+        <span class="username">{{loggedUser.member.name}}</span>
+        <div class="icon">
+          <img src="../assets/avatar.png" width="50" height="50" id="avatar">
+        </div>
+      </div>
+      <div class="dropdown-content">
+        <div class="btn_signout" routerLink="" (click)="logout()">
+          Sign out
+        </div>
+        <!-- <button *ngIf="loggedUser.role !== 'GUEST'" type="button" class="btn btn-danger my-sm-0" style="color:white; width: 8%;" routerLink="" (click)="logout()">
+          Sign out
+        </button> -->
+      </div>
+    </div>
+   
   </div>
 </nav>
 <div *ngIf="route === ''|| route === '/login'" class="home-bg-img">
