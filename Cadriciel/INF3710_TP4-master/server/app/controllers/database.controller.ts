@@ -6,7 +6,9 @@ import * as pg from "pg";
 // import {Hotel} from "../../../common/tables/Hotel";
 // import {Room} from '../../../common/tables/Room';
 // import { Member } from "../../../common/Member";
+import { Oscar } from "../../../common/Oscar";
 import { Movie } from "../../../common/Movie";
+import { Person } from "../../../common/Person";
 import { DatabaseService } from "../services/database.service";
 import Types from "../types";
 
@@ -64,7 +66,7 @@ export class DatabaseController {
             });
         });
 
-        router.get("/register/payment",
+        router.get("/member/count",
                    (req: Request, res: Response, next: NextFunction) => {
                     this.databaseService.getNbMember().then((result: pg.QueryResult) => {
                     res.json(result.rows[0].count);
@@ -73,7 +75,7 @@ export class DatabaseController {
                 });
         });
 
-        router.post("/register/payment", (req: Request, res: Response, next: NextFunction) => {
+        router.post("/member/insert", (req: Request, res: Response, next: NextFunction) => {
             this.databaseService.createMember(req.body.plan, req.body.member).then((result: pg.QueryResult) => {
                 res.json(result.rowCount);
             }).catch((e: Error) => {
@@ -160,7 +162,7 @@ export class DatabaseController {
         //             });
         // });
 
-        router.post("/admin/movie/insert", (req: Request, res: Response, next: NextFunction) => {
+        router.post("/movie/insert", (req: Request, res: Response, next: NextFunction) => {
             this.databaseService.insertMovie(req.body.movie).then((result: pg.QueryResult) => {
                 res.json(result.rowCount);
             }).catch((e: Error) => {
@@ -169,7 +171,7 @@ export class DatabaseController {
             });
         });
 
-        router.post("/admin/movie/update", (req: Request, res: Response, next: NextFunction) => {
+        router.post("/movie/update", (req: Request, res: Response, next: NextFunction) => {
             this.databaseService.updateMovie(req.body.movie).then((result: pg.QueryResult) => {
                 res.json(result.rowCount);
             }).catch((e: Error) => {
@@ -178,7 +180,7 @@ export class DatabaseController {
             });
         });
 
-        router.post("/admin/movie/delete", (req: Request, res: Response, next: NextFunction) => {
+        router.post("/movie/delete", (req: Request, res: Response, next: NextFunction) => {
             this.databaseService.deleteMovie(req.body.movieno).then((result: pg.QueryResult) => {
                 res.json(result.rowCount);
             }).catch((e: Error) => {
@@ -187,7 +189,7 @@ export class DatabaseController {
             });
         });
 
-        router.get("/admin/movie", (req: Request, res: Response, next: NextFunction) => {
+        router.get("/movie", (req: Request, res: Response, next: NextFunction) => {
             this.databaseService.getMovies().then((result: pg.QueryResult) => {
                 const movies: Movie[] = result.rows.map((movie: Movie) => ({
                         movieno: movie.movieno,
@@ -202,8 +204,8 @@ export class DatabaseController {
             });
         });
 
-        router.post("/member/movie/get", (req: Request, res: Response, next: NextFunction) => {
-            this.databaseService.getMovie(req.body.title).then((result: pg.QueryResult) => {
+        router.get("/movie/:title", (req: Request, res: Response, next: NextFunction) => {
+            this.databaseService.getMovie(req.params.title).then((result: pg.QueryResult) => {
                 const myMovie: Movie = result.rows.map((movie: Movie) => ({
                     movieno: movie.movieno,
                     title: movie.title,
@@ -217,40 +219,81 @@ export class DatabaseController {
             });
         });
 
-        router.post("/member/movie/duration", (req: Request, res: Response, next: NextFunction) => {
-            this.databaseService.getMovieDuration(req.body.title).then((result: pg.QueryResult) => {
+        router.get("/movie/:title/duration", (req: Request, res: Response, next: NextFunction) => {
+            this.databaseService.getMovieDuration(req.params.title).then((result: pg.QueryResult) => {
                 res.json(result.rows[0].duration);
             }).catch((e: Error) => {
                 console.error(e.stack);
             });
         });
 
-        router.post("/member/movie/watch", (req: Request, res: Response, next: NextFunction) => {
-            this.databaseService.getWatchtime(req.body.title, req.body.memberName).then((result: pg.QueryResult) => {
+        router.get("/:memberName/find/:title/time", (req: Request, res: Response, next: NextFunction) => {
+            this.databaseService.getWatchtime(req.params.title, req.params.memberName).then((result: pg.QueryResult) => {
                 res.json(result.rows[0]);
             }).catch((e: Error) => {
                 console.error(e.stack);
             });
         });
 
-        router.get("/tables/:tableName",
-                   (req: Request, res: Response, next: NextFunction) => {
-                this.databaseService.getAllFromTable(req.params.tableName)
-                    .then((result: pg.QueryResult) => {
-                        res.json(result.rows);
-                    }).catch((e: Error) => {
-                        console.error(e.stack);
-                    });
-            });
-
-        router.post("/movie/:movieName", (req: Request, res: Response, next: NextFunction) => {
-            this.databaseService.getMovie(req.params.movieName)
-            .then((result: pg.QueryResult) => {
-                res.json(result.rows);
+        router.get("/movie/:title/list/role", (req: Request, res: Response, next: NextFunction) => {
+            this.databaseService.getAllRoles(req.params.title).then((result: pg.QueryResult) => {
+                const roles: string[] = [];
+                for (const role of result.rows) {
+                    roles.push(role.rolename);
+                }
+                res.json(roles);
             }).catch((e: Error) => {
                 console.error(e.stack);
             });
         });
+
+        router.get("/movie/:title/crew", (req: Request, res: Response, next: NextFunction) => {
+            this.databaseService.getCrew(req.params.title).then((result: pg.QueryResult) => {
+                const crew: Person[] = result.rows.map((person: Person) => ({
+                    personname: person.personname,
+                    birthdate: String(person.birthdate).substr(4, 11),
+                    sex: person.sex,
+                    nationality: person.nationality,
+                    rolename: person.rolename,
+                    salary: person.salary
+                }));
+                res.json(crew);
+            }).catch((e: Error) => {
+                console.error(e.stack);
+            });
+        });
+
+        router.get("/movie/:title/awards", (req: Request, res: Response, next: NextFunction) => {
+            this.databaseService.getAwards(req.params.title).then((result: pg.QueryResult) => {
+                const oscars: Oscar[] = result.rows.map((oscar: Oscar) => ({
+                    category: oscar.category,
+                    oscartype: oscar.oscartype,
+                    host: oscar.host
+                }));
+                res.json(oscars);
+            }).catch((e: Error) => {
+                console.error(e.stack);
+            });
+        });
+
+        // router.get("/tables/:tableName",
+        //            (req: Request, res: Response, next: NextFunction) => {
+        //         this.databaseService.getAllFromTable(req.params.tableName)
+        //             .then((result: pg.QueryResult) => {
+        //                 res.json(result.rows);
+        //             }).catch((e: Error) => {
+        //                 console.error(e.stack);
+        //             });
+        //     });
+
+        // router.post("/movie/:movieName", (req: Request, res: Response, next: NextFunction) => {
+        //     this.databaseService.getMovie(req.params.movieName)
+        //     .then((result: pg.QueryResult) => {
+        //         res.json(result.rows);
+        //     }).catch((e: Error) => {
+        //         console.error(e.stack);
+        //     });
+        // });
 
         return router;
     }

@@ -4,7 +4,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { AdminComponent } from "./admin/admin.component";
 import { AppComponent } from "./app.component";
 import { AdminAuthGuardService } from "./auth-guard/admin-auth-guard.service";
-import { AuthGuardService } from "./auth-guard/auth-guard.service";
+// import { AuthGuardService } from "./auth-guard/auth-guard.service";
 // import { HotelComponent } from "./hotel/hotel.component";
 import { LoginComponent } from "./login/login.component";
 import { MemberComponent } from "./member/member.component";
@@ -18,8 +18,8 @@ const routes: Routes = [
   // { path: "room", component: RoomComponent },
   // { path: "hotel", component: HotelComponent },
   { path: "login", component: LoginComponent },
-  // { path: "member", component: MemberComponent },
-  { path: "member", canActivate: [AuthGuardService], component: MemberComponent },
+  { path: "member", component: MemberComponent },
+  // { path: "member", canActivate: [AuthGuardService], component: MemberComponent },
   { path: "admin", canActivate: [AdminAuthGuardService], component: AdminComponent,  },
   {
     path: "register",

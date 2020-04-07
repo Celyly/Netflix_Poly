@@ -1,5 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { Movie } from "../../../../common/Movie";
+import { Oscar } from "../../../../common/Oscar";
+import { Person } from "../../../../common/Person";
 import { CommunicationService } from "../communication.service";
 import { LoggedUser } from "../logged-user";
 import { LoggedUserService } from "../logged-user.service";
@@ -9,7 +11,10 @@ import { LoggedUserService } from "../logged-user.service";
   templateUrl: "./member.component.html",
   styleUrls: ["./member.component.css"]
 })
-export class MemberComponent implements OnInit {
+export class MemberComponent implements OnInit, AfterViewInit {
+  @ViewChildren("popups") public popups: QueryList<ElementRef<HTMLElement>>;
+  public popup: HTMLElement | null | undefined;
+
   public loggedUser: LoggedUser;
   public movies: Movie[];
 
@@ -19,15 +24,39 @@ export class MemberComponent implements OnInit {
   public watchtime: number;
   public duration: number;
 
+  // Affichage
+  public roles: string[];
+  public crew: Person[];
+  public awards: Oscar[];
+
+  public map: Map<string, HTMLElement | null>;
+
   public constructor(public communicationService: CommunicationService, public loggedService: LoggedUserService) {
     this.loggedService.loggedUser.subscribe((user) => this.loggedUser = user);
     this.watchtime = 0;
     this.duration = 0;
     this.movie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0 };
+    this.roles = [];
+    this.crew = [];
+    this.awards = [];
+    this.map = new Map<string, HTMLElement>();
+    this.popup = null;
   }
 
   public ngOnInit(): void {
     this.getMovies();
+  }
+
+  public ngAfterViewInit(): void {
+    this.popups.changes.subscribe((comps: QueryList<ElementRef<HTMLElement>>) => {
+        const movieArray: ElementRef<HTMLElement>[] = this.popups.toArray();
+        if (movieArray.length) {
+          console.log(movieArray[0].nativeElement);
+          for (let i: number = 0; i < this.movies.length; i++) {
+            this.map.set(this.movies[i].title, movieArray[i].nativeElement);
+          }
+        }
+     });
   }
 
   public getMovies(): void {
@@ -39,7 +68,7 @@ export class MemberComponent implements OnInit {
   public getMovie(title: string): void {
     this.communicationService.getMovie(title).subscribe((movie: Movie) => {
       this.movie = movie;
-    })
+    });
   }
 
   public getWatchtime(title: string, memberName: string): void {
@@ -51,6 +80,28 @@ export class MemberComponent implements OnInit {
   public getDuration(title: string): void {
     this.communicationService.getMovieDuration(title).subscribe((duration: number) => {
       this.duration = duration;
+    });
+  }
+
+  public getAllRoles(title: string): void {
+    this.communicationService.getAllRoles(title).subscribe((roles: string[]) => {
+      this.roles = roles;
+      console.log(this.roles, "roles");
+    });
+  }
+
+  public getCrew(title: string): void {
+    this.communicationService.getCrew(title).subscribe((crew: Person[]) => {
+      this.crew = crew;
+      console.log(this.crew, "crew");
+    });
+  }
+
+  public getAwards(title: string): void {
+    this.communicationService.getAwards(title).subscribe((awards: Oscar[]) => {
+      this.awards = awards;
+      console.log(this.awards, "awards");
+
     });
   }
 
@@ -71,6 +122,30 @@ export class MemberComponent implements OnInit {
     this.getMovie(this.selectedOption[0]);
     this.getDuration(this.selectedOption[0]);
     this.getWatchtime(this.selectedOption[0], this.getCurrentMemberName());
+    this.getAllRoles(this.selectedOption[0]);
+    this.getCrew(this.selectedOption[0]);
+    this.getAwards(this.selectedOption[0]);
+  }
 
+  public getTarget(evt: MouseEvent): void {
+    const target: HTMLElement = evt.currentTarget as HTMLElement;
+    const title: HTMLElement = target.firstChild as HTMLElement;
+    this.hide();
+    console.log(title.textContent);
+    this.popup = this.map.get(title.textContent as string) ? this.map.get(title.textContent as string) : null;
+    console.log(this.popup);
+    this.show();
+  }
+
+  public hide(): void {
+    if (this.popup) {
+      this.popup.style.display = "none";
+    }
+  }
+
+  public show(): void {
+    if (this.popup) {
+      this.popup.style.display = "block";
+    }
   }
 }

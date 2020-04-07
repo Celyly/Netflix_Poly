@@ -52,14 +52,13 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   public ngAfterViewInit(): void {
     this.moviesDB.changes.subscribe((comps: QueryList<ElementRef<HTMLElement>>) => {
-            const movieArray: ElementRef<HTMLElement>[] = this.moviesDB.toArray();
-            console.log(movieArray);
-            if (movieArray.length) {
-              this.selectedRow = movieArray[0].nativeElement;
-              this.setSelectedMovie();
-              this.addBgColor(this.selectedRow);
-            }
-        });
+        const movieArray: ElementRef<HTMLElement>[] = this.moviesDB.toArray();
+        if (movieArray.length) {
+          this.selectedRow = movieArray[0].nativeElement;
+          this.setSelectedMovie();
+          this.addBgColor(this.selectedRow);
+        }
+     });
   }
 
   public getMovies(): void {
@@ -145,5 +144,20 @@ export class AdminComponent implements OnInit, AfterViewInit {
     if (element) {
       element.style.backgroundColor = "rgba(245, 71, 89, 0.297)";
     }
+  }
+
+  public resetAll(): void {
+    this.communicationService.setUpDatabase().subscribe((res: any) => {
+      console.log(res);
+      this.getMovies();
+      this.moviesDB.changes.subscribe((comps: QueryList<ElementRef<HTMLElement>>) => {
+        const movieArray: ElementRef<HTMLElement>[] = this.moviesDB.toArray();
+        if (movieArray.length) {
+          this.selectedRow = movieArray[0].nativeElement;
+          this.setSelectedMovie();
+          this.addBgColor(this.selectedRow);
+        }
+     });
+    });
   }
 }

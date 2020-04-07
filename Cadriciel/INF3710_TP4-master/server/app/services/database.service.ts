@@ -45,9 +45,9 @@ export class DatabaseService {
         return this.pool.query(data);
     }
 
-    public async getAllFromTable(tableName: string): Promise<pg.QueryResult> {
-        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.${tableName};`);
-    }
+    // public async getAllFromTable(tableName: string): Promise<pg.QueryResult> {
+    //     return this.pool.query(`SELECT * FROM ${this.DB_NAME}.${tableName};`);
+    // }
 
     public async getMovies(): Promise<pg.QueryResult> {
         return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Movie`);
@@ -112,6 +112,22 @@ export class DatabaseService {
         // tslint:disable-next-line: max-line-length
         return this.pool.query(`INSERT INTO ${this.DB_NAME}.Member VALUES('${memberId}', '${member.name}', '${member.password}', '${member.email}', '${member.zip}'); ${queryCredit} ${queryPlan}`);
     }
+
+    public async getAllRoles(title: string): Promise<pg.QueryResult> {
+        // tslint:disable-next-line: max-line-length
+        return this.pool.query(`SELECT DISTINCT r.roleName FROM ${this.DB_NAME}.Movie m, ${this.DB_NAME}.Role r WHERE m.movieno = r.movieno AND m.title = '${title}'`);
+    }
+
+    public async getCrew(title: string): Promise<pg.QueryResult> {
+        // tslint:disable-next-line: max-line-length
+        return this.pool.query(`SELECT p.personName, p.birthDate, p.sex, p.nationality, r.roleName, r.salary FROM ${this.DB_NAME}.Movie m, ${this.DB_NAME}.Role r, ${this.DB_NAME}.Person p WHERE m.title = '${title}' AND m.movieno = r.movieno AND r.personId = p.personId`);
+    }
+
+    public async getAwards(title: string): Promise<pg.QueryResult> {
+        // tslint:disable-next-line: max-line-length
+        return this.pool.query(`SELECT o.category, o.oscarType, c.host FROM ${this.DB_NAME}.Movie m, ${this.DB_NAME}.Oscar o, ${this.DB_NAME}.Ceremony c WHERE m.title = '${title}' AND m.movieno = o.movieno AND o.ceremonyNo = c.ceremonyNo`);
+    }
+
 
     // // HOTEL
     // public async getHotels(): Promise<pg.QueryResult> {

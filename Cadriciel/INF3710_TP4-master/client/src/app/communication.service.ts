@@ -5,6 +5,9 @@ import { concat, of, Observable, Subject } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { Member } from "../../../common/Member";
 import { Movie } from "../../../common/Movie";
+import { Oscar } from "../../../common/Oscar";
+import { Person } from "../../../common/Person";
+
 // import {Hotel} from "../../../common/tables/Hotel";
 // import { Room } from "../../../common/tables/Room";
 
@@ -29,56 +32,74 @@ export class CommunicationService {
     }
 
     public getMovie(title: string): Observable<Movie> {
-        return this.http.post<Movie>(this.BASE_URL + "/member/movie/get", {title}).pipe(
+        return this.http.get<Movie>(this.BASE_URL + `/movie/${title}`).pipe(
             catchError(this.handleError<Movie>("getMovie")),
         );
     }
 
     public insertMovie(movie: Movie): Observable<number> {
-        return this.http.post<number>(this.BASE_URL + "/admin/movie/insert", {movie}).pipe(
+        return this.http.post<number>(this.BASE_URL + "/movie/insert", {movie}).pipe(
             catchError(this.handleError<number>("insertMovie")),
         );
     }
 
     public deleteMovie(movieno: number): Observable<number> {
-        return this.http.post<number>(this.BASE_URL + "/admin/movie/delete", {movieno}).pipe(
+        return this.http.post<number>(this.BASE_URL + "/movie/delete", {movieno}).pipe(
             catchError(this.handleError<number>("deleteMovie")),
         );
     }
 
     public updateMovie(movie: Movie): Observable<number> {
-        return this.http.post<number>(this.BASE_URL + "/admin/movie/update", {movie}).pipe(
+        return this.http.post<number>(this.BASE_URL + "/movie/update", {movie}).pipe(
             catchError(this.handleError<number>("updateMovie")),
         );
     }
 
     public getMovies(): Observable<Movie[]> {
-        return this.http.get<Movie[]>(this.BASE_URL + "/admin/movie").pipe(
+        return this.http.get<Movie[]>(this.BASE_URL + "/movie").pipe(
             catchError(this.handleError<Movie[]>("getMovies")),
         );
     }
 
     public getMovieDuration(title: string): Observable<number> {
-        return this.http.post<number>(this.BASE_URL + "/member/movie/duration", {title}).pipe(
+        return this.http.get<number>(this.BASE_URL + `/movie/${title}/duration`).pipe(
             catchError(this.handleError<number>("getMovieDuration")),
         );
     }
 
     public getWatchtime(title: string, memberName: string): Observable<any> {
-        return this.http.post<any>(this.BASE_URL + "/member/movie/watch", {title, memberName}).pipe(
-            catchError(this.handleError<any>("getMovieDuration")),
+        return this.http.get<any>(this.BASE_URL + `/${memberName}/find/${title}/time`).pipe(
+            catchError(this.handleError<any>("getWatchtime")),
         );
     }
 
     public getNbMember(): Observable<string> {
-        return this.http.get<string>(this.BASE_URL + "/register/payment").pipe(
+        return this.http.get<string>(this.BASE_URL + "/member/count").pipe(
             catchError(this.handleError<string>("insertMember")),
         );
     }
 
     public insertMember(plan: string, member: Member): Observable<string> {
-        return this.http.post<string>(this.BASE_URL + "/register/payment", {plan, member}).pipe(
+        return this.http.post<string>(this.BASE_URL + "/member/insert", {plan, member}).pipe(
             catchError(this.handleError<string>("insertMember")),
+        );
+    }
+
+    public getAllRoles(title: string): Observable<string[]> {
+        return this.http.get<string[]>(this.BASE_URL + `/movie/${title}/list/role`).pipe(
+            catchError(this.handleError<string[]>("getAllRoles"))
+        );
+    }
+
+    public getCrew(title: string): Observable<Person[]> {
+        return this.http.get<Person[]>(this.BASE_URL + `/movie/${title}/crew`).pipe(
+            catchError(this.handleError<Person[]>("getCrew")),
+        );
+    }
+
+    public getAwards(title: string): Observable<Oscar[]> {
+        return this.http.get<Oscar[]>(this.BASE_URL + `/movie/${title}/awards`).pipe(
+            catchError(this.handleError<Oscar[]>("getAwards")),
         );
     }
 

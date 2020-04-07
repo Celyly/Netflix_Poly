@@ -3,19 +3,60 @@
     <input class="form-control mr-sm-2" type="search" placeholder="Search for a movie title">
     <button class="btn btn-danger my-2 my-sm-0" type="submit">Search</button>
 </form> -->
-
-<div class="form-group">
-  <label>LIST OF MOVIES</label>
-  <select multiple class="form-control" [(ngModel)]="selectedOption" (click)="test()">
-    <option *ngFor="let movie of movies">{{movie.title}}</option>
-  </select>
+<div class="member-interface">
+  <div class="flex-container">
+    <div class="movie-container" *ngFor="let movie of movies">
+      <!-- <span>{{movie.title}}</span> -->
+      <div class="img" (click)="getTarget($event)">{{movie.title}}</div>
+      <!-- <img src="../../assets/thumbnail_test.png"> -->
+      <div class="movie-popup" #popups>
+        <div class="arrow"></div>
+        <div class="movie-content">
+          <div class="close" (click)="hide()">X</div>
+          <div class="movie-info">
+            <h2>{{movie.title}}</h2>
+            <h4>Genre: {{movie.genre}}</h4>
+            <h5>Production date: {{movie.productiondate}}</h5>
+            <h6>Duration: {{movie.duration}}mins</h6>
+          </div>
+          <!-- <div class="movie-info">
+            <h2>{{movie.title}}</h2>
+            <div *ngFor="let role of roles">
+              {{role}}
+              <div *ngFor="let person of crew">
+                <span *ngIf="person.rolename === role"> {{person.personname}}</span>
+              </div>
+              <br>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="form-group">
+    <label>LIST OF MOVIES</label>
+    <select multiple class="form-control" [(ngModel)]="selectedOption" (click)="test()">
+      <option *ngFor="let movie of movies">{{movie.title}}</option>
+    </select>
+  </div>
+  <div>
+    <div class="movie-info">
+      <h2>{{movie.title}}</h2>
+      <h4>Genre: {{movie.genre}}</h4>
+      <h5>Production date: {{movie.productiondate}}</h5>
+      <h6>Duration: {{movie.duration}}mins</h6>
+    </div>
+    <button *ngIf="isContinuing()" type="button" class="btn btn-danger my-sm-0">Resume movie at {{watchtime}} mins</button>
+    <button *ngIf="!isContinuing()" type="button" class="btn btn-danger my-sm-0">Watch movie</button>
+  </div>
+  <div>
+    Information
+    <div *ngFor="let role of roles">
+      {{role}}
+      <div *ngFor="let person of crew">
+        <span *ngIf="person.rolename === role"> {{person.personname}}</span>
+      </div>
+      <br>
+    </div>
+  </div> -->
 </div>
-<div>
-  {{movie.movieno}}
-  {{movie.title}}
-  {{movie.genre}}
-  {{movie.productiondate}}
-  {{movie.duration}}
-</div>
-<button *ngIf="isContinuing()" type="button" class="btn btn-danger my-sm-0">Resume movie at {{watchtime}} mins</button>
-<button *ngIf="!isContinuing()" type="button" class="btn btn-danger my-sm-0">Watch movie</button>
