@@ -3,17 +3,28 @@
     
 }
 
+a {
+    text-decoration: underline;
+    color:rgb(218, 47, 64);
+}
+
+a:hover {
+    color:rgb(245, 57, 76);
+}
+
 #form-title{
     font-size: x-large;
     font-weight: bold;
+    color:rgb(187, 42, 57);
+    padding-bottom: 30%;
 }
 
 button {
-    width: 80%;
-    left: 50%;
+    width: 100%;
+    position:center;
 }
 .signin-forms{
-    background-color: rgba(0, 0, 0, 0.644);
+    background-color: rgba(0, 0, 0, 0.534);
     border-radius: 5%;
     text-align: center;
     position: absolute;
@@ -22,6 +33,16 @@ button {
     top: 53%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+input {
+    color: rgb(0, 0, 0);
+}
+
+p {
+    margin-top: 3%;
+    font-size: x-small;
+    text-align: center;
 }
 
 form {

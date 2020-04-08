@@ -1,11 +1,20 @@
 SET search_path = 'NETFLIXDB';
 
-INSERT INTO NETFLIXDB.Member VALUES ('member01', 'Phineas Flynn', 'agentperry', 'phineas1999@trimail.com', 'H4K2B6');
-INSERT INTO NETFLIXDB.Member VALUES ('member02', 'Ferb Fletcher', 'gitchigoo', 'ferbfletcher@trimail.com', 'H4K2B6');
-INSERT INTO NETFLIXDB.Member VALUES ('member03', 'Candance Flynn', 'jeremy', 'ribbonsrcool@hotmail.com', 'H3C1E8');
-INSERT INTO NETFLIXDB.Member VALUES ('member04', 'Perry The Platypus', 'krrrrr', 'agentp@owca.com', 'H3H1X2');
-INSERT INTO NETFLIXDB.Member VALUES ('member05', 'Heinz Doofenshmirtz', 'passwordinator', 'heinzinator@evil.inc', 'H2W2N4');
-INSERT INTO NETFLIXDB.Member VALUES ('member06', 'Isabella Garcia-Shapiro', 'ilovephineas', 'izzyshapiro@fireside.com', 'H2J1L7');
+-- INSERT INTO NETFLIXDB.Member VALUES ('admin01', 'Admin', 'admin', 'admin@netflixpoly.com', 'H4H2P6');
+-- INSERT INTO NETFLIXDB.Member VALUES ('member01', 'Phineas Flynn', 'agentperry', 'phineas1999@trimail.com', 'H4K2B6');
+-- INSERT INTO NETFLIXDB.Member VALUES ('member02', 'Ferb Fletcher', 'gitchigoo', 'ferbfletcher@trimail.com', 'H4K2B6');
+-- INSERT INTO NETFLIXDB.Member VALUES ('member03', 'Candance Flynn', 'jeremy', 'ribbonsrcool@hotmail.com', 'H3C1E8');
+-- INSERT INTO NETFLIXDB.Member VALUES ('member04', 'Perry The Platypus', 'krrrrr', 'agentp@owca.com', 'H3H1X2');
+-- INSERT INTO NETFLIXDB.Member VALUES ('member05', 'Heinz Doofenshmirtz', 'passwordinator', 'heinzinator@evil.inc', 'H2W2N4');
+-- INSERT INTO NETFLIXDB.Member VALUES ('member06', 'Isabella Garcia-Shapiro', 'ilovephineas', 'izzyshapiro@fireside.com', 'H2J1L7');
+
+INSERT INTO NETFLIXDB.Member VALUES ('admin01', 'Admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin@netflixpoly.com', 'H4H2P6');
+INSERT INTO NETFLIXDB.Member VALUES ('member01', 'Phineas Flynn', '162ddfb0027fd6df06301425f6aa5fca4e0fc60a2497b1eb1cf90b8a011fe1a7', 'phineas1999@trimail.com', 'H4K2B6');
+INSERT INTO NETFLIXDB.Member VALUES ('member02', 'Ferb Fletcher', 'efa406e9784da1feedc52ab578ebcede86d6c90b447267976136c4d2d25fe84a', 'ferbfletcher@trimail.com', 'H4K2B6');
+INSERT INTO NETFLIXDB.Member VALUES ('member03', 'Candance Flynn', '73ecb4b9d82c620a68d517119881d21eaaf808307da44ea47836893e551f9d51', 'ribbonsrcool@hotmail.com', 'H3C1E8');
+INSERT INTO NETFLIXDB.Member VALUES ('member04', 'Perry The Platypus', '23731fa9133fb2f42085cf64044c554b0f2ef468f6fe02f19e95205672001782', 'agentp@owca.com', 'H3H1X2');
+INSERT INTO NETFLIXDB.Member VALUES ('member05', 'Heinz Doofenshmirtz', '1d0b3b8ab8f46610a8784061a5e47558beb1dc2c02829fb1f00c2ef65d7aca0a', 'heinzinator@evil.inc', 'H2W2N4');
+INSERT INTO NETFLIXDB.Member VALUES ('member06', 'Isabella Garcia-Shapiro', 'a8b4ae7797b8b55be4bd24c8a002471c4cb7049e04d28a1f0274d05202d7a44b', 'izzyshapiro@fireside.com', 'H2J1L7');
 
 INSERT INTO NETFLIXDB.MemberMonthly VALUES ('member03', 5, '2016-05-19', '2020-04-20');
 INSERT INTO NETFLIXDB.MemberMonthly VALUES ('member05', 9, '2014-09-23', '2020-04-25');
@@ -25,10 +34,10 @@ INSERT INTO NETFLIXDB.CreditCard VALUES ('1234-5678-9101-1120', 'member06', 453,
 INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'The Mini Katana', 'Gore', '1982-01-08', 98);
 INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'The Peculiar Case of Adam Sandler', 'Comédie', '2004-05-22', 86);
 INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'My Best Friend Hates My Cat', 'Animation', '2008-09-17', 91);
-INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'Caillou''s Misfortune', 'Coming-Of-Age', '2018-07-15', 116);
+INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'Caillous Misfortune', 'Coming-Of-Age', '2018-07-15', 116);
 INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'Time Is Forever', 'Romance', '2012-02-14', 105);
 INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'Finding Roxanne', 'Romance', '2007-04-30', 110);
-INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'The Prince''s PowerPoint Presentation', 'Drame', '1997-11-24', 123);
+INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'The Princes PowerPoint Presentation', 'Drame', '1997-11-24', 123);
 
 INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 5, 'member01', '2019-12-18', 67);
 INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 5, 'member02', '2019-12-18', 67);

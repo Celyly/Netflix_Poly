@@ -1,28 +1,93 @@
-export const data: string = `SET search_path = hotelDB;
+// tslint:disable: max-line-length
+export const data: string =
+`SET search_path = 'NETFLIXDB';
 
-INSERT INTO HOTELDB.Hotel VALUES ('H111', 'Grosvenor Hotel', 'London');
-INSERT INTO HOTELDB.Hotel VALUES ('H112', 'Kingston Hotel', 'Kingston');
-INSERT INTO HOTELDB.Hotel VALUES ('H113', 'Hotel des pas perdus', 'Montreal');
+INSERT INTO NETFLIXDB.Member VALUES ('admin01', 'Admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin@netflixpoly.com', 'H4H2P6');
+INSERT INTO NETFLIXDB.Member VALUES ('member01', 'Phineas Flynn', '162ddfb0027fd6df06301425f6aa5fca4e0fc60a2497b1eb1cf90b8a011fe1a7', 'phineas1999@trimail.com', 'H4K2B6');
+INSERT INTO NETFLIXDB.Member VALUES ('member02', 'Ferb Fletcher', 'efa406e9784da1feedc52ab578ebcede86d6c90b447267976136c4d2d25fe84a', 'ferbfletcher@trimail.com', 'H4K2B6');
+INSERT INTO NETFLIXDB.Member VALUES ('member03', 'Candance Flynn', '73ecb4b9d82c620a68d517119881d21eaaf808307da44ea47836893e551f9d51', 'ribbonsrcool@hotmail.com', 'H3C1E8');
+INSERT INTO NETFLIXDB.Member VALUES ('member04', 'Perry The Platypus', '23731fa9133fb2f42085cf64044c554b0f2ef468f6fe02f19e95205672001782', 'agentp@owca.com', 'H3H1X2');
+INSERT INTO NETFLIXDB.Member VALUES ('member05', 'Heinz Doofenshmirtz', '1d0b3b8ab8f46610a8784061a5e47558beb1dc2c02829fb1f00c2ef65d7aca0a', 'heinzinator@evil.inc', 'H2W2N4');
+INSERT INTO NETFLIXDB.Member VALUES ('member06', 'Isabella Garcia-Shapiro', 'a8b4ae7797b8b55be4bd24c8a002471c4cb7049e04d28a1f0274d05202d7a44b', 'izzyshapiro@fireside.com', 'H2J1L7');
 
-INSERT INTO HOTELDB.Room VALUES ('1', 'H111', 'S', 72.00);
-INSERT INTO HOTELDB.Room VALUES ('2', 'H111', 'S', 100.00);
-INSERT INTO HOTELDB.Room VALUES ('3', 'H111', 'D', 200.00);
-INSERT INTO HOTELDB.Room VALUES ('4', 'H111', 'D', 250.00);
-INSERT INTO HOTELDB.Room VALUES ('1', 'H112', 'D', 450.00);
-INSERT INTO HOTELDB.Room VALUES ('2', 'H112', 'D', 450.00);
-INSERT INTO HOTELDB.Room VALUES ('3', 'H112', 'D', 450.00);
+INSERT INTO NETFLIXDB.MemberMonthly VALUES ('member03', 5, '2016-05-19', '2020-04-20');
+INSERT INTO NETFLIXDB.MemberMonthly VALUES ('member05', 9, '2014-09-23', '2020-04-25');
+INSERT INTO NETFLIXDB.MemberMonthly VALUES ('member06', 2, '2020-03-04', '2020-04-05');
 
-INSERT INTO HOTELDB.Guest (guestNo, nas, guestName, gender, guestCity) VALUES ('G111', '123', 'John Smith', 'M', 'London');
-INSERT INTO HOTELDB.Guest (guestNo, nas, guestName, gender,  guestCity)VALUES ('G112', '213', 'Alex L', 'M', 'Kingston');
-INSERT INTO HOTELDB.Guest (guestNo, nas, guestName, gender,  guestCity)VALUES ('G113', '233', 'Idris S',  'M', 'Montreal');
-INSERT INTO HOTELDB.Guest (guestNo, nas, guestName, gender, guestCity) VALUES ('G114', '312', 'Guillaume D', 'M',  'Quebec');
-INSERT INTO HOTELDB.Guest (guestNo, nas, guestName, gender, guestCity)VALUES ('G115', '122', 'Katrine S.',  'F', 'Kingston');
-INSERT INTO HOTELDB.Guest (guestNo, nas, guestName, gender, guestCity)VALUES ('G116', '111', 'Simon D', 'M',  'Kingston');
+INSERT INTO NETFLIXDB.MemberPayPerView VALUES ('member01', 5);
+INSERT INTO NETFLIXDB.MemberPayPerView VALUES ('member02', 5);
+INSERT INTO NETFLIXDB.MemberPayPerView VALUES ('member04', 8);
 
-INSERT INTO HOTELDB.Booking VALUES ('H111', 'G111', DATE'2020-06-01', DATE'2020-06-04', '1');
-INSERT INTO HOTELDB.Booking VALUES ('H111', 'G114', DATE'2020-06-01', DATE'2020-06-05', '3');
-INSERT INTO HOTELDB.Booking VALUES ('H111', 'G116', DATE'2020-06-03', DATE'2020-06-06', '4');
-INSERT INTO HOTELDB.Booking (hotelNo, guestNo, dateFrom, roomNo) VALUES ('H112', 'G115', DATE'2020-05-03',  '1');
+INSERT INTO NETFLIXDB.CreditCard VALUES ('1234-1234-1234-1234', 'member01', 453, 'Linda Flynn-Fletcher', '2022-09-01');
+INSERT INTO NETFLIXDB.CreditCard VALUES ('4321-4321-4321-4321', 'member02', 891, 'Lawrence Fletcher', '2021-05-01');
+INSERT INTO NETFLIXDB.CreditCard VALUES ('5373-6956-4676-6588', 'member03', 232, 'Candace Flynn', '2023-10-01');
+INSERT INTO NETFLIXDB.CreditCard VALUES ('7377-9843-7528-9787', 'member04', 007, 'Perry P', '2022-07-01');
+INSERT INTO NETFLIXDB.CreditCard VALUES ('3845-4626-7767-2833', 'member05', 317, 'Heinz Doofenshmirtz', '2020-12-01');
+INSERT INTO NETFLIXDB.CreditCard VALUES ('1234-5678-9101-1120', 'member06', 453, 'Vivian Garcia-Shapiro', '2024-03-01');
 
-UPDATE HOTELDB.Guest set guestName = 'Alexandra L.' where guestNo='G112';
-;`;
+INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'The Mini Katana', 'Gore', '1982-01-08', 98);
+INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'The Peculiar Case of Adam Sandler', 'Comédie', '2004-05-22', 86);
+INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'My Best Friend Hates My Cat', 'Animation', '2008-09-17', 91);
+INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'Caillous Misfortune', 'Coming-Of-Age', '2018-07-15', 116);
+INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'Time Is Forever', 'Romance', '2012-02-14', 105);
+INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'Finding Roxanne', 'Romance', '2007-04-30', 110);
+INSERT INTO NETFLIXDB.Movie VALUES (DEFAULT, 'The Princes PowerPoint Presentation', 'Drame', '1997-11-24', 123);
+
+INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 5, 'member01', '2019-12-18', 67);
+INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 5, 'member02', '2019-12-18', 67);
+INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 5, 'member03', '2019-12-18', 67);
+INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 5, 'member04', '2020-02-14', 105);
+INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 6, 'member04', '2020-03-02', 106);
+INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 7, 'member02', '2019-08-30', 121);
+INSERT INTO NETFLIXDB.Viewing VALUES (DEFAULT, 3, 'member06', '2020-03-29', 34);
+
+INSERT INTO NETFLIXDB.DVD VALUES (DEFAULT, 1, 5);
+INSERT INTO NETFLIXDB.DVD VALUES (1, 2, 5);
+INSERT INTO NETFLIXDB.DVD VALUES (DEFAULT, 2, 5);
+INSERT INTO NETFLIXDB.DVD VALUES (DEFAULT, 3, 6);
+INSERT INTO NETFLIXDB.DVD VALUES (DEFAULT, 4, 8);
+INSERT INTO NETFLIXDB.DVD VALUES (DEFAULT, 5, 8);
+
+INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member05', 1, 1, 5, '2020-01-28');
+INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member02', 1, 1, 5, '2020-02-04');
+INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member05', 2, 2, 5, '2020-03-12');
+INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member01', 2, 2, 5, '2020-03-19');
+INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member03', 3, 3, 6, '2020-02-08');
+INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member04', 5, 5, 6, '2020-03-21');
+INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member03', 4, 4, 8, '2020-03-16');
+INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member06', 4, 4, 7, '2020-01-17');
+
+INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Woody Allen', '1935-12-01', 'M', 'Américain');
+INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Dylan Batista', '1998-05-09', 'M', 'Québécois');
+INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Céline Ly', '1999-02-28', 'F', 'Québécois');
+INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Helena Ton-That', '1999-09-29', 'F', 'Québécois');
+INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Behrt Behrnolds', '1978-10-23', 'M', 'Australien');
+INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Francine Françoise', '1981-07-27', 'F', 'Français');
+
+INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 1, 1, 'Réalisateur', 38750);
+INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 1, 2, 'Réalisateur', 400345);
+INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 1, 7, 'Acteur', 930000);
+INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 1, 3, 'Réalisateur', 2035000);
+INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 3, 3, 'Acteur', 95000);
+INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 4, 4, 'Acteur', 89000);
+INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 5, 5, 'Éditeur', 26000);
+INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 2, 6, 'Animateur', 34000);
+INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 6, 7, 'Acteur', 180000);
+INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 6, 5, 'Réalisateur', 180000);
+INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 4, 3, 'Réalisateur', 45000);
+INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 2, 4, 'Réalisateur', 165000);
+
+
+INSERT INTO NETFLIXDB.Ceremony VALUES (DEFAULT, 'Jimmy Fallon');
+INSERT INTO NETFLIXDB.Ceremony VALUES (DEFAULT, 'Jimmy Kimmel');
+INSERT INTO NETFLIXDB.Ceremony VALUES (DEFAULT, 'Jimmy Neutron');
+INSERT INTO NETFLIXDB.Ceremony VALUES (DEFAULT, 'Jimmy Fallon');
+
+INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 1, 7, 'Drame', 'Winner');
+INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 1, 7, 'Musique', 'Nominee');
+INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 1, 7, 'Costumes', 'Nominee');
+INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 2, 3, 'Animation', 'Nominee');
+INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 2, 6, 'Romance', 'Winner');
+INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 3, 5, 'Romance', 'Winner');
+INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 4, 4, 'Drame', 'Nominee');
+INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 4, 4, 'Costumes', 'Nominee');`;

@@ -60,9 +60,12 @@ HAVING SUM(o.deliveryPrice + d.dvdPrice) >
         ) totalPrice
     )
 
-
+--**
 -- 6) Ordonnez et retournez les films en termes de quantité totale vendue (DVD) et en nombre de
 --    visionnements
+-- On s'attend à idFilm | nomFilm | Quantité Totale vendue | Nb visionnement
+-- ordonné d'abord par Quantité totale vendue et ensuite par NB visionnement tel qu'indiqué dans l'énoncé. 
+-- Il y a un exemple similaire dans les notes de cours sur le type de maison (flat, etc) et le loyer.
 SELECT m.movieNo, title, (
 SELECT SUM(qte)
 FROM

@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="subtitle">
+        <span class="index">STEP <b>2</b> OF <b>3</b></span><br>
+        <h5><b>CREATE YOUR ACCOUNT</b></h5>
+    </div>
+    <form>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>First name</label>
+              <input type="text" class="form-control" [(ngModel)]="fName" name="fName" placeholder="First name">
+            </div>
+            <div class="form-group col-md-6">
+              <label>Last name</label>
+              <input type="text" class="form-control" [(ngModel)]="lName" name="lName" placeholder="Last name">
+            </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control"  [(ngModel)]="member.email" name="email" placeholder="Email">
+          <label *ngIf="exist" style="color:rgb(245, 57, 76)">Email is already used</label>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-control" [(ngModel)]="member.password" name="password" placeholder="Password">
+        </div>
+        <div class="form-group">
+          <label>ZIP code</label>
+          <input type="text" class="form-control" [(ngModel)]="member.zip" name="zip">
+        </div>
+        <button type="button" class="btn btn-danger" [routerLink]="" (click)="findDuplicate()">Continue</button>
+    </form>
+</div>

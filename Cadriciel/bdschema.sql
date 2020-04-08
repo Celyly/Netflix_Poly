@@ -6,7 +6,7 @@ CREATE SCHEMA NETFLIXDB;
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Member (
 	memberId		    VARCHAR(50)             NOT NULL,
     memberName          VARCHAR(50)             NOT NULL,
-    memberPassword      VARCHAR(50)             NOT NULL, -- Doit être encrypté
+    memberPassword      VARCHAR(500)            NOT NULL, -- Doit être encrypté
     email               VARCHAR(50)             NOT NULL,
     deliveryAddress     VARCHAR(50)             NOT NULL,
     PRIMARY KEY (memberId)
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Order (
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Person (
     personId        SERIAL                  NOT NULL,
     personName      VARCHAR(50)             NOT NULL,
-    dateNaissance   DATE                    NOT NULL,
+    birthDate       DATE                    NOT NULL,
     sex             CHAR                    DEFAULT 'M' CHECK (sex IN ('M', 'F')),
     nationality     VARCHAR(50),
     PRIMARY KEY (personId)
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Role (
     roleNo          SERIAL                  NOT NULL,
     personId        SERIAL                  NOT NULL,
     movieNo         SERIAL                  NOT NULL,
-    roleNom         VARCHAR(50)             NOT NULL,
+    roleName        VARCHAR(50)             NOT NULL,
     salary          NUMERIC(9,2)            NOT NULL,
     FOREIGN KEY (personId) REFERENCES NETFLIXDB.Person(personId)
     ON UPDATE CASCADE ON DELETE CASCADE,

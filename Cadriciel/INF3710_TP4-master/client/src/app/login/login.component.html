@@ -4,22 +4,24 @@
         <br>
         <br>
         <div class="form-group">
-          <label for="formGroupExampleInput">Email</label>
-          <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Email">
+          <label>Email</label>
+          <input type="email" class="form-control" [(ngModel)]="email" name="email" placeholder="Email">
         </div>
         <div class="form-group">
-          <label for="formGroupExampleInput2">Password</label>
-          <input type="password" class="form-control" id="formGroupExampleInput2" placeholder="Password">
+          <label>Password</label>
+          <input type="password" class="form-control" [(ngModel)]="password" name="password" placeholder="Password">
+          <label *ngIf="isWrong" style="color:rgb(245, 57, 76)">Invalid password</label>
         </div>
         <div class="form-group">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="gridCheck">
               <label class="form-check-label" for="gridCheck">
-                I am an employee
+                Remember me
               </label>
             </div>
           </div>
+          <br>
+          <button type="button" class="btn btn-danger" (click)="login()">Sign in</button>
+          <p>Press <b><a [routerLink]="" (click)="createDB()">HERE</a></b> to create and populate the database</p>
       </form>
-      <br>
-      <button type="button" class="btn btn-danger">Sign in</button>
 </div>

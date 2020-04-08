@@ -1,1 +1,44 @@
-<p>admin works!</p>
+<div class="dbcontainer">
+  <nav class="nav flex-column sticky-left">
+      <p>OPTIONS</p>
+      <a *ngIf="isEditing" class="nav-link" (click)="updateMovie()">Accept</a>
+      <a *ngIf="isEditing" class="nav-link" (click)="cancel()">Cancel</a>
+      <a *ngIf="!isEditing" class="nav-link" (click)="getMovies()">Refresh</a>
+      <a *ngIf="!isEditing" class="nav-link" (click)="addMovie()">Add</a>
+      <a *ngIf="!isEditing" class="nav-link" (click)="deleteMovie()">Delete</a>
+      <a *ngIf="!isEditing" class="nav-link" (click)="enterEditMode()">Modify</a>
+      <a *ngIf="!isEditing" class="nav-link" (click)="resetAll()">Reset all</a>
+  </nav>
+  <div class="db">
+    <div class="db-viewport">
+      <div class="db-view">
+        <h5>LIST OF MOVIES</h5>
+        <table>
+          <thead>
+            <th> ID</th>
+            <th> TITLE</th>
+            <th> GENRE</th>
+            <th> PRODUCTION DATE</th>
+            <th> DURATION</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let movie of movies" #moviesDB (click)="selectRow($event)">
+              <td>{{movie.movieno}}</td>
+              <td>{{movie.title}}</td>
+              <td>{{movie.genre}}</td>
+              <td>{{movie.productiondate}}</td>
+              <td>{{movie.duration}}</td>
+            </tr>
+            <tr class="newRow">
+              <td><input type="number" class="col-xs-2 form-control" [(ngModel)]="newMovie.movieno" placeholder="ID"></td>
+              <td><input type="text" class="col-xs-3 form-control" [(ngModel)]="newMovie.title" placeholder="Title"></td>
+              <td><input type="text" class="col-xs-3 form-control" [(ngModel)]="newMovie.genre" placeholder="Genre"></td>
+              <td><input type="text" class="col-xs-3 form-control" [(ngModel)]="newMovie.productiondate" placeholder="YYYY-MM-DD"></td>
+              <td><input type="number" class="col-xs-3 form-control" [(ngModel)]="newMovie.duration" placeholder="Duration"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+
+</div>

@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="subtitle">
+        <span class="index">STEP <b>1</b> OF <b>3</b></span><br>
+        <h5><b>CHOOSE A MEMBERSHIP</b></h5>
+    </div>
+    <div class="plans">
+        <div class="monthly">
+            <b><h4>MONTHLY PLAN</h4></b>
+            <ul>
+                <li>HD available</li>
+                <li>Ultra HD available</li>
+                <li>Unlimited movies</li>
+                <li>Order DVD</li>
+            </ul>
+            <span>From <span class="price">9,99$</span> per month</span>
+            <br>
+            <br>
+            <button type="button" class="btn btn-danger" (click)="sendPlan('monthly')" routerLink="/register/account">Choose this plan</button>
+        </div>
+        <div class="vr"></div>
+        <div class="payperview">
+            <b><h4>PAY PER VIEW PLAN</h4></b>
+            <ul>
+                <li>HD available</li>
+                <li>Unlimited movies</li>
+                <li>Order DVD</li>
+            </ul>
+            <br>
+            <span>From <span class="price">1,99$</span> per view</span>
+            <br>
+            <br>
+            <button type="button" class="btn btn-danger" (click)="sendPlan('payperview')" routerLink="/register/account">Choose this plan</button>
+        </div>
+    </div>
+
+</div>
