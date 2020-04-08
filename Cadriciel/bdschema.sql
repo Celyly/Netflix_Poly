@@ -5,9 +5,9 @@ CREATE SCHEMA NETFLIXDB;
 
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Member (
 	memberId		    VARCHAR(50)             NOT NULL,
-    memberName          VARCHAR(50)             NOT NULL,
+    memberName          VARCHAR(200)            NOT NULL,
     memberPassword      VARCHAR(500)            NOT NULL, -- Doit être encrypté
-    email               VARCHAR(50)             NOT NULL,
+    email               VARCHAR(200)            NOT NULL,
     deliveryAddress     VARCHAR(50)             NOT NULL,
     PRIMARY KEY (memberId)
 );
@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.CreditCard (
     cardNo              VARCHAR(50)          NOT NULL,
 	memberId	        VARCHAR(50)          NOT NULL,
     ccv                 INT                  NOT NULL,
-    ownerCard           VARCHAR(50)          NOT NULL,
-    expirationDate      DATE                 NOT NULL,
+    ownerCard           VARCHAR(200)         NOT NULL,
+    expirationDate      DATE                 NOT NULL CHECK (expirationDate > CURRENT_DATE),
     FOREIGN KEY (memberId) REFERENCES NETFLIXDB.Member(memberId)
     ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (cardNo)
@@ -44,8 +44,8 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.CreditCard (
 
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Movie (
     movieNo         SERIAL                  NOT NULL,
-    title           VARCHAR(50)             NOT NULL,
-    genre           VARCHAR(50)             NOT NULL,
+    title           VARCHAR(200)            NOT NULL,
+    genre           VARCHAR(200)            NOT NULL,
     productionDate  DATE                    NOT NULL,
     duration        INT                     NOT NULL,
     PRIMARY KEY (movieNo)
@@ -91,10 +91,10 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Order (
 
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Person (
     personId        SERIAL                  NOT NULL,
-    personName      VARCHAR(50)             NOT NULL,
+    personName      VARCHAR(200)            NOT NULL,
     birthDate       DATE                    NOT NULL,
     sex             CHAR                    DEFAULT 'M' CHECK (sex IN ('M', 'F')),
-    nationality     VARCHAR(50),
+    nationality     VARCHAR(200),
     PRIMARY KEY (personId)
 );
 
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Role (
     roleNo          SERIAL                  NOT NULL,
     personId        SERIAL                  NOT NULL,
     movieNo         SERIAL                  NOT NULL,
-    roleName        VARCHAR(50)             NOT NULL,
+    roleName        VARCHAR(200)            NOT NULL,
     salary          NUMERIC(9,2)            NOT NULL,
     FOREIGN KEY (personId) REFERENCES NETFLIXDB.Person(personId)
     ON UPDATE CASCADE ON DELETE CASCADE,
@@ -113,8 +113,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Role (
 
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Ceremony (
     ceremonyNo      SERIAL                  NOT NULL,
-    host            VARCHAR(50)             NOT NULL,
-    -- category        VARCHAR(50)             NOT NULL,
+    host            VARCHAR(200)            NOT NULL,
     PRIMARY KEY (ceremonyNo)
 );
 
@@ -122,7 +121,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Oscar (
     oscarNo         SERIAL                  NOT NULL,
     ceremonyNo      SERIAL                  NOT NULL,
     movieNo         SERIAL                  NOT NULL,
-    category        VARCHAR(50)             NOT NULL,
+    category        VARCHAR(200)            NOT NULL,
     oscarType       VARCHAR(50)             NOT NULL CHECK (oscarType IN ('Nominee','Winner')),
     FOREIGN KEY (ceremonyNo) REFERENCES NETFLIXDB.Ceremony(ceremonyNo)
     ON UPDATE CASCADE ON DELETE CASCADE,

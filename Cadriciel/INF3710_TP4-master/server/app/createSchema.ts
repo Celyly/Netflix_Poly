@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.CreditCard (
 	memberId	        VARCHAR(50)          NOT NULL,
     ccv                 INT                  NOT NULL,
     ownerCard           VARCHAR(50)          NOT NULL,
-    expirationDate      DATE                 NOT NULL,
+    expirationDate      DATE                 NOT NULL CHECK (expirationDate > CURRENT_DATE),
     FOREIGN KEY (memberId) REFERENCES NETFLIXDB.Member(memberId)
     ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (cardNo)
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.DVD (
     dvdPrice        SERIAL        NOT NULL,
     FOREIGN KEY (movieNo) REFERENCES NETFLIXDB.Movie(movieNo)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    PRIMARY KEY (DVDNo, movieNo) -- ??
+    PRIMARY KEY (DVDNo, movieNo)
 );
 
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Order (
@@ -82,7 +82,6 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Order (
     movieNo             SERIAL                NOT NULL,
     deliveryPrice       NUMERIC(9, 2)         NOT NULL,
     deliveryDate        DATE                  NOT NULL,
-    -- distance            NUMERIC(9, 2)         NOT NULL,
     FOREIGN KEY (memberId) REFERENCES NETFLIXDB.Member(memberId)
     ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (DVDNo, movieNo) REFERENCES NETFLIXDB.DVD(DVDNo, movieNo)
@@ -115,7 +114,6 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Role (
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Ceremony (
     ceremonyNo      SERIAL                  NOT NULL,
     host            VARCHAR(50)             NOT NULL,
-    -- category        VARCHAR(50)             NOT NULL,
     PRIMARY KEY (ceremonyNo)
 );
 
