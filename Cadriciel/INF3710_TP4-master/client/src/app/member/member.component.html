@@ -22,7 +22,8 @@
             </div>
             <div class="movie-crew">
               <h3>Credits</h3>
-              <div *ngFor="let role of roles">
+              <h5 *ngIf="roles.length === 0">N\A</h5>
+              <div *ngFor="let role of roles" class="roles">
                 <h5>{{role}}</h5>
                 <h6 *ngFor="let person of crew"><span *ngIf="person.rolename === role">{{person.personname}} ({{person.salary}}$)</span></h6>
                 <p></p>

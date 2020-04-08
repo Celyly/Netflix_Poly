@@ -106,6 +106,7 @@
 }
 
 .img {
+    text-align: center;
     color: white;
     background-image: linear-gradient(to top, rgba(0, 0, 0, 0.897), rgba(37, 37, 37, 0.671), rgba(143, 143, 143, 0.336)), url('../../assets/thumbnail_test.png');
     background-size: cover;
