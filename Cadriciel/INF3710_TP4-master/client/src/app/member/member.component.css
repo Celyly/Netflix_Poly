@@ -1,5 +1,5 @@
 * {
-    /* color: black; */
+    white-space: pre-wrap;
 }
 /* 
 .member-interface {
@@ -44,8 +44,7 @@
 }
 
 .movie-container {
-    color: black;
-    
+    color: black;    
 }
 
 .movie-popup {
@@ -70,7 +69,7 @@
 } */
 
 .movie-container:hover {
-    border: 5px solid rgb(223, 55, 71)
+    outline: 5px solid rgb(223, 55, 71)
 }
 
 .arrow {
@@ -87,7 +86,23 @@
 
 .movie-info {
     padding-top: 5%;
+    padding-left: 5%;
     text-align: left;
+    width: 50%;
+    margin-bottom: 3%;
+
+}
+
+.movie-crew {
+    padding-top: 7%;
+    text-align: left;
+    width: 25%;
+    padding-left: 8%;
+    font-size: small;
+}
+
+.description {
+    display: flex;
 }
 
 .img {
@@ -97,5 +112,15 @@
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
+}
 
+h6 {
+    margin-bottom: 3%;
+}
+
+button {
+    position: absolute;
+    right: 0;
+    margin-right: 5%;
+    bottom: 5%;
 }

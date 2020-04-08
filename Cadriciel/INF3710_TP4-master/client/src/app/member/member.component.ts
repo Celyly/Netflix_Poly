@@ -117,21 +117,24 @@ export class MemberComponent implements OnInit, AfterViewInit {
     return "";
   }
 
-  public test(): void {
-    console.log(this.selectedOption[0]);
-    this.getMovie(this.selectedOption[0]);
-    this.getDuration(this.selectedOption[0]);
-    this.getWatchtime(this.selectedOption[0], this.getCurrentMemberName());
-    this.getAllRoles(this.selectedOption[0]);
-    this.getCrew(this.selectedOption[0]);
-    this.getAwards(this.selectedOption[0]);
+  public findInformation(title: string): void {
+    console.log(title);
+    this.getMovie(title);
+    this.getDuration(title);
+    this.getWatchtime(title, this.getCurrentMemberName());
+    this.getAllRoles(title);
+    this.getCrew(title);
+    this.getAwards(title);
   }
 
-  public getTarget(evt: MouseEvent): void {
+  public select(evt: MouseEvent): void {
     const target: HTMLElement = evt.currentTarget as HTMLElement;
     const title: HTMLElement = target.firstChild as HTMLElement;
+    if (title.textContent) {
+      this.findInformation(title.textContent);
+      console.log(this.roles);
+    }
     this.hide();
-    console.log(title.textContent);
     this.popup = this.map.get(title.textContent as string) ? this.map.get(title.textContent as string) : null;
     console.log(this.popup);
     this.show();
