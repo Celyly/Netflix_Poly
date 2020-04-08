@@ -85,9 +85,9 @@ export class CommunicationService {
         );
     }
 
-    public insertMember(plan: string, member: Member): Observable<string> {
-        return this.http.post<string>(this.BASE_URL + "/member/insert", {plan, member}).pipe(
-            catchError(this.handleError<string>("insertMember")),
+    public insertMember(plan: string, member: Member): Observable<number> {
+        return this.http.post<number>(this.BASE_URL + "/member/insert", {plan, member}).pipe(
+            catchError(this.handleError<number>("insertMember")),
         );
     }
 

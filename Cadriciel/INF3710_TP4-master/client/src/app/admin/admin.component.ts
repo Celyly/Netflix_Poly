@@ -1,6 +1,6 @@
 // tslint:disable: no-magic-numbers
 
-import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from "@angular/core";
 import { Movie } from "../../../../common/Movie";
 import { CommunicationService } from "../communication.service";
 import { LoggedUser } from "../logged-user";
@@ -13,6 +13,7 @@ import { LoggedUserService } from "../logged-user.service";
 })
 export class AdminComponent implements OnInit, AfterViewInit {
   @ViewChildren("moviesDB") public moviesDB: QueryList<ElementRef<HTMLElement>>;
+  @ViewChild("idInput") public idInput: ElementRef;
 
   private months: Map<string, string>;
   public isEditing: boolean;
@@ -67,13 +68,15 @@ export class AdminComponent implements OnInit, AfterViewInit {
   }
 
   public addMovie(): void {
-    this.communicationService.insertMovie(this.newMovie).subscribe((res: any) => {
-      if (res !== -1) {
-        this.getMovies();
-      } else {
-        alert("Invalid data");
-      }
-    });
+    if (this.verifyInputs()) {
+      this.communicationService.insertMovie(this.newMovie).subscribe((res: any) => {
+        if (res !== -1) {
+          this.getMovies();
+        } else {
+          alert("Invalid data, please verify your inputs");
+        }
+      });
+    }
   }
 
   public updateMovie(): void {
@@ -81,7 +84,10 @@ export class AdminComponent implements OnInit, AfterViewInit {
       if (res !== -1) {
         this.getMovies();
         this.isEditing = false;
+        this.disableIdInput(false);
         this.newMovie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0 };
+      }  else {
+        alert("Invalid data, please verify your inputs");
       }
     });
   }
@@ -91,6 +97,8 @@ export class AdminComponent implements OnInit, AfterViewInit {
       if (res !== -1) {
         this.getMovies();
         this.selectedMovie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0 };
+      } else {
+        alert("Error! Couldn't properly delete the movie. Try again");
       }
     });
   }
@@ -124,12 +132,14 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   public enterEditMode(): void {
     this.isEditing = true;
+    this.disableIdInput(true);
     this.newMovie = this.selectedMovie;
     this.newMovie.productiondate = this.formatDate(this.newMovie.productiondate);
   }
 
   public cancel(): void {
     this.isEditing = false;
+    this.disableIdInput(false);
     this.newMovie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0 };
   }
 
@@ -158,5 +168,23 @@ export class AdminComponent implements OnInit, AfterViewInit {
         }
      });
     });
+  }
+
+  public disableIdInput(disabled: boolean): void {
+    if (disabled) {
+      this.idInput.nativeElement.setAttribute("readonly", "");
+    } else {
+      this.idInput.nativeElement.removeAttribute("readonly");
+    }
+  }
+
+  public verifyInputs(): boolean {
+    if (this.newMovie.title === "" || this.newMovie.genre === "" || this.newMovie.duration === 0) {
+      alert("Invalid data, please verify your inputs");
+
+      return false;
+    }
+
+    return true;
   }
 }
