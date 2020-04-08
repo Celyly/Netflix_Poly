@@ -59,10 +59,10 @@ INSERT INTO NETFLIXDB.Order VALUES (DEFAULT, 'member06', 4, 4, 7, '2020-01-17');
 
 INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Woody Allen', '1935-12-01', 'M', 'Américain');
 INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Dylan Batista', '1998-05-09', 'M', 'Québécois');
-INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Céline Ly', '1999-02-28', 'F', 'Québécoise');
-INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Helena Ton-That', '1999-09-29', 'F', 'Québécoise');
+INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Céline Ly', '1999-02-28', 'F', 'Québécois');
+INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Helena Ton-That', '1999-09-29', 'F', 'Québécois');
 INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Behrt Behrnolds', '1978-10-23', 'M', 'Australien');
-INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Francine Françoise', '1981-07-27', 'F', 'Française');
+INSERT INTO NETFLIXDB.Person VALUES (DEFAULT, 'Francine Françoise', '1981-07-27', 'F', 'Français');
 
 INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 1, 1, 'Réalisateur', 38750);
 INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 1, 2, 'Réalisateur', 400345);
@@ -74,6 +74,8 @@ INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 5, 5, 'Éditeur', 26000);
 INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 2, 6, 'Animateur', 34000);
 INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 6, 7, 'Acteur', 180000);
 INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 6, 5, 'Réalisateur', 180000);
+INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 4, 3, 'Réalisateur', 45000);
+INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 2, 4, 'Réalisateur', 165000);
 
 
 INSERT INTO NETFLIXDB.Ceremony VALUES (DEFAULT, 'Jimmy Fallon');
@@ -83,7 +85,9 @@ INSERT INTO NETFLIXDB.Ceremony VALUES (DEFAULT, 'Jimmy Fallon');
 
 INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 1, 7, 'Drame', 'Winner');
 INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 1, 7, 'Musique', 'Nominee');
+INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 1, 7, 'Costumes', 'Nominee');
 INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 2, 3, 'Animation', 'Nominee');
 INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 2, 6, 'Romance', 'Winner');
 INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 3, 5, 'Romance', 'Winner');
-INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 4, 4, 'Drame', 'Nominee');`;
+INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 4, 4, 'Drame', 'Nominee');
+INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 4, 4, 'Costumes', 'Nominee');`;

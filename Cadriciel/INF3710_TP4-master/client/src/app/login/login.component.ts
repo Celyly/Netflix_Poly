@@ -14,12 +14,14 @@ import { LoggedUserService } from "../logged-user.service";
 export class LoginComponent implements OnInit {
   public email: string;
   public password: string;
+  public isWrong: boolean;
 
   public loggedUser: LoggedUser;
 
   public constructor(private communicationService: CommunicationService, public router: Router, public loggedService: LoggedUserService) {
     // this.loggedUser = new LoggedUser();
     this.loggedService.loggedUser.subscribe((user) => this.loggedUser = user);
+    this.isWrong = false;
   }
 
   public ngOnInit(): void {}
@@ -36,6 +38,7 @@ export class LoginComponent implements OnInit {
 
   public changePermissions(res: any): void {
     if (res !== -1) {
+      this.isWrong = false;
       const member: Member = {
         id: res[0].memberid,
         name: res[0].membername,
@@ -57,6 +60,8 @@ export class LoginComponent implements OnInit {
         this.loggedService.setLoggedUser(this.loggedUser);
         this.router.navigate(["/member"], { state: { role: "MEMBER" } });
       }
+    } else {
+      this.isWrong = true;
     }
   }
 

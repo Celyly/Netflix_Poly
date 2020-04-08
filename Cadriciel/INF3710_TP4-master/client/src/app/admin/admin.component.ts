@@ -43,7 +43,6 @@ export class AdminComponent implements OnInit, AfterViewInit {
       .set("Oct", "10")
       .set("Nov", "11")
       .set("Dec", "12");
-
   }
 
   public ngOnInit(): void {
@@ -71,6 +70,8 @@ export class AdminComponent implements OnInit, AfterViewInit {
     this.communicationService.insertMovie(this.newMovie).subscribe((res: any) => {
       if (res !== -1) {
         this.getMovies();
+      } else {
+        alert("Invalid data");
       }
     });
   }
@@ -109,7 +110,6 @@ export class AdminComponent implements OnInit, AfterViewInit {
     this.selectedMovie.genre = this.selectedRow.childNodes[2].textContent as string;
     this.selectedMovie.productiondate = this.selectedRow.childNodes[3].textContent as string;
     this.selectedMovie.duration = parseFloat(this.selectedRow.childNodes[4].textContent as string);
-    console.log(this.selectedMovie);
   }
 
   public formatDate(date: string): string {
@@ -148,7 +148,6 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   public resetAll(): void {
     this.communicationService.setUpDatabase().subscribe((res: any) => {
-      console.log(res);
       this.getMovies();
       this.moviesDB.changes.subscribe((comps: QueryList<ElementRef<HTMLElement>>) => {
         const movieArray: ElementRef<HTMLElement>[] = this.moviesDB.toArray();

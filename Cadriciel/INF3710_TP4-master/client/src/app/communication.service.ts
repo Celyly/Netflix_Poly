@@ -31,6 +31,12 @@ export class CommunicationService {
         return this.http.post<string>(this.BASE_URL + "/login", {email, password});
     }
 
+    public memberCreated(email: string): Observable<number> {
+        return this.http.get<number>(this.BASE_URL + `/member/browse/${email}`).pipe(
+            catchError(this.handleError<number>("memberCreated")),
+        );
+    }
+
     public getMovie(title: string): Observable<Movie> {
         return this.http.get<Movie>(this.BASE_URL + `/movie/${title}`).pipe(
             catchError(this.handleError<Movie>("getMovie")),

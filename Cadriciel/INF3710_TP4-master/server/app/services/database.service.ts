@@ -64,7 +64,7 @@ export class DatabaseService {
 
     public async updateMovie(movie: Movie): Promise<pg.QueryResult> {
         // tslint:disable-next-line: max-line-length
-        return this.pool.query(`UPDATE ${this.DB_NAME}.Movie SET movieNo=${movie.movieno}, title='${movie.title}', genre='${movie.genre}', productiondate='${movie.productiondate}', duration=${movie.duration} WHERE movieNo=${movie.movieno}`);
+        return this.pool.query(`UPDATE ${this.DB_NAME}.Movie SET movieNo=${movie.movieno}, title='${movie.title}', genre='${movie.genre}', productionDate='${movie.productiondate}', duration=${movie.duration} WHERE movieNo=${movie.movieno}`);
     }
 
     public async deleteMovie(movieno: number): Promise<pg.QueryResult> {
@@ -86,6 +86,10 @@ export class DatabaseService {
 
     public async getAccount(email: string, password: string): Promise<pg.QueryResult> {
         return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Member m WHERE m.email = '${email}' AND m.memberPassword = '${password}'`);
+    }
+
+    public async memberCreated(email: string): Promise<pg.QueryResult> {
+        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Member m WHERE m.email = '${email}'`);
     }
 
     public async getNbMember(): Promise<pg.QueryResult> {

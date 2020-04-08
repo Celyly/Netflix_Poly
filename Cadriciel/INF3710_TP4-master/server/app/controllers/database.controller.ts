@@ -66,6 +66,16 @@ export class DatabaseController {
             });
         });
 
+        router.get("/member/browse/:email",
+                   (req: Request, res: Response, next: NextFunction) => {
+                    this.databaseService.memberCreated(req.params.email).then((result: pg.QueryResult) => {
+                    res.json(result.rowCount);
+                }).catch((e: Error) => {
+                    console.error(e.stack);
+                    res.json(-1);
+                });
+        });
+
         router.get("/member/count",
                    (req: Request, res: Response, next: NextFunction) => {
                     this.databaseService.getNbMember().then((result: pg.QueryResult) => {
