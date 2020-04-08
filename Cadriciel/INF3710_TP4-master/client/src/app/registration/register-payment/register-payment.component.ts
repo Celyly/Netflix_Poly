@@ -21,6 +21,7 @@ export class RegisterPaymentComponent implements OnInit {
   public creditCard: CreditCard;
 
   public loggedUser: LoggedUser;
+  public exist: boolean;
 
   public constructor(private communicationService: CommunicationService, public registerMemberService: RegisterMemberService, public router: Router) {
     this.expiration = ["", "", ""];
@@ -33,6 +34,7 @@ export class RegisterPaymentComponent implements OnInit {
     };
     this.registerMemberService.plan.subscribe((plan: string) => this.plan = plan);
     this.registerMemberService.member.subscribe((member: Member) => this.member = member);
+    this.exist = false;
   }
 
   public ngOnInit(): void {
@@ -49,15 +51,32 @@ export class RegisterPaymentComponent implements OnInit {
     this.communicationService.getNbMember().subscribe((res: any) => {
       const id: string = `${+res + 1}`;
       this.member.id = id;
-      this.communicationService.insertMember(this.plan, this.member).subscribe((res: any) => {
-        console.log(res);
-        this.goToAdmin();
-      });
+      if (this.verifyInputs()) {
+        this.communicationService.insertMember(this.plan, this.member).subscribe((res: any) => {
+          if (res !== -1) {
+            this.goToAdmin();
+          } else {
+            alert("An unexpected error was found! Please verify your inputs and try again");
+          }
+        });
+      }
     });
   }
 
   public goToAdmin(): void {
     this.router.navigate(["/admin"], { state: { role: "ADMIN" } });
+  }
+
+  public verifyInputs(): boolean {
+    const validCreditCard = this.cardNumber[0].toString() + this.cardNumber[1].toString()
+                            + this.cardNumber[2].toString() + this.cardNumber[3].toString();
+    if (this.fName === "" || this.lName === "" || this.creditCard.ccv.toString().length < 3 || validCreditCard.length < 16) {
+      alert("Oops. You missed some required information. Please complete all the fields and try again.");
+
+      return false;
+    }
+
+    return true;
   }
 
 }

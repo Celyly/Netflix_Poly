@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.MemberPayPerView (
 
 
 CREATE TABLE IF NOT EXISTS NETFLIXDB.CreditCard (
-    cardNo              VARCHAR(50)          NOT NULL,
+    cardNo              VARCHAR(19)          NOT NULL,
 	memberId	        VARCHAR(50)          NOT NULL,
     ccv                 INT                  NOT NULL,
     ownerCard           VARCHAR(200)         NOT NULL,

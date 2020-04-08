@@ -35,10 +35,9 @@ export class RegisterComponent implements OnInit {
 
   public ngOnInit(): void {}
 
-  // User already exists?
+  // Verify if User already exists
   public findDuplicate(): void {
     this.communicationService.memberCreated(this.member.email).subscribe((res: any) => {
-      console.log(res, "database asked");
       if (res !== 0) {
         this.exist = true;
       } else {
@@ -46,15 +45,26 @@ export class RegisterComponent implements OnInit {
         this.sendMember();
       }
     });
-
   }
 
   public sendMember(): void {
-    const encrypted: string = sha256(this.member.password);
-    this.member.name = this.fName + " " + this.lName;
-    this.member.password = encrypted;
-    this.registerMemberService.createMember(this.member);
-    this.router.navigate(["/register/payment"]);
+    if (this.verifyInputs()) {
+      const encrypted: string = sha256(this.member.password);
+      this.member.password = encrypted;
+      this.member.name = this.fName + " " + this.lName;
+      this.registerMemberService.createMember(this.member);
+      this.router.navigate(["/register/payment"]);
+    }
+  }
+
+  public verifyInputs(): boolean {
+    if (this.fName === "" || this.lName === "" || this.member.password === "" || this.member.zip === "") {
+      alert("Oops. You missed some required information. Please complete all the fields and try again.");
+
+      return false;
+    }
+
+    return true;
   }
 
 }

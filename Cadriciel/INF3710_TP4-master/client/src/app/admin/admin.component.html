@@ -30,7 +30,7 @@
               <td>{{movie.duration}}</td>
             </tr>
             <tr class="newRow">
-              <td><input type="number" class="col-xs-2 form-control" [(ngModel)]="newMovie.movieno" placeholder="ID"></td>
+              <td><input #idInput type="number" class="col-xs-2 form-control" [(ngModel)]="newMovie.movieno" placeholder="ID"></td>
               <td><input type="text" class="col-xs-3 form-control" [(ngModel)]="newMovie.title" placeholder="Title"></td>
               <td><input type="text" class="col-xs-3 form-control" [(ngModel)]="newMovie.genre" placeholder="Genre"></td>
               <td><input type="text" class="col-xs-3 form-control" [(ngModel)]="newMovie.productiondate" placeholder="YYYY-MM-DD"></td>
