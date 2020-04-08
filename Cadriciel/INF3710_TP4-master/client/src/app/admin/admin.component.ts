@@ -28,8 +28,8 @@ export class AdminComponent implements OnInit, AfterViewInit {
   public constructor(public communicationService: CommunicationService, public loggedService: LoggedUserService) {
     this.loggedService.loggedUser.subscribe((user) => this.loggedUser = user);
     this.isEditing = false;
-    this.selectedMovie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0 };
-    this.newMovie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0 };
+    this.selectedMovie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0, price: 0 };
+    this.newMovie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0, price: 0 };
 
     this.months = new Map<string, string>()
       .set("Jan", "01")
@@ -85,7 +85,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
         this.getMovies();
         this.isEditing = false;
         this.disableIdInput(false);
-        this.newMovie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0 };
+        this.newMovie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0, price: 0 };
       }  else {
         alert("Invalid data, please verify your inputs");
       }
@@ -96,7 +96,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
     this.communicationService.deleteMovie(this.selectedMovie.movieno).subscribe((res: any) => {
       if (res !== -1) {
         this.getMovies();
-        this.selectedMovie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0 };
+        this.selectedMovie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0, price: 0 };
       } else {
         alert("Error! Couldn't properly delete the movie. Try again");
       }
@@ -118,6 +118,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
     this.selectedMovie.genre = this.selectedRow.childNodes[2].textContent as string;
     this.selectedMovie.productiondate = this.selectedRow.childNodes[3].textContent as string;
     this.selectedMovie.duration = parseFloat(this.selectedRow.childNodes[4].textContent as string);
+    this.selectedMovie.price = parseFloat(this.selectedRow.childNodes[5].textContent as string);
   }
 
   public formatDate(date: string): string {
@@ -140,7 +141,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   public cancel(): void {
     this.isEditing = false;
     this.disableIdInput(false);
-    this.newMovie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0 };
+    this.newMovie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0, price: 0 };
   }
 
   public removeBgColor(element: HTMLElement): void {

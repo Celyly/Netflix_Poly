@@ -7,7 +7,7 @@ SELECT *
 FROM NETFLIXDB.Movie
 WHERE title = 'The Mini Katana'
 
--- **
+
 -- 2) Pour chaque genre de film, listez tous les titres de films ainsi que la dernière date à laquelle
 --    un film a été acheté (DVD) ou visionné
 SELECT genre, title, (
@@ -87,7 +87,7 @@ ORDER BY qteTotal
 
 -- 7) Trouvez le titre et le prix des films qui n’ont jamais été commandés sous forme de DVD mais
 --    qui ont été visionnés plus de 10 fois
-SELECT m.title
+SELECT m.title, m.price
 FROM NETFLIXDB.Movie m, NETFLIXDB.Viewing v
 WHERE m.movieNo = v.movieNo
 AND 10 < (SELECT COUNT(movie.movieNo)

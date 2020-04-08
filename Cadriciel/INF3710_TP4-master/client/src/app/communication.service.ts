@@ -91,6 +91,12 @@ export class CommunicationService {
         );
     }
 
+    public checkMonthlyMembership(email: string): Observable<number>{
+        return this.http.get<number>(this.BASE_URL + `/member/browse/${email}/plan`).pipe(
+            catchError(this.handleError<number>("isMonthlyMember")),
+        );
+    }
+
     public getAllRoles(title: string): Observable<string[]> {
         return this.http.get<string[]>(this.BASE_URL + `/movie/${title}/list/role`).pipe(
             catchError(this.handleError<string[]>("getAllRoles"))

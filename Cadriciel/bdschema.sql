@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Movie (
     genre           VARCHAR(200)            NOT NULL,
     productionDate  DATE                    NOT NULL,
     duration        INT                     NOT NULL,
+    price           NUMERIC(9,2)            NOT NULL,
     PRIMARY KEY (movieNo)
 );
 
@@ -71,7 +72,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.DVD (
     dvdPrice        SERIAL        NOT NULL,
     FOREIGN KEY (movieNo) REFERENCES NETFLIXDB.Movie(movieNo)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    PRIMARY KEY (DVDNo, movieNo) -- ??
+    PRIMARY KEY (DVDNo, movieNo)
 );
 
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Order (

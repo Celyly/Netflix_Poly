@@ -59,12 +59,12 @@ export class DatabaseService {
 
     public async insertMovie(movie: Movie): Promise<pg.QueryResult> {
         // tslint:disable-next-line: max-line-length
-        return this.pool.query(`INSERT INTO ${this.DB_NAME}.Movie VALUES(${movie.movieno}, '${movie.title}', '${movie.genre}', '${movie.productiondate}', ${movie.duration})`);
+        return this.pool.query(`INSERT INTO ${this.DB_NAME}.Movie VALUES(${movie.movieno}, '${movie.title}', '${movie.genre}', '${movie.productiondate}', ${movie.duration}, ${movie.price})`);
     }
 
     public async updateMovie(movie: Movie): Promise<pg.QueryResult> {
         // tslint:disable-next-line: max-line-length
-        return this.pool.query(`UPDATE ${this.DB_NAME}.Movie SET movieNo=${movie.movieno}, title='${movie.title}', genre='${movie.genre}', productionDate='${movie.productiondate}', duration=${movie.duration} WHERE movieNo=${movie.movieno}`);
+        return this.pool.query(`UPDATE ${this.DB_NAME}.Movie SET movieNo=${movie.movieno}, title='${movie.title}', genre='${movie.genre}', productionDate='${movie.productiondate}', duration=${movie.duration}, price=${movie.price} WHERE movieNo=${movie.movieno}`);
     }
 
     public async deleteMovie(movieno: number): Promise<pg.QueryResult> {
@@ -132,6 +132,10 @@ export class DatabaseService {
         return this.pool.query(`SELECT o.category, o.oscarType, c.host FROM ${this.DB_NAME}.Movie m, ${this.DB_NAME}.Oscar o, ${this.DB_NAME}.Ceremony c WHERE m.title = '${title}' AND m.movieno = o.movieno AND o.ceremonyNo = c.ceremonyNo`);
     }
 
+    public async checkMonthlyMembership(email: string): Promise<pg.QueryResult> {
+        // tslint:disable-next-line: max-line-length
+        return this.pool.query(`SELECT * FROM NETFLIXDB.Member m, NETFLIXDB.MemberMonthly mon WHERE m.email = '${email}' AND m.memberid = mon.memberid`);
+    }
 
     // // HOTEL
     // public async getHotels(): Promise<pg.QueryResult> {

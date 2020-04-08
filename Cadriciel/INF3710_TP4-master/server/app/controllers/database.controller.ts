@@ -76,6 +76,16 @@ export class DatabaseController {
                 });
         });
 
+        router.get("/member/browse/:email/plan",
+                   (req: Request, res: Response, next: NextFunction) => {
+                    this.databaseService.checkMonthlyMembership(req.params.email).then((result: pg.QueryResult) => {
+                    res.json(result.rowCount);
+                }).catch((e: Error) => {
+                    console.error(e.stack);
+                    res.json(-1);
+                });
+        });
+
         router.get("/member/count",
                    (req: Request, res: Response, next: NextFunction) => {
                     this.databaseService.getNbMember().then((result: pg.QueryResult) => {
@@ -206,7 +216,8 @@ export class DatabaseController {
                         title: movie.title,
                         genre: movie.genre,
                         productiondate: String(movie.productiondate).substr(4, 11),
-                        duration: movie.duration
+                        duration: movie.duration,
+                        price: movie.price
                     }));
                 res.json(movies);
             }).catch((e: Error) => {
@@ -221,7 +232,8 @@ export class DatabaseController {
                     title: movie.title,
                     genre: movie.genre,
                     productiondate: String(movie.productiondate).substr(4, 11),
-                    duration: movie.duration
+                    duration: movie.duration,
+                    price: movie.price
                 }))[0];
                 res.json(myMovie);
             }).catch((e: Error) => {
