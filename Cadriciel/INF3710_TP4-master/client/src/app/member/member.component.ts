@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { Movie } from "../../../../common/Movie";
 import { Oscar } from "../../../../common/Oscar";
 import { Person } from "../../../../common/Person";
