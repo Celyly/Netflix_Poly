@@ -7,7 +7,7 @@ SELECT *
 FROM NETFLIXDB.Movie
 WHERE title = 'The Mini Katana'
 
--- **
+
 -- 2) Pour chaque genre de film, listez tous les titres de films ainsi que la dernière date à laquelle
 --    un film a été acheté (DVD) ou visionné
 SELECT genre, title, (
@@ -60,34 +60,27 @@ HAVING SUM(o.deliveryPrice + d.dvdPrice) >
         ) totalPrice
     )
 
---**
+
 -- 6) Ordonnez et retournez les films en termes de quantité totale vendue (DVD) et en nombre de
 --    visionnements
--- On s'attend à idFilm | nomFilm | Quantité Totale vendue | Nb visionnement
--- ordonné d'abord par Quantité totale vendue et ensuite par NB visionnement tel qu'indiqué dans l'énoncé. 
--- Il y a un exemple similaire dans les notes de cours sur le type de maison (flat, etc) et le loyer.
-SELECT m.movieNo, title, (
-SELECT SUM(qte)
-FROM
-    (SELECT COUNT(*) as qte
+SELECT m.title, m.movieNo,
+	(SELECT COUNT(*) as qte
+    FROM NETFLIXDB.Movie movie, NETFLIXDB.Order o, NETFLIXDB.DVD d
+    WHERE (o.DVDNo = d.DVDNo AND d.movieNo = movie.movieNo AND movie.movieNo = o.movieNo)
+	GROUP BY movie.movieNo
+	HAVING movie.movieNo = m.movieNo) as orderTotal,
+	(SELECT COUNT(*) as qte
     FROM NETFLIXDB.Movie movie, NETFLIXDB.Viewing v
     WHERE (movie.movieNo = v.movieNo)
     GROUP BY movie.movieNo
-    HAVING movie.movieNo = m.movieNo
-    UNION ALL
-    SELECT COUNT(*) as qte
-    FROM NETFLIXDB.Movie movie, NETFLIXDB.Order o, NETFLIXDB.DVD d
-    WHERE (o.DVDNo = d.DVDNo AND d.movieNo = movie.movieNo AND movie.movieNo = o.movieNo)
-    GROUP BY movie.movieNo
-    HAVING movie.movieNo = m.movieNo) tableQte
-) qteTotal
+ 	HAVING movie.movieNo = m.movieNo) as viewTotal
 FROM NETFLIXDB.Movie m
-ORDER BY qteTotal
+ORDER BY orderTotal, viewTotal
 
 
 -- 7) Trouvez le titre et le prix des films qui n’ont jamais été commandés sous forme de DVD mais
 --    qui ont été visionnés plus de 10 fois
-SELECT m.title
+SELECT m.title, m.price
 FROM NETFLIXDB.Movie m, NETFLIXDB.Viewing v
 WHERE m.movieNo = v.movieNo
 AND 10 < (SELECT COUNT(movie.movieNo)

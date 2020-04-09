@@ -23,6 +23,7 @@ export class RegisterPaymentComponent implements OnInit {
   public loggedUser: LoggedUser;
   public exist: boolean;
 
+  // tslint:disable-next-line: max-line-length
   public constructor(private communicationService: CommunicationService, public registerMemberService: RegisterMemberService, public router: Router) {
     this.expiration = ["", "", ""];
     this.cardNumber = ["", "", "", ""];

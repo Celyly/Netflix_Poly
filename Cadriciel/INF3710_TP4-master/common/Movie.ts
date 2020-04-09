@@ -3,5 +3,6 @@ export interface Movie {
     title: string,
     genre: string,
     productiondate: string,
-    duration: number
+    duration: number,
+    price: number
 }

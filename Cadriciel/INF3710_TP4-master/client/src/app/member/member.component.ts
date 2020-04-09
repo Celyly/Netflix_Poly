@@ -13,6 +13,7 @@ import { LoggedUserService } from "../logged-user.service";
 })
 export class MemberComponent implements OnInit, AfterViewInit {
   @ViewChildren("popups") public popups: QueryList<ElementRef<HTMLElement>>;
+
   public popup: HTMLElement | null | undefined;
 
   public loggedUser: LoggedUser;
@@ -23,6 +24,7 @@ export class MemberComponent implements OnInit, AfterViewInit {
 
   public watchtime: number;
   public duration: number;
+  public price: string;
 
   // Affichage
   public roles: string[];
@@ -35,12 +37,13 @@ export class MemberComponent implements OnInit, AfterViewInit {
     this.loggedService.loggedUser.subscribe((user) => this.loggedUser = user);
     this.watchtime = 0;
     this.duration = 0;
-    this.movie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0 };
+    this.movie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0, price: 0 };
     this.roles = [];
     this.crew = [];
     this.awards = [];
     this.map = new Map<string, HTMLElement>();
     this.popup = null;
+    this.price = "N\'A";
   }
 
   public ngOnInit(): void {
@@ -51,7 +54,6 @@ export class MemberComponent implements OnInit, AfterViewInit {
     this.popups.changes.subscribe((comps: QueryList<ElementRef<HTMLElement>>) => {
         const movieArray: ElementRef<HTMLElement>[] = this.popups.toArray();
         if (movieArray.length) {
-          console.log(movieArray[0].nativeElement);
           for (let i: number = 0; i < this.movies.length; i++) {
             this.map.set(this.movies[i].title, movieArray[i].nativeElement);
           }
@@ -68,6 +70,7 @@ export class MemberComponent implements OnInit, AfterViewInit {
   public getMovie(title: string): void {
     this.communicationService.getMovie(title).subscribe((movie: Movie) => {
       this.movie = movie;
+      this.price = `${this.movie.price}$`;
     });
   }
 
@@ -86,22 +89,18 @@ export class MemberComponent implements OnInit, AfterViewInit {
   public getAllRoles(title: string): void {
     this.communicationService.getAllRoles(title).subscribe((roles: string[]) => {
       this.roles = roles;
-      console.log(this.roles, "roles");
     });
   }
 
   public getCrew(title: string): void {
     this.communicationService.getCrew(title).subscribe((crew: Person[]) => {
       this.crew = crew;
-      console.log(this.crew, "crew");
     });
   }
 
   public getAwards(title: string): void {
     this.communicationService.getAwards(title).subscribe((awards: Oscar[]) => {
       this.awards = awards;
-      console.log(this.awards, "awards");
-
     });
   }
 
@@ -118,7 +117,6 @@ export class MemberComponent implements OnInit, AfterViewInit {
   }
 
   public findInformation(title: string): void {
-    console.log(title);
     this.getMovie(title);
     this.getDuration(title);
     this.getWatchtime(title, this.getCurrentMemberName());
@@ -132,11 +130,10 @@ export class MemberComponent implements OnInit, AfterViewInit {
     const title: HTMLElement = target.firstChild as HTMLElement;
     if (title.textContent) {
       this.findInformation(title.textContent);
-      console.log(this.roles);
+      this.checkMembership();
     }
     this.hide();
     this.popup = this.map.get(title.textContent as string) ? this.map.get(title.textContent as string) : null;
-    console.log(this.popup);
     this.show();
   }
 
@@ -149,6 +146,17 @@ export class MemberComponent implements OnInit, AfterViewInit {
   public show(): void {
     if (this.popup) {
       this.popup.style.display = "block";
+    }
+  }
+
+  public checkMembership(): void {
+    const member = this.loggedUser.member;
+    if (member) {
+      this.communicationService.checkMonthlyMembership(member.email).subscribe((res: any) => {
+        if (res !== 0) {
+          this.price = "FREE";
+        }
+      });
     }
   }
 }
