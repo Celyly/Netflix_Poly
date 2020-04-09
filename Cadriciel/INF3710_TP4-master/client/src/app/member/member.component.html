@@ -17,8 +17,8 @@
           <div class="description">
             <div class="movie-info">
               <h2>{{movie.title}} ({{movie.duration}}mins)</h2>
-              <h5>Genre: <h6>{{movie.genre}}</h6></h5>
-              <h5>Production date: <h6>{{movie.productiondate}}</h6></h5>
+              <h5>Genre: <h6 class="section">{{movie.genre}}</h6></h5>
+              <h5>Production date: <h6 class="section">{{movie.productiondate}}</h6></h5>
               <button *ngIf="isContinuing()" type="button" class="btn btn-danger my-sm-0">Resume movie at {{watchtime}}mins</button>
               <button *ngIf="!isContinuing()" type="button" class="btn btn-danger my-sm-0">Watch movie ({{price}})</button>
             </div>
@@ -30,6 +30,7 @@
                 <h6 *ngFor="let person of crew"><span *ngIf="person.rolename === role">{{person.personname}} ({{person.salary}}$)</span></h6>
                 <p></p>
               </div>
+              <h5 *ngIf="awards.length > 0">Oscars: <h6 *ngFor="let award of awards"><span>{{award.category}} ({{award.oscartype}})</span></h6></h5>
             </div>
           </div>
           <!-- <button *ngIf="isContinuing()" type="button" class="btn btn-danger my-sm-0">Resume movie at {{watchtime}}mins</button>
