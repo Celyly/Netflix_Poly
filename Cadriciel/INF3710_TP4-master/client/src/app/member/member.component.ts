@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren } from "@angular/core";
+import { Router } from "@angular/router";
 import { Movie } from "../../../../common/Movie";
 import { Oscar } from "../../../../common/Oscar";
 import { Person } from "../../../../common/Person";
@@ -33,7 +34,8 @@ export class MemberComponent implements OnInit, AfterViewInit {
 
   public map: Map<string, HTMLElement | null>;
 
-  public constructor(public communicationService: CommunicationService, public loggedService: LoggedUserService) {
+  public constructor(public communicationService: CommunicationService, public loggedService: LoggedUserService,
+                     public router: Router) {
     this.loggedService.loggedUser.subscribe((user) => this.loggedUser = user);
     this.watchtime = 0;
     this.duration = 0;
@@ -158,5 +160,9 @@ export class MemberComponent implements OnInit, AfterViewInit {
         }
       });
     }
+  }
+
+  public watch(): void {
+    this.router.navigate(["/watch"], { state: { role: "MEMBER" } });
   }
 }

@@ -44,7 +44,7 @@ export class DatabaseController {
         //             name: member.memberName,
         //             password: member.memberPassword,
         //             email: member.email,
-        //             deliveryAddress: member.deliveryAddress
+        //             zipcode: member.zipcode
         //         }));
         //         res.json(members);
         //         }).catch((e: Error) => {
