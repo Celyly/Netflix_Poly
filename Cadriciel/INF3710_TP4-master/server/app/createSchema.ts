@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Member (
     memberName          VARCHAR(200)            NOT NULL,
     memberPassword      VARCHAR(500)            NOT NULL, -- Doit être encrypté
     email               VARCHAR(200)            NOT NULL,
-    deliveryAddress     VARCHAR(50)             NOT NULL,
+    zipcode             VARCHAR(6)              NOT NULL,
     PRIMARY KEY (memberId)
 );
 

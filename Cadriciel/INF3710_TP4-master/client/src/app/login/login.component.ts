@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
         name: res[0].membername,
         password: res[0].memberpassword,
         email: res[0].email,
-        zip: res[0].deliveryaddress,
+        zip: res[0].zipcode,
         creditCard: null
       };
       if (this.email === "admin@netflixpoly.com") {
