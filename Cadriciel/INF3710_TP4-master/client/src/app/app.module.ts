@@ -15,6 +15,7 @@ import { MovieComponent } from "./movie/movie.component";
 import { RegisterPaymentComponent } from "./registration/register-payment/register-payment.component";
 import { RegisterPlanComponent } from "./registration/register-plan/register-plan.component";
 import { RegisterComponent } from "./registration/register/register.component";
+import { SafeUrlPipe } from "./safe-url.pipe";
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { RegisterComponent } from "./registration/register/register.component";
     RegisterPlanComponent,
     RegisterPaymentComponent,
     MovieComponent,
+    SafeUrlPipe,
   ],
   imports: [
     CommonModule,
