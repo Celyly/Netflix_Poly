@@ -40,7 +40,7 @@ GROUP BY genre
 -- 4) Trouvez le nombre total de films groupés par réalisateur
 SELECT COUNT(m.movieNo) as nbTotalFilms, p.personName as realisateur
 FROM NETFLIXDB.Movie m, NETFLIXDB.Person p, NETFLIXDB.Role r
-WHERE p.personId = r.personId AND r.roleNom = 'Réalisateur' AND m.movieNo = r.movieNo
+WHERE p.personId = r.personId AND r.roleName = 'Réalisateur' AND m.movieNo = r.movieNo
 GROUP BY personName
 
 
@@ -96,60 +96,73 @@ GROUP BY m.movieNo
 
 -- 8) Trouvez le nom et date de naissance des acteurs qui jouent dans les films qui sont visionnés
 --    le plus souvent (soit plus que la moyenne)
-SELECT p.personName, p.dateNaissance
-FROM NETFLIXDB.Person p, NETFLIXDB.Role r, NETFLIXDB.Viewing v
-WHERE p.personId = r.personId AND r.movieNo = v.movieNo
-GROUP BY p.personName, p.dateNaissance
-HAVING COUNT(v.movieNo) > (
-	SELECT AVG(nViews) FROM (
-		SELECT Viewing.movieNo, COUNT(Viewing.movieNo) as nViews
-		FROM NETFLIXDB.Viewing, NETFLIXDB.Role
-		WHERE Role.movieNo = Viewing.movieNo
-		GROUP BY Viewing.movieNo
-	) as viewTable
+
+SELECT p.personName, p.birthDate
+FROM NETFLIXDB.Person p, NETFLIXDB.Role r, NETFLIXDB.Viewing v, NETFLIXDB.Movie m
+WHERE p.personId = r.personId AND r.movieNo = v.movieNo AND r.roleName = 'Acteur' 
+AND (SELECT COUNT(Viewing.movieNo) as nViews
+	FROM NETFLIXDB.Viewing, NETFLIXDB.Role
+	WHERE Role.movieNo = Viewing.movieNo AND m.movieNo = Viewing.movieNo
+	GROUP BY Viewing.movieNo) > 
+        (SELECT AVG(nViews) FROM 
+            (SELECT Viewing.movieNo, COUNT(Viewing.movieNo) as nViews
+             FROM NETFLIXDB.Viewing, NETFLIXDB.Role
+             WHERE Role.movieNo = Viewing.movieNo
+             GROUP BY Viewing.movieNo
+            ) as viewTable
 )
+GROUP BY p.personName, p.birthDate
 
 
 -- 9) Trouvez le nom du ou des réalisateurs qui ont réalisé les films qui ont le plus grand nombre
 --    de nominations aux oscars. Par exemple, Woody Allen et Steven Spielberg ont réalisé 10
---    films qui ont été nominés aux oscars.
+--    films qui ont été nominés aux oscars. 
+--    (On inclut également les gagnants comme une nominations aux oscars puisqu'avant de devenir un gagnant, il faut être nominé)
+
 SELECT p.personName
 FROM NETFLIXDB.Person p, NETFLIXDB.Role r, NETFLIXDB.Oscar o
-WHERE p.personId = r.personId AND r.roleNom = 'Réalisateur' AND r.movieNo = o.movieNo
+WHERE p.personId = r.personId AND r.roleName = 'Réalisateur' AND r.movieNo = o.movieNo
 GROUP BY p.personName
 HAVING COUNT(o.movieNo) >= (
-    SELECT MAX(nNominations) FROM (
-        SELECT Oscar.movieNo, COUNT(Oscar.movieNo) as nNominations
-        FROM NETFLIXDB.Oscar
-        WHERE Oscar.oscarType = 'Nominee'
-        GROUP BY Oscar.movieNo
-    ) as viewTable
+    SELECT MAX(nNominations) FROM
+		(SELECT COUNT(Oscar.movieNo) as nNominations
+		FROM NETFLIXDB.Oscar, NETFLIXDB.Movie
+		WHERE Oscar.movieNo = Movie.movieNo
+		GROUP BY Movie.movieNo
+		) as nominationTable
 )
+
 
 
 -- 10) Trouvez le nom des réalisateurs qui ont été le plus souvent nominés aux oscars mais qui
 --     n’ont jamais gagné d’oscar
+
 SELECT p.personName
-FROM NETFLIXDB.Person p, NETFLIXDB.Role r
-WHERE p.personId = r.personId AND r.roleNom = 'Réalisateur'
-GROUP BY p.personName
+FROM NETFLIXDB.Person p, NETFLIXDB.Role r, NETFLIXDB.Oscar o
+WHERE p.personId = r.personId AND r.roleName = 'Réalisateur' AND r.movieNo = o.movieNo
+GROUP BY p.personName, p.personId
 HAVING COUNT(o.movieNo) >= (
-    SELECT MAX(nNominations) FROM (
-        SELECT Oscar.movieNo, COUNT(Oscar.movieNo) as nNominations
-        FROM NETFLIXDB.Oscar
-        WHERE Oscar.oscarType = 'Nominee'
-        GROUP BY Oscar.movieNo
-    ) as viewTable
-)
--- je ne suis pas sure comment vérifié s'ils ont gagné déjà ou non
+    SELECT MAX(nNominations) FROM
+        (SELECT COUNT(Oscar.movieNo) as nNominations
+        FROM NETFLIXDB.Oscar, NETFLIXDB.Movie
+        WHERE Oscar.movieNo = Movie.movieNo AND Oscar.oscarType = 'Nominee'
+        GROUP BY Movie.movieNo
+        ) as nomineesTable
+) AND p.personId NOT IN
+	(SELECT Person.personId
+	 FROM NETFLIXDB.Oscar, NETFLIXDB.Movie, NETFLIXDB.Person, NETFLIXDB.Role
+	 WHERE Oscar.movieNo = Movie.movieNo AND Oscar.oscarType = 'Winner' 
+         AND Person.personId = Role.personId AND Role.roleName = 'Réalisateur' 
+         AND Role.movieNo = Oscar.movieNo
+	)
 
 
 -- 11) Trouvez les films (titre, année) qui ont gagné le plus d’oscars. Listez également leur
 --     réalisateurs et leurs acteurs ;
-SELECT m.title, m.productionDate, p.personName
+SELECT m.title, m.productionDate, p.personName, r.roleName
 FROM NETFLIXDB.Movie m, NETFLIXDB.Person p, NETFLIXDB.Role r, NETFLIXDB.Oscar o
 WHERE p.personId = r.personId AND r.movieNo = m.movieNo AND m.movieNo = o.MovieNo AND o.oscarType = 'Winner'
-GROUP BY m.title, m.productionDate, p.personName
+GROUP BY m.title, m.productionDate, p.personName, r.roleName
 HAVING COUNT(o.movieNo) >= (
     SELECT MAX(nWins) FROM (
         SELECT Oscar.movieNo, COUNT(Oscar.movieNo) as nWins
@@ -157,26 +170,25 @@ HAVING COUNT(o.movieNo) >= (
         WHERE Oscar.oscarType = 'Winner'
         GROUP BY Oscar.movieNo
     ) as viewTable
-)
+) AND r.roleName IN ('Réalisateur', 'Acteur')
 
 
 -- 12) Quelles paires de femmes québécoises ont le plus souvent travaillé ensemble dans différents
 --     films ?
-SELECT p1.personName
+SELECT p1.personName, p2.personName
 FROM NETFLIXDB.Person p1, NETFLIXDB.Person p2, NETFLIXDB.Role r1, NETFLIXDB.Role r2
 WHERE p1.sex = 'F' AND p2.sex = 'F'
-AND p1.nationality = 'Québécoise' AND p2.nationality = 'Québécoise'
+AND p1.nationality = 'Québécois' AND p2.nationality = 'Québécois'
 AND p1.personId != p2.personId
 AND r1.personId = p1.personId AND r2.personId = r2.personID
 AND r1.movieNo = r2.movieNo
-GROUP BY p1.personName
--- ahaha ça donne la bonne réponse mais je pense pas que c'est bon ahahahahahahahahahaha
+GROUP BY p1.personName, p2.personName
 
 
 -- 13) Comment a évolué la carrière de Woody Allen ? (On veut connaitre tous ses rôles dans un
 --     film (réalisateur, acteur, etc.) du plus ancien au plus récent)
-SELECT m.productionDate, m.title, p.personName, r.roleNom
+SELECT m.productionDate, m.title, p.personName, r.roleName
 FROM NETFLIXDB.Person p, NETFLIXDB.Role r, NETFLIXDB.Movie m
 WHERE p.personName = 'Woody Allen' AND p.personId = r.personId AND r.movieNo = m.movieNo
-GROUP BY m.productionDate, m.title, p.personName, r.roleNom
+GROUP BY m.productionDate, m.title, p.personName, r.roleName
 ORDER BY m.productionDate
