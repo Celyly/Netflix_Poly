@@ -40,7 +40,7 @@ GROUP BY genre
 -- 4) Trouvez le nombre total de films groupés par réalisateur
 SELECT COUNT(m.movieNo) as nbTotalFilms, p.personName as realisateur
 FROM NETFLIXDB.Movie m, NETFLIXDB.Person p, NETFLIXDB.Role r
-WHERE p.personId = r.personId AND r.roleNom = 'Réalisateur' AND m.movieNo = r.movieNo
+WHERE p.personId = r.personId AND r.roleName = 'Réalisateur' AND m.movieNo = r.movieNo
 GROUP BY personName
 
 
@@ -77,7 +77,7 @@ SELECT m.title, m.movieNo,
 FROM NETFLIXDB.Movie m
 ORDER BY orderTotal, viewTotal
 
-
+-- ** doit retourner au moins 2 tupes
 -- 7) Trouvez le titre et le prix des films qui n’ont jamais été commandés sous forme de DVD mais
 --    qui ont été visionnés plus de 10 fois
 SELECT m.title, m.price
@@ -96,10 +96,10 @@ GROUP BY m.movieNo
 
 -- 8) Trouvez le nom et date de naissance des acteurs qui jouent dans les films qui sont visionnés
 --    le plus souvent (soit plus que la moyenne)
-SELECT p.personName, p.dateNaissance
+SELECT p.personName, p.birthDate
 FROM NETFLIXDB.Person p, NETFLIXDB.Role r, NETFLIXDB.Viewing v
 WHERE p.personId = r.personId AND r.movieNo = v.movieNo
-GROUP BY p.personName, p.dateNaissance
+GROUP BY p.personName, p.birthDate
 HAVING COUNT(v.movieNo) > (
 	SELECT AVG(nViews) FROM (
 		SELECT Viewing.movieNo, COUNT(Viewing.movieNo) as nViews
@@ -110,18 +110,19 @@ HAVING COUNT(v.movieNo) > (
 )
 
 
+-- ** doit retourner au moins 2 tupes
 -- 9) Trouvez le nom du ou des réalisateurs qui ont réalisé les films qui ont le plus grand nombre
 --    de nominations aux oscars. Par exemple, Woody Allen et Steven Spielberg ont réalisé 10
 --    films qui ont été nominés aux oscars.
 SELECT p.personName
 FROM NETFLIXDB.Person p, NETFLIXDB.Role r, NETFLIXDB.Oscar o
-WHERE p.personId = r.personId AND r.roleNom = 'Réalisateur' AND r.movieNo = o.movieNo
+WHERE p.personId = r.personId AND r.roleName = 'Réalisateur' AND r.movieNo = o.movieNo
 GROUP BY p.personName
 HAVING COUNT(o.movieNo) >= (
     SELECT MAX(nNominations) FROM (
         SELECT Oscar.movieNo, COUNT(Oscar.movieNo) as nNominations
         FROM NETFLIXDB.Oscar
-        WHERE Oscar.oscarType = 'Nominee'
+        WHERE Oscar.oscarType = 'Nominee' OR Oscar.oscarType
         GROUP BY Oscar.movieNo
     ) as viewTable
 )
