@@ -5,9 +5,9 @@ import { CreditCard } from "../../../common/CreditCard";
 import { Member } from "../../../common/Member";
 
 // import { Room } from "../../../common/tables/Room";
+import { Movie } from "../../../common/Movie";
 import {schema} from "../createSchema";
 import {data} from "../populateDB";
-import { Movie } from "../../../common/Movie";
 
 @injectable()
 export class DatabaseService {
@@ -50,50 +50,51 @@ export class DatabaseService {
     // }
 
     public async getMovies(): Promise<pg.QueryResult> {
-        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Movie`);
+        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Film`);
     }
 
     public async getMovie(movieName: string): Promise<pg.QueryResult> {
-        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Movie WHERE title = '${movieName}'`);
+        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Film WHERE titre = '${movieName}'`);
     }
 
     public async insertMovie(movie: Movie): Promise<pg.QueryResult> {
         // tslint:disable-next-line: max-line-length
-        return this.pool.query(`INSERT INTO ${this.DB_NAME}.Movie VALUES(${movie.movieno}, '${movie.title}', '${movie.genre}', '${movie.productiondate}', ${movie.duration}, ${movie.price})`);
+        return this.pool.query(`INSERT INTO ${this.DB_NAME}.Film VALUES(${movie.movieno}, '${movie.title}', '${movie.genre}', '${movie.productiondate}', ${movie.duration}, ${movie.price})`);
     }
 
     public async updateMovie(movie: Movie): Promise<pg.QueryResult> {
         // tslint:disable-next-line: max-line-length
-        return this.pool.query(`UPDATE ${this.DB_NAME}.Movie SET movieNo=${movie.movieno}, title='${movie.title}', genre='${movie.genre}', productionDate='${movie.productiondate}', duration=${movie.duration}, price=${movie.price} WHERE movieNo=${movie.movieno}`);
+        return this.pool.query(`UPDATE ${this.DB_NAME}.Film SET noFilm=${movie.movieno}, titre='${movie.title}', genre='${movie.genre}', dateProduction='${movie.productiondate}', duree=${movie.duration}, prix=${movie.price} WHERE noFilm=${movie.movieno}`);
     }
 
     public async deleteMovie(movieno: number): Promise<pg.QueryResult> {
-        return this.pool.query(`DELETE FROM ${this.DB_NAME}.Movie WHERE movieNo = ${movieno}`);
+        return this.pool.query(`DELETE FROM ${this.DB_NAME}.Film WHERE noFilm = ${movieno}`);
     }
 
     public async getMovieDuration(title: string): Promise<pg.QueryResult> {
-        return this.pool.query(`SELECT duration FROM ${this.DB_NAME}.Movie WHERE title = '${title}'`);
+        return this.pool.query(`SELECT duree FROM ${this.DB_NAME}.Film WHERE titre = '${title}'`);
     }
 
     public async getWatchtime(title: string, memberName: string): Promise<pg.QueryResult> {
         // tslint:disable-next-line: max-line-length
-        return this.pool.query(`SELECT v.duration FROM ${this.DB_NAME}.Member member, ${this.DB_NAME}.Movie m, ${this.DB_NAME}.Viewing v WHERE m.title = '${title}' AND m.movieNo = v.movieNo AND v.memberId = member.memberId AND member.memberName = '${memberName}'`);
+        return this.pool.query(`SELECT v.dureeVisionnement FROM ${this.DB_NAME}.Membre m, ${this.DB_NAME}.Film f, ${this.DB_NAME}.Visionnement v WHERE f.titre = '${title}' AND f.noFilm = v.noFilm AND v.idMembre = m.idMembre AND m.nomMembre = '${memberName}'`);
     }
 
     public async getMembers(): Promise<pg.QueryResult> {
-        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Member`);
+        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Membre`);
     }
 
     public async getAccount(email: string, password: string): Promise<pg.QueryResult> {
-        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Member m WHERE m.email = '${email}' AND m.memberPassword = '${password}'`);
+        // tslint:disable-next-line: max-line-length
+        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Membre m WHERE m.adresseCourriel = '${email}' AND m.motDePasse = '${password}'`);
     }
 
     public async memberCreated(email: string): Promise<pg.QueryResult> {
-        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Member m WHERE m.email = '${email}'`);
+        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Membre m WHERE m.adresseCourriel = '${email}'`);
     }
 
     public async getNbMember(): Promise<pg.QueryResult> {
-        return this.pool.query(`SELECT COUNT(*) FROM ${this.DB_NAME}.Member m WHERE m.memberId LIKE 'member%'`);
+        return this.pool.query(`SELECT COUNT(*) FROM ${this.DB_NAME}.Membre m WHERE m.idMembre LIKE 'member%'`);
     }
 
     // Insert Member and CreditCard
@@ -105,36 +106,36 @@ export class DatabaseService {
         const credit: CreditCard = member.creditCard as CreditCard;
         const memberId: string = `member${zero}${member.id}`;
         // tslint:disable-next-line: max-line-length
-        const queryCredit: string = `INSERT INTO ${this.DB_NAME}.CreditCard VALUES('${credit.cardNo}', '${memberId}', '${credit.ccv}', '${credit.ownerCard}', '${credit.expirationDate}');`;
+        const queryCredit: string = `INSERT INTO ${this.DB_NAME}.CarteCredit VALUES('${credit.cardNo}', '${memberId}', '${credit.ccv}', '${credit.ownerCard}', '${credit.expirationDate}');`;
         let queryPlan: string = '';
         if (plan === 'monthly') {
-            queryPlan = `INSERT INTO ${this.DB_NAME}.MemberMonthly VALUES('${memberId}', '${this.PRICE}', CURRENT_DATE, CURRENT_DATE + 30)`;
+            queryPlan = `INSERT INTO ${this.DB_NAME}.MembreMensuel VALUES('${memberId}', '${this.PRICE}', CURRENT_DATE, CURRENT_DATE + 30)`;
         } else if (plan === 'payperview') {
             queryPlan = `INSERT INTO ${this.DB_NAME}.MemberPayPerView VALUES('${memberId}', 0)`;
         }
 
         // tslint:disable-next-line: max-line-length
-        return this.pool.query(`INSERT INTO ${this.DB_NAME}.Member VALUES('${memberId}', '${member.name}', '${member.password}', '${member.email}', '${member.zip}'); ${queryCredit} ${queryPlan}`);
+        return this.pool.query(`INSERT INTO ${this.DB_NAME}.Membre VALUES('${memberId}', '${member.name}', '${member.password}', '${member.email}', '${member.zip}'); ${queryCredit} ${queryPlan}`);
     }
 
     public async getAllRoles(title: string): Promise<pg.QueryResult> {
         // tslint:disable-next-line: max-line-length
-        return this.pool.query(`SELECT DISTINCT r.roleName FROM ${this.DB_NAME}.Movie m, ${this.DB_NAME}.Role r WHERE m.movieno = r.movieno AND m.title = '${title}'`);
+        return this.pool.query(`SELECT DISTINCT r.nomRole FROM ${this.DB_NAME}.Film f, ${this.DB_NAME}.Role r WHERE f.noFilm = r.noFilm AND f.titre = '${title}'`);
     }
 
     public async getCrew(title: string): Promise<pg.QueryResult> {
         // tslint:disable-next-line: max-line-length
-        return this.pool.query(`SELECT p.personName, p.birthDate, p.sex, p.nationality, r.roleName, r.salary FROM ${this.DB_NAME}.Movie m, ${this.DB_NAME}.Role r, ${this.DB_NAME}.Person p WHERE m.title = '${title}' AND m.movieno = r.movieno AND r.personId = p.personId`);
+        return this.pool.query(`SELECT p.nomPersonne, p.dateNaissance, p.sexe, p.nationalite, r.nomRole, r.salaire FROM ${this.DB_NAME}.Film f, ${this.DB_NAME}.Role r, ${this.DB_NAME}.Personne p WHERE f.titre = '${title}' AND f.noFilm = r.noFilm AND r.idPersonne = p.idPersonne`);
     }
 
     public async getAwards(title: string): Promise<pg.QueryResult> {
         // tslint:disable-next-line: max-line-length
-        return this.pool.query(`SELECT o.category, o.oscarType, c.host FROM ${this.DB_NAME}.Movie m, ${this.DB_NAME}.Oscar o, ${this.DB_NAME}.Ceremony c WHERE m.title = '${title}' AND m.movieno = o.movieno AND o.ceremonyNo = c.ceremonyNo`);
+        return this.pool.query(`SELECT o.categorie, o.type, c.mc FROM ${this.DB_NAME}.Film f, ${this.DB_NAME}.Oscar o, ${this.DB_NAME}.Ceremonie c WHERE f.titre = '${title}' AND f.noFilm = o.noFilm AND o.noCeremonie = c.noCeremonie`);
     }
 
     public async checkMonthlyMembership(email: string): Promise<pg.QueryResult> {
         // tslint:disable-next-line: max-line-length
-        return this.pool.query(`SELECT * FROM NETFLIXDB.Member m, NETFLIXDB.MemberMonthly mon WHERE m.email = '${email}' AND m.memberid = mon.memberid`);
+        return this.pool.query(`SELECT * FROM ${this.DB_NAME}.Membre m, ${this.DB_NAME}.MembreMensuel mon WHERE m.adresseCourriel = '${email}' AND m.idMembre = mon.idMembre`);
     }
 
     // // HOTEL

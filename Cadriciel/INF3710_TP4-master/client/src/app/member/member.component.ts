@@ -78,7 +78,7 @@ export class MemberComponent implements OnInit, AfterViewInit {
 
   public getWatchtime(title: string, memberName: string): void {
     this.communicationService.getWatchtime(title, memberName).subscribe((watchtime: any) => {
-      watchtime ? this.watchtime = watchtime.duration : this.watchtime = 0;
+      watchtime ? this.watchtime = watchtime.dureevisionnement : this.watchtime = 0;
     });
   }
 

@@ -211,13 +211,13 @@ export class DatabaseController {
 
         router.get("/movie", (req: Request, res: Response, next: NextFunction) => {
             this.databaseService.getMovies().then((result: pg.QueryResult) => {
-                const movies: Movie[] = result.rows.map((movie: Movie) => ({
-                        movieno: movie.movieno,
-                        title: movie.title,
+                const movies: Movie[] = result.rows.map((movie: any) => ({
+                        movieno: movie.nofilm,
+                        title: movie.titre,
                         genre: movie.genre,
-                        productiondate: String(movie.productiondate).substr(4, 11),
-                        duration: movie.duration,
-                        price: movie.price
+                        productiondate: String(movie.dateproduction).substr(4, 11),
+                        duration: movie.duree,
+                        price: movie.prix
                     }));
                 res.json(movies);
             }).catch((e: Error) => {
@@ -227,13 +227,13 @@ export class DatabaseController {
 
         router.get("/movie/:title", (req: Request, res: Response, next: NextFunction) => {
             this.databaseService.getMovie(req.params.title).then((result: pg.QueryResult) => {
-                const myMovie: Movie = result.rows.map((movie: Movie) => ({
-                    movieno: movie.movieno,
-                    title: movie.title,
+                const myMovie: Movie = result.rows.map((movie: any) => ({
+                    movieno: movie.nofilm,
+                    title: movie.titre,
                     genre: movie.genre,
-                    productiondate: String(movie.productiondate).substr(4, 11),
-                    duration: movie.duration,
-                    price: movie.price
+                    productiondate: String(movie.dateproduction).substr(4, 11),
+                    duration: movie.duree,
+                    price: movie.prix
                 }))[0];
                 res.json(myMovie);
             }).catch((e: Error) => {
@@ -243,7 +243,7 @@ export class DatabaseController {
 
         router.get("/movie/:title/duration", (req: Request, res: Response, next: NextFunction) => {
             this.databaseService.getMovieDuration(req.params.title).then((result: pg.QueryResult) => {
-                res.json(result.rows[0].duration);
+                res.json(result.rows[0].duree);
             }).catch((e: Error) => {
                 console.error(e.stack);
             });
@@ -261,7 +261,7 @@ export class DatabaseController {
             this.databaseService.getAllRoles(req.params.title).then((result: pg.QueryResult) => {
                 const roles: string[] = [];
                 for (const role of result.rows) {
-                    roles.push(role.rolename);
+                    roles.push(role.nomrole);
                 }
                 res.json(roles);
             }).catch((e: Error) => {
@@ -271,13 +271,13 @@ export class DatabaseController {
 
         router.get("/movie/:title/crew", (req: Request, res: Response, next: NextFunction) => {
             this.databaseService.getCrew(req.params.title).then((result: pg.QueryResult) => {
-                const crew: Person[] = result.rows.map((person: Person) => ({
-                    personname: person.personname,
-                    birthdate: String(person.birthdate).substr(4, 11),
-                    sex: person.sex,
-                    nationality: person.nationality,
-                    rolename: person.rolename,
-                    salary: person.salary
+                const crew: Person[] = result.rows.map((person: any) => ({
+                    personname: person.nompersonne,
+                    birthdate: String(person.datenaissance).substr(4, 11),
+                    sex: person.sexe,
+                    nationality: person.nationalite,
+                    rolename: person.nomrole,
+                    salary: person.salaire
                 }));
                 res.json(crew);
             }).catch((e: Error) => {
@@ -287,10 +287,10 @@ export class DatabaseController {
 
         router.get("/movie/:title/awards", (req: Request, res: Response, next: NextFunction) => {
             this.databaseService.getAwards(req.params.title).then((result: pg.QueryResult) => {
-                const oscars: Oscar[] = result.rows.map((oscar: Oscar) => ({
-                    category: oscar.category,
-                    oscartype: oscar.oscartype,
-                    host: oscar.host
+                const oscars: Oscar[] = result.rows.map((oscar: any) => ({
+                    category: oscar.categorie,
+                    oscartype: oscar.type,
+                    host: oscar.mc
                 }));
                 res.json(oscars);
             }).catch((e: Error) => {
