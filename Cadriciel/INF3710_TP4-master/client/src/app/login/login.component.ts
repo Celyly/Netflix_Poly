@@ -40,11 +40,11 @@ export class LoginComponent implements OnInit {
     if (res !== -1) {
       this.isWrong = false;
       const member: Member = {
-        id: res[0].memberid,
-        name: res[0].membername,
-        password: res[0].memberpassword,
-        email: res[0].email,
-        zip: res[0].zipcode,
+        id: res[0].idmembre,
+        name: res[0].nommembre,
+        password: res[0].motdepasse,
+        email: res[0].adressecourriel,
+        zip: res[0].adressepostale,
         creditCard: null
       };
       if (this.email === "admin@netflixpoly.com") {

@@ -3,130 +3,131 @@ SET search_path = 'NETFLIXDB';
 DROP SCHEMA IF EXISTS NETFLIXDB CASCADE;
 CREATE SCHEMA NETFLIXDB;
 
-CREATE TABLE IF NOT EXISTS NETFLIXDB.Member (
-	memberId		    VARCHAR(50)             NOT NULL,
-    memberName          VARCHAR(200)            NOT NULL,
-    memberPassword      VARCHAR(500)            NOT NULL, -- Doit être encrypté
-    email               VARCHAR(200)            NOT NULL,
-    zipcode             VARCHAR(6)              NOT NULL,
-    PRIMARY KEY (memberId)
+CREATE TABLE IF NOT EXISTS NETFLIXDB.Membre (
+	idMembre		    VARCHAR(50)             NOT NULL,
+    nomMembre           VARCHAR(200)            NOT NULL,
+    motDePasse          VARCHAR(500)            NOT NULL, -- Doit être encrypté
+    adresseCourriel     VARCHAR(200)            NOT NULL,
+    adressePostale      VARCHAR(6)              NOT NULL,
+    PRIMARY KEY (idMembre)
 );
 
-CREATE TABLE IF NOT EXISTS NETFLIXDB.MemberMonthly (
-	memberId		    VARCHAR(50)             NOT NULL,
-    subscriptionPrice   NUMERIC(9,2)            NOT NULL,
-    startDate           DATE                    NOT NULL,
-    dueDate             DATE                    NOT NULL,
-    FOREIGN KEY (memberId) REFERENCES NETFLIXDB.Member(memberId)
+CREATE TABLE IF NOT EXISTS NETFLIXDB.MembreMensuel (
+	idMembre		    VARCHAR(50)             NOT NULL,
+    prixAbonnement      NUMERIC(9,2)            NOT NULL,
+    dateDebut           DATE                    NOT NULL,
+    dateEcheance        DATE                    NOT NULL,
+    FOREIGN KEY (idMembre) REFERENCES NETFLIXDB.Membre(idMembre)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    PRIMARY KEY (memberId)
+    PRIMARY KEY (idMembre)
 );
 
 CREATE TABLE IF NOT EXISTS NETFLIXDB.MemberPayPerView (
-	memberId		        VARCHAR(50)           NOT NULL,
+	idMembre		        VARCHAR(50)           NOT NULL,
     film_payperview         INT                   NOT NULL, -- nombre de films
-    FOREIGN KEY (memberId) REFERENCES NETFLIXDB.Member(memberId)
+    FOREIGN KEY (idMembre) REFERENCES NETFLIXDB.Membre(idMembre)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    PRIMARY KEY (memberId)
+    PRIMARY KEY (idMembre)
 );
 
 
-CREATE TABLE IF NOT EXISTS NETFLIXDB.CreditCard (
-    cardNo              VARCHAR(19)          NOT NULL,
-	memberId	        VARCHAR(50)          NOT NULL,
+CREATE TABLE IF NOT EXISTS NETFLIXDB.CarteCredit (
+    noCarte             VARCHAR(19)          NOT NULL,
+	idMembre	        VARCHAR(50)          NOT NULL,
     ccv                 INT                  NOT NULL,
-    ownerCard           VARCHAR(200)         NOT NULL,
-    expirationDate      DATE                 NOT NULL CHECK (expirationDate > CURRENT_DATE),
-    FOREIGN KEY (memberId) REFERENCES NETFLIXDB.Member(memberId)
+    titulaire           VARCHAR(200)         NOT NULL,
+    dateExpiration      DATE                 NOT NULL CHECK (dateExpiration > CURRENT_DATE),
+    FOREIGN KEY (idMembre) REFERENCES NETFLIXDB.Membre(idMembre)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    PRIMARY KEY (cardNo)
+    PRIMARY KEY (noCarte)
 );
 
-CREATE TABLE IF NOT EXISTS NETFLIXDB.Movie (
-    movieNo         SERIAL                  NOT NULL,
-    title           VARCHAR(200)            NOT NULL,
+CREATE TABLE IF NOT EXISTS NETFLIXDB.Film (
+    noFilm          SERIAL                  NOT NULL,
+    titre           VARCHAR(200)            NOT NULL,
     genre           VARCHAR(200)            NOT NULL,
-    productionDate  DATE                    NOT NULL,
-    duration        INT                     NOT NULL,
-    price           NUMERIC(9,2)            NOT NULL,
-    PRIMARY KEY (movieNo)
+    dateProduction  DATE                    NOT NULL,
+    duree           INT                     NOT NULL,
+    prix            NUMERIC(9,2)            NOT NULL,
+    PRIMARY KEY (noFilm)
 );
 
-CREATE TABLE IF NOT EXISTS NETFLIXDB.Viewing (
-    viewNo          SERIAL               NOT NULL,
-    movieNo         SERIAL               NOT NULL,
-    memberId        VARCHAR(50)          NOT NULL,
-    viewDate        DATE                 NOT NULL,
-    duration        INT                  NOT NULL,
-    FOREIGN KEY (memberId) REFERENCES NETFLIXDB.Member(memberId)
+CREATE TABLE IF NOT EXISTS NETFLIXDB.Visionnement (
+    noVisionnement          SERIAL               NOT NULL,
+    noFilm                  SERIAL               NOT NULL,
+    idMembre                VARCHAR(50)          NOT NULL,
+    dateVisionnement        DATE                 NOT NULL,
+    dureeVisionnement       INT                  NOT NULL,
+    FOREIGN KEY (idMembre) REFERENCES NETFLIXDB.Membre(idMembre)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (movieNo) REFERENCES NETFLIXDB.Movie(movieNo)
+    FOREIGN KEY (noFilm) REFERENCES NETFLIXDB.Film(noFilm)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    PRIMARY KEY (viewNo)
+    PRIMARY KEY (noVisionnement)
 );
 
 
 CREATE TABLE IF NOT EXISTS NETFLIXDB.DVD (
-    DVDNo           SERIAL        NOT NULL,
-    movieNo         SERIAL        NOT NULL,
-    dvdPrice        SERIAL        NOT NULL,
-    FOREIGN KEY (movieNo) REFERENCES NETFLIXDB.Movie(movieNo)
+    noDVD          SERIAL        NOT NULL,
+    noFilm         SERIAL        NOT NULL,
+    prixDVD        SERIAL        NOT NULL,
+    FOREIGN KEY (noFilm) REFERENCES NETFLIXDB.Film(noFilm)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    PRIMARY KEY (DVDNo, movieNo)
+    PRIMARY KEY (noDVD, noFilm)
 );
 
-CREATE TABLE IF NOT EXISTS NETFLIXDB.Order (
-    orderNo             SERIAL                NOT NULL,
-    memberId            VARCHAR(50)           NOT NULL,
-    DVDNo               SERIAL                NOT NULL,
-    movieNo             SERIAL                NOT NULL,
-    deliveryPrice       NUMERIC(9, 2)         NOT NULL,
-    deliveryDate        DATE                  NOT NULL,
+CREATE TABLE IF NOT EXISTS NETFLIXDB.Commande (
+    noCommande      SERIAL                NOT NULL,
+    idMembre        VARCHAR(50)           NOT NULL,
+    noDVD           SERIAL                NOT NULL,
+    noFilm          SERIAL                NOT NULL,
+    coutEnvoi       NUMERIC(9, 2)         NOT NULL,
+    dateEnvoi       DATE                  NOT NULL,
     -- distance            NUMERIC(9, 2)         NOT NULL,
-    FOREIGN KEY (memberId) REFERENCES NETFLIXDB.Member(memberId)
+    FOREIGN KEY (idMembre) REFERENCES NETFLIXDB.Membre(idMembre)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (DVDNo, movieNo) REFERENCES NETFLIXDB.DVD(DVDNo, movieNo)
+    FOREIGN KEY (noDVD, noFilm) REFERENCES NETFLIXDB.DVD(noDVD, noFilm)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    PRIMARY KEY (orderNo)
+    PRIMARY KEY (noCommande)
 );
 
-CREATE TABLE IF NOT EXISTS NETFLIXDB.Person (
-    personId        SERIAL                  NOT NULL,
-    personName      VARCHAR(200)            NOT NULL,
-    birthDate       DATE                    NOT NULL,
-    sex             CHAR                    DEFAULT 'M' CHECK (sex IN ('M', 'F')),
-    nationality     VARCHAR(200),
-    PRIMARY KEY (personId)
+CREATE TABLE IF NOT EXISTS NETFLIXDB.Personne (
+    idPersonne          SERIAL                  NOT NULL,
+    nomPersonne         VARCHAR(200)            NOT NULL,
+    dateNaissance       DATE                    NOT NULL,
+    sexe                CHAR                    DEFAULT 'M' CHECK (sexe IN ('M', 'F')),
+    nationalite         VARCHAR(200),
+    PRIMARY KEY (idPersonne)
 );
 
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Role (
-    roleNo          SERIAL                  NOT NULL,
-    personId        SERIAL                  NOT NULL,
-    movieNo         SERIAL                  NOT NULL,
-    roleName        VARCHAR(200)            NOT NULL,
-    salary          NUMERIC(9,2)            NOT NULL,
-    FOREIGN KEY (personId) REFERENCES NETFLIXDB.Person(personId)
+    noRole          SERIAL                  NOT NULL,
+    idPersonne      SERIAL                  NOT NULL,
+    noFilm          SERIAL                  NOT NULL,
+    nomRole         VARCHAR(200)            NOT NULL,
+    salaire         NUMERIC(9,2)            NOT NULL,
+    FOREIGN KEY (idPersonne) REFERENCES NETFLIXDB.Personne(idPersonne)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (movieNo) REFERENCES NETFLIXDB.Movie(movieNo)
+    FOREIGN KEY (noFilm) REFERENCES NETFLIXDB.Film(noFilm)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    PRIMARY KEY (roleNo)
+    PRIMARY KEY (noRole)
 );
 
-CREATE TABLE IF NOT EXISTS NETFLIXDB.Ceremony (
-    ceremonyNo      SERIAL                  NOT NULL,
-    host            VARCHAR(200)            NOT NULL,
-    PRIMARY KEY (ceremonyNo)
+CREATE TABLE IF NOT EXISTS NETFLIXDB.Ceremonie (
+    noCeremonie     SERIAL                  NOT NULL,
+    mc              VARCHAR(200)            NOT NULL,
+    location        VARCHAR(200)            NOT NULL,
+    PRIMARY KEY (noCeremonie)
 );
 
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Oscar (
-    oscarNo         SERIAL                  NOT NULL,
-    ceremonyNo      SERIAL                  NOT NULL,
-    movieNo         SERIAL                  NOT NULL,
-    category        VARCHAR(200)            NOT NULL,
-    oscarType       VARCHAR(50)             NOT NULL CHECK (oscarType IN ('Nominee','Winner')),
-    FOREIGN KEY (ceremonyNo) REFERENCES NETFLIXDB.Ceremony(ceremonyNo)
+    code            SERIAL                  NOT NULL,
+    noCeremonie     SERIAL                  NOT NULL,
+    noFilm          SERIAL                  NOT NULL,
+    categorie       VARCHAR(200)            NOT NULL,
+    type            VARCHAR(50)             NOT NULL CHECK (type IN ('Nominee','Winner')),
+    FOREIGN KEY (noCeremonie) REFERENCES NETFLIXDB.Ceremonie(noCeremonie)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (movieNo) REFERENCES NETFLIXDB.Movie(movieNo)
+    FOREIGN KEY (noFilm) REFERENCES NETFLIXDB.Film(noFilm)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    PRIMARY KEY (oscarNo)
+    PRIMARY KEY (code)
 );
