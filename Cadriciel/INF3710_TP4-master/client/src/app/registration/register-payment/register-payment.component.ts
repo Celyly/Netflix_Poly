@@ -55,6 +55,7 @@ export class RegisterPaymentComponent implements OnInit {
       if (this.verifyInputs()) {
         this.communicationService.insertMember(this.plan, this.member).subscribe((res: any) => {
           if (res !== -1) {
+            alert("The member has been successfully added!");
             this.goToAdmin();
           } else {
             alert("An unexpected error was found! Please verify your inputs and try again");
