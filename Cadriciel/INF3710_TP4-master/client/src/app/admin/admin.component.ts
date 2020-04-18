@@ -1,6 +1,7 @@
 // tslint:disable: no-magic-numbers
 
 import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from "@angular/core";
+import { Member } from "../../../../common/Member";
 import { Movie } from "../../../../common/Movie";
 import { CommunicationService } from "../communication.service";
 import { LoggedUser } from "../logged-user";
@@ -17,9 +18,11 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   private months: Map<string, string>;
   public isEditing: boolean;
+  public viewMember: boolean;
 
   public loggedUser: LoggedUser;
   public movies: Movie[];
+  public members: Member[];
 
   public selectedRow: HTMLElement;
   public selectedMovie: Movie;
@@ -28,6 +31,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   public constructor(public communicationService: CommunicationService, public loggedService: LoggedUserService) {
     this.loggedService.loggedUser.subscribe((user) => this.loggedUser = user);
     this.isEditing = false;
+    this.viewMember = false;
     this.selectedMovie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0, price: 0 };
     this.newMovie = { movieno: 0, title: "", genre: "", productiondate: "", duration: 0, price: 0 };
 
@@ -48,6 +52,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   public ngOnInit(): void {
     this.getMovies();
+    this.getMembers();
   }
 
   public ngAfterViewInit(): void {
@@ -59,6 +64,12 @@ export class AdminComponent implements OnInit, AfterViewInit {
           this.addBgColor(this.selectedRow);
         }
      });
+  }
+
+  public getMembers(): void {
+    this.communicationService.getMembers().subscribe((members) => {
+      this.members = members;
+    });
   }
 
   public getMovies(): void {
@@ -160,6 +171,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   public resetAll(): void {
     this.communicationService.setUpDatabase().subscribe((res: any) => {
       this.getMovies();
+      this.getMembers();
       this.moviesDB.changes.subscribe((comps: QueryList<ElementRef<HTMLElement>>) => {
         const movieArray: ElementRef<HTMLElement>[] = this.moviesDB.toArray();
         if (movieArray.length) {
@@ -187,5 +199,9 @@ export class AdminComponent implements OnInit, AfterViewInit {
     }
 
     return true;
+  }
+
+  public switchToMemberView(value: boolean): void {
+    this.viewMember = value;
   }
 }

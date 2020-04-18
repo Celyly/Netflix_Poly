@@ -1,16 +1,20 @@
 <div class="dbcontainer">
   <nav class="nav flex-column sticky-left">
       <p>OPTIONS</p>
-      <a *ngIf="isEditing" class="nav-link" (click)="updateMovie()">Accept</a>
-      <a *ngIf="isEditing" class="nav-link" (click)="cancel()">Cancel</a>
-      <a *ngIf="!isEditing" class="nav-link" (click)="getMovies()">Refresh</a>
-      <a *ngIf="!isEditing" class="nav-link" (click)="addMovie()">Add</a>
-      <a *ngIf="!isEditing" class="nav-link" (click)="deleteMovie()">Delete</a>
-      <a *ngIf="!isEditing" class="nav-link" (click)="enterEditMode()">Modify</a>
+      <a *ngIf="isEditing && !viewMember" class="nav-link" (click)="updateMovie()">Accept</a>
+      <a *ngIf="isEditing && !viewMember" class="nav-link" (click)="cancel()">Cancel</a>
+      <a *ngIf="!isEditing && !viewMember" class="nav-link" (click)="getMovies()">Refresh</a>
+      <a *ngIf="!isEditing && !viewMember" class="nav-link" (click)="addMovie()">Add</a>
+      <a *ngIf="!isEditing && !viewMember" class="nav-link" (click)="deleteMovie()">Delete</a>
+      <a *ngIf="!isEditing && !viewMember" class="nav-link" (click)="enterEditMode()">Modify</a>
       <a *ngIf="!isEditing" class="nav-link" (click)="resetAll()">Reset all</a>
+      <br>
+      <a *ngIf="!isEditing && !viewMember" class="nav-link" (click)="switchToMemberView(true)">View members list</a>
+      <a *ngIf="!isEditing && viewMember" class="nav-link" (click)="switchToMemberView(false)">View movies list</a>
   </nav>
+  <!-- MOVIES LIST -->
   <div class="db">
-    <div class="db-viewport">
+    <div class="db-viewport" *ngIf="!viewMember">
       <div class="db-view">
         <h5>LIST OF MOVIES</h5>
         <table>
@@ -42,6 +46,30 @@
           </tbody>
         </table>
       </div>
-  </div>
+   </div>
 
+   <!-- MEMBERS LIST -->
+    <div class="db-viewport" *ngIf="viewMember">
+      <div class="db-view">
+        <h5>LIST OF MEMBERS</h5>
+        <table>
+          <thead>
+            <th> ID</th>
+            <th> NAME</th>
+            <th> EMAIL</th>
+            <th> ZIP</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let member of members">
+              <td style="width:8%">{{member.id}}</td>
+              <td>{{member.name}}</td>
+              <td>{{member.email}}</td>
+              <td>{{member.zip}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+   </div>
+
+  </div>
 </div>

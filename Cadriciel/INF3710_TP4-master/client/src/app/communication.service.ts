@@ -37,6 +37,12 @@ export class CommunicationService {
         );
     }
 
+    public getMembers(): Observable<Member[]> {
+        return this.http.get<Member[]>(this.BASE_URL + "/member").pipe(
+            catchError(this.handleError<Member[]>("getMembers")),
+        );
+    }
+
     public getMovie(title: string): Observable<Movie> {
         return this.http.get<Movie>(this.BASE_URL + `/movie/${title}`).pipe(
             catchError(this.handleError<Movie>("getMovie")),
