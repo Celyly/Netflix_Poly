@@ -6,8 +6,9 @@ import * as pg from "pg";
 // import {Hotel} from "../../../common/tables/Hotel";
 // import {Room} from '../../../common/tables/Room';
 // import { Member } from "../../../common/Member";
-import { Oscar } from "../../../common/Oscar";
+import { Member } from "../../../common/Member";
 import { Movie } from "../../../common/Movie";
+import { Oscar } from "../../../common/Oscar";
 import { Person } from "../../../common/Person";
 import { DatabaseService } from "../services/database.service";
 import Types from "../types";
@@ -61,6 +62,22 @@ export class DatabaseController {
                     console.log('No account found!');
                     res.json(-1);
                 }
+            }).catch((e: Error) => {
+                console.error(e.stack);
+            });
+        });
+
+        router.get("/member", (req: Request, res: Response, next: NextFunction) => {
+            this.databaseService.getMembers().then((result: pg.QueryResult) => {
+                const members: Member[] = result.rows.map((member: any) => ({
+                        id: member.idmembre,
+                        name: member.nommembre,
+                        password: member.motdepasse,
+                        email: member.adressecourriel,
+                        zip: member.adressepostale,
+                        creditCard: null
+                    }));
+                res.json(members);
             }).catch((e: Error) => {
                 console.error(e.stack);
             });

@@ -31,12 +31,12 @@ INSERT INTO NETFLIXDB.MembrePayPerView VALUES ('member10', 8);
 INSERT INTO NETFLIXDB.MembrePayPerView VALUES ('member11', 8);
 
 
-INSERT INTO NETFLIXDB.CarteCredit VALUES ('1234-1234-1234-1234', 'member01', 453, 'Linda Flynn-Fletcher', '2022-09-01');
-INSERT INTO NETFLIXDB.CarteCredit VALUES ('4321-4321-4321-4321', 'member02', 891, 'Lawrence Fletcher', '2021-05-01');
-INSERT INTO NETFLIXDB.CarteCredit VALUES ('5373-6956-4676-6588', 'member03', 232, 'Candace Flynn', '2023-10-01');
-INSERT INTO NETFLIXDB.CarteCredit VALUES ('7377-9843-7528-9787', 'member04', 007, 'Perry P', '2022-07-01');
-INSERT INTO NETFLIXDB.CarteCredit VALUES ('3845-4626-7767-2833', 'member05', 317, 'Heinz Doofenshmirtz', '2020-12-01');
-INSERT INTO NETFLIXDB.CarteCredit VALUES ('1234-5678-9101-1120', 'member06', 453, 'Vivian Garcia-Shapiro', '2024-03-01');
+INSERT INTO NETFLIXDB.CarteCredit VALUES ('1234-1234-1234-1234', 'member01', '453', 'Linda Flynn-Fletcher', '2022-09-01');
+INSERT INTO NETFLIXDB.CarteCredit VALUES ('4321-4321-4321-4321', 'member02', '891', 'Lawrence Fletcher', '2021-05-01');
+INSERT INTO NETFLIXDB.CarteCredit VALUES ('5373-6956-4676-6588', 'member03', '232', 'Candace Flynn', '2023-10-01');
+INSERT INTO NETFLIXDB.CarteCredit VALUES ('7377-9843-7528-9787', 'member04', '007', 'Perry P', '2022-07-01');
+INSERT INTO NETFLIXDB.CarteCredit VALUES ('3845-4626-7767-2833', 'member05', '317', 'Heinz Doofenshmirtz', '2020-12-01');
+INSERT INTO NETFLIXDB.CarteCredit VALUES ('1234-5678-9101-1120', 'member06', '453', 'Vivian Garcia-Shapiro', '2024-03-01');
 
 INSERT INTO NETFLIXDB.Film VALUES (DEFAULT, 'The Mini Katana', 'Gore', '1982-01-08', 98, 5);
 INSERT INTO NETFLIXDB.Film VALUES (DEFAULT, 'The Peculiar Case of Adam Sandler', 'Comedy', '2004-05-22', 86, 6);
