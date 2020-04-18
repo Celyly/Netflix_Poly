@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.MembreMensuel (
     PRIMARY KEY (idMembre)
 );
 
-CREATE TABLE IF NOT EXISTS NETFLIXDB.MemberPayPerView (
+CREATE TABLE IF NOT EXISTS NETFLIXDB.MembrePayPerView (
 	idMembre		        VARCHAR(50)           NOT NULL,
     film_payperview         INT                   NOT NULL, -- nombre de films
     FOREIGN KEY (idMembre) REFERENCES NETFLIXDB.Membre(idMembre)

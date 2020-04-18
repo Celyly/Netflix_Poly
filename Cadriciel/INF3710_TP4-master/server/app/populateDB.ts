@@ -24,11 +24,11 @@ INSERT INTO NETFLIXDB.MembreMensuel VALUES ('member08', 2, '2020-03-04', '2020-0
 INSERT INTO NETFLIXDB.MembreMensuel VALUES ('member09', 2, '2020-03-04', '2020-04-05');
 
 
-INSERT INTO NETFLIXDB.MemberPayPerView VALUES ('member01', 5);
-INSERT INTO NETFLIXDB.MemberPayPerView VALUES ('member02', 5);
-INSERT INTO NETFLIXDB.MemberPayPerView VALUES ('member04', 8);
-INSERT INTO NETFLIXDB.MemberPayPerView VALUES ('member10', 8);
-INSERT INTO NETFLIXDB.MemberPayPerView VALUES ('member11', 8);
+INSERT INTO NETFLIXDB.MembrePayPerView VALUES ('member01', 5);
+INSERT INTO NETFLIXDB.MembrePayPerView VALUES ('member02', 5);
+INSERT INTO NETFLIXDB.MembrePayPerView VALUES ('member04', 8);
+INSERT INTO NETFLIXDB.MembrePayPerView VALUES ('member10', 8);
+INSERT INTO NETFLIXDB.MembrePayPerView VALUES ('member11', 8);
 
 
 INSERT INTO NETFLIXDB.CarteCredit VALUES ('1234-1234-1234-1234', 'member01', 453, 'Linda Flynn-Fletcher', '2022-09-01');
