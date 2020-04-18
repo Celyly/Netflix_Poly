@@ -29,7 +29,7 @@ export class RegisterPaymentComponent implements OnInit {
     this.cardNumber = ["", "", "", ""];
     this.creditCard = {
       cardNo: "",
-      ccv: 0,
+      ccv: "",
       ownerCard: "",
       expirationDate: "",
     };
@@ -69,15 +69,22 @@ export class RegisterPaymentComponent implements OnInit {
   }
 
   public verifyInputs(): boolean {
-    const validCreditCard = this.cardNumber[0].toString() + this.cardNumber[1].toString()
-                            + this.cardNumber[2].toString() + this.cardNumber[3].toString();
-    if (this.fName === "" || this.lName === "" || this.creditCard.ccv.toString().length < 3 || validCreditCard.length < 16) {
+    const validCreditCard: string = this.cardNumber[0] + this.cardNumber[1]
+                            + this.cardNumber[2] + this.cardNumber[3];
+    console.log(this.fName, this.lName, this.creditCard.ccv, validCreditCard);
+    if (this.fName === "" || this.lName === "" || this.creditCard.ccv.length < 3 || validCreditCard.length < 16) {
       alert("Oops. You missed some required information. Please complete all the fields and try again.");
 
       return false;
     }
 
     return true;
+  }
+
+  public isNumber(event: KeyboardEvent): boolean {
+    const numbers: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+    return numbers.includes(event.key);
   }
 
 }

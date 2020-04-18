@@ -21,19 +21,19 @@
         <label for="inputCard4">Card number</label>
         <div class="form-row">
             <div class="col">
-                <input type="number" oninput="this.value=this.value.slice(0,this.maxLength)" maxlength="4" class="form-control" [(ngModel)]="cardNumber[0]" name="cardNumber0" placeholder="XXXX">
+                <input type="text" (keypress)="isNumber($event)" oninput="this.value=this.value.slice(0,this.maxLength)" maxlength="4" class="form-control" [(ngModel)]="cardNumber[0]" name="cardNumber0" placeholder="XXXX">
             </div>
             -
             <div class="col">
-                <input type="number" oninput="this.value=this.value.slice(0,this.maxLength)" maxlength="4" class="form-control" [(ngModel)]="cardNumber[1]" name="cardNumber1" placeholder="XXXX">
+                <input type="text" (keypress)="isNumber($event)" oninput="this.value=this.value.slice(0,this.maxLength)" maxlength="4" class="form-control" [(ngModel)]="cardNumber[1]" name="cardNumber1" placeholder="XXXX">
             </div>
             -
             <div class="col">
-                <input type="number" oninput="this.value=this.value.slice(0,this.maxLength)" maxlength="4" class="form-control" [(ngModel)]="cardNumber[2]" name="cardNumber2" placeholder="XXXX">
+                <input type="text" (keypress)="isNumber($event)" oninput="this.value=this.value.slice(0,this.maxLength)" maxlength="4" class="form-control" [(ngModel)]="cardNumber[2]" name="cardNumber2" placeholder="XXXX">
             </div>
             -
             <div class="col">
-                <input type="number" oninput="this.value=this.value.slice(0,this.maxLength)" maxlength="4" class="form-control" [(ngModel)]="cardNumber[3]" name="cardNumber3" placeholder="XXXX">
+                <input type="text" (keypress)="isNumber($event)" oninput="this.value=this.value.slice(0,this.maxLength)" maxlength="4" class="form-control" [(ngModel)]="cardNumber[3]" name="cardNumber3" placeholder="XXXX">
             </div>
         </div>
         <br>
@@ -54,7 +54,7 @@
         <br>
         <div class="form-col">
             <label>CCV</label>
-            <input type="number" oninput="this.value=this.value.slice(0,this.maxLength)" maxlength="3" class="form-control" [(ngModel)]="creditCard.ccv" name="ccv" placeholder="XXX">
+            <input type="text" (keypress)="isNumber($event)" oninput="this.value=this.value.slice(0,this.maxLength)" maxlength="3" class="form-control" [(ngModel)]="creditCard.ccv" name="ccv" placeholder="XXX">
         </div>
         <button type="button" class="btn btn-danger" [routerLink]="" (click)="finish()">Finish</button>
     </form>

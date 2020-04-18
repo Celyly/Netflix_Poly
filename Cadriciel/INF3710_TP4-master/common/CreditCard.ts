@@ -1,6 +1,6 @@
 export interface CreditCard {
     cardNo: string,
-    ccv: number,
+    ccv: string,
     ownerCard: string,
     expirationDate: string,
 }

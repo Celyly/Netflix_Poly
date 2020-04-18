@@ -34,12 +34,12 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.MemberPayPerView (
 CREATE TABLE IF NOT EXISTS NETFLIXDB.CarteCredit (
     noCarte             VARCHAR(19)          NOT NULL,
 	idMembre	        VARCHAR(50)          NOT NULL,
-    ccv                 INT                  NOT NULL,
+    ccv                 VARCHAR(3)           NOT NULL,
     titulaire           VARCHAR(200)         NOT NULL,
     dateExpiration      DATE                 NOT NULL CHECK (dateExpiration > CURRENT_DATE),
     FOREIGN KEY (idMembre) REFERENCES NETFLIXDB.Membre(idMembre)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    PRIMARY KEY (noCarte)
+    PRIMARY KEY (idMembre)
 );
 
 CREATE TABLE IF NOT EXISTS NETFLIXDB.Film (
