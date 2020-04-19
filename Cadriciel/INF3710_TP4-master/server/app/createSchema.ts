@@ -83,7 +83,6 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Commande (
     noFilm          SERIAL                NOT NULL,
     coutEnvoi       NUMERIC(9, 2)         NOT NULL,
     dateEnvoi       DATE                  NOT NULL,
-    -- distance            NUMERIC(9, 2)         NOT NULL,
     FOREIGN KEY (idMembre) REFERENCES NETFLIXDB.Membre(idMembre)
     ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (noDVD, noFilm) REFERENCES NETFLIXDB.DVD(noDVD, noFilm)
