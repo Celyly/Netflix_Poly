@@ -40,7 +40,7 @@ GROUP BY genre
 -- 4) Trouvez le nombre total de films groupés par réalisateur
 SELECT COUNT(f.noFilm) as nbTotalFilms, p.nomPersonne as realisateur
 FROM NETFLIXDB.Film f, NETFLIXDB.Personne p, NETFLIXDB.Role r
-WHERE p.idPersonne = r.idPersonne AND r.nomRole = 'Réalisateur' AND f.noFilm = r.noFilm
+WHERE p.idPersonne = r.idPersonne AND r.nomRole = 'Director' AND f.noFilm = r.noFilm
 GROUP BY nomPersonne
 
 
@@ -99,7 +99,7 @@ GROUP BY f.noFilm
 
 SELECT p.nomPersonne, p.dateNaissance
 FROM NETFLIXDB.Personne p, NETFLIXDB.Role r, NETFLIXDB.Visionnement v, NETFLIXDB.Film f
-WHERE p.idPersonne = r.idPersonne AND r.noFilm = v.noFilm AND r.nomRole = 'Acteur' 
+WHERE p.idPersonne = r.idPersonne AND r.noFilm = v.noFilm AND r.nomRole = 'Actor' 
 AND (SELECT COUNT(Visionnement.noFilm) as nViews
 	FROM NETFLIXDB.Visionnement, NETFLIXDB.Role
 	WHERE Role.noFilm = Visionnement.noFilm AND f.noFilm = Visionnement.noFilm
@@ -121,7 +121,7 @@ GROUP BY p.nomPersonne, p.dateNaissance
 
 SELECT p.nomPersonne
 FROM NETFLIXDB.Personne p, NETFLIXDB.Role r, NETFLIXDB.Oscar o
-WHERE p.idPersonne = r.idPersonne AND r.nomRole = 'Réalisateur' AND r.noFilm = o.noFilm
+WHERE p.idPersonne = r.idPersonne AND r.nomRole = 'Director' AND r.noFilm = o.noFilm
 GROUP BY p.nomPersonne
 HAVING COUNT(o.noFilm) >= (
     SELECT MAX(nNominations) FROM
@@ -139,7 +139,7 @@ HAVING COUNT(o.noFilm) >= (
 
 SELECT p.nomPersonne
 FROM NETFLIXDB.Personne p, NETFLIXDB.Role r, NETFLIXDB.Oscar o
-WHERE p.idPersonne = r.idPersonne AND r.nomRole = 'Réalisateur' AND r.noFilm = o.noFilm
+WHERE p.idPersonne = r.idPersonne AND r.nomRole = 'Director' AND r.noFilm = o.noFilm
 GROUP BY p.nomPersonne, p.idPersonne
 HAVING COUNT(o.noFilm) >= (
     SELECT MAX(nNominations) FROM
@@ -152,7 +152,7 @@ HAVING COUNT(o.noFilm) >= (
 	(SELECT Personne.idPersonne
 	 FROM NETFLIXDB.Oscar, NETFLIXDB.Film, NETFLIXDB.Personne, NETFLIXDB.Role
 	 WHERE Oscar.noFilm = Film.noFilm AND Oscar.type = 'Winner' 
-         AND Personne.idPersonne = Role.idPersonne AND Role.nomRole = 'Réalisateur' 
+         AND Personne.idPersonne = Role.idPersonne AND Role.nomRole = 'Director' 
          AND Role.noFilm = Oscar.noFilm
 	)
 
@@ -170,7 +170,7 @@ HAVING COUNT(o.noFilm) >= (
         WHERE Oscar.type = 'Winner'
         GROUP BY Oscar.noFilm
     ) as viewTable
-) AND r.nomRole IN ('Réalisateur', 'Acteur')
+) AND r.nomRole IN ('Director', 'Actor')
 
 
 -- 12) Quelles paires de femmes québécoises ont le plus souvent travaillé ensemble dans différents
@@ -178,7 +178,7 @@ HAVING COUNT(o.noFilm) >= (
 SELECT p1.nomPersonne, p2.nomPersonne
 FROM NETFLIXDB.Personne p1, NETFLIXDB.Personne p2, NETFLIXDB.Role r1, NETFLIXDB.Role r2
 WHERE p1.sexe = 'F' AND p2.sexe = 'F'
-AND p1.nationalite = 'Québécois' AND p2.nationalite = 'Québécois'
+AND p1.nationalite = 'Quebecer' AND p2.nationalite = 'Quebecer'
 AND p1.idPersonne != p2.idPersonne
 AND r1.idPersonne = p1.idPersonne AND r2.idPersonne = r2.idPersonne
 AND r1.noFilm = r2.noFilm
