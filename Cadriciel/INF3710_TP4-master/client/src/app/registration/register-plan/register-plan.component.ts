@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { LoggedUser } from "src/app/logged-user";
 import { RegisterMemberService } from "src/app/register-member.service";
 
