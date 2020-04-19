@@ -274,6 +274,26 @@ export class DatabaseController {
             });
         });
 
+        router.post("/watch/time/update", (req: Request, res: Response, next: NextFunction) => {
+            // tslint:disable-next-line: max-line-length
+            this.databaseService.updateWatchtime(req.body.movieno, req.body.memberid, req.body.time).then((result: pg.QueryResult) => {
+                res.json(result.rowCount);
+            }).catch((e: Error) => {
+                console.error(e.stack);
+                res.json(-1);
+            });
+        });
+
+        router.post("/watch/time/add", (req: Request, res: Response, next: NextFunction) => {
+            // tslint:disable-next-line: max-line-length
+            this.databaseService.addWatchtime(req.body.movieno, req.body.memberid, req.body.time).then((result: pg.QueryResult) => {
+                res.json(result.rowCount);
+            }).catch((e: Error) => {
+                console.error(e.stack);
+                res.json(-1);
+            });
+        });
+
         router.get("/movie/:title/list/role", (req: Request, res: Response, next: NextFunction) => {
             this.databaseService.getAllRoles(req.params.title).then((result: pg.QueryResult) => {
                 const roles: string[] = [];

@@ -85,6 +85,18 @@ export class CommunicationService {
         );
     }
 
+    public updateWatchtime(movieno: number, memberid: string, time: number): Observable<any> {
+        return this.http.post<any>(this.BASE_URL + `/watch/time/update`, {movieno, memberid, time}).pipe(
+            catchError(this.handleError<any>("updateWatchtime")),
+        );
+    }
+
+    public addWatchtime(movieno: number, memberid: string, time: number): Observable<any> {
+        return this.http.post<any>(this.BASE_URL + `/watch/time/add`, {movieno, memberid, time}).pipe(
+            catchError(this.handleError<any>("addWatchtime")),
+        );
+    }
+
     public getNbMember(): Observable<string> {
         return this.http.get<string>(this.BASE_URL + "/member/count").pipe(
             catchError(this.handleError<string>("insertMember")),

@@ -75,9 +75,23 @@ export class DatabaseService {
         return this.pool.query(`SELECT duree FROM ${this.DB_NAME}.Film WHERE titre = '${title}'`);
     }
 
+    // public async countWatchTimeID(): Promise<pg.QueryResult> {
+    //     return this.pool.query(`SELECT COUNT(*) FROM ${this.DB_NAME}.Visionnement`);
+    // }
+
     public async getWatchtime(title: string, memberName: string): Promise<pg.QueryResult> {
         // tslint:disable-next-line: max-line-length
         return this.pool.query(`SELECT v.dureeVisionnement FROM ${this.DB_NAME}.Membre m, ${this.DB_NAME}.Film f, ${this.DB_NAME}.Visionnement v WHERE f.titre = '${title}' AND f.noFilm = v.noFilm AND v.idMembre = m.idMembre AND m.nomMembre = '${memberName}'`);
+    }
+
+    public async addWatchtime(movieno: number, memberId: string, time: number): Promise<pg.QueryResult> {
+        // tslint:disable-next-line: max-line-length
+        return this.pool.query(`INSERT INTO ${this.DB_NAME}.Visionnement VALUES (DEFAULT, ${movieno}, '${memberId}', CURRENT_DATE, ${time});`);
+    }
+
+    public async updateWatchtime(movieno: number, memberId: string, time: number): Promise<pg.QueryResult> {
+        // tslint:disable-next-line: max-line-length
+        return this.pool.query(`UPDATE ${this.DB_NAME}.Visionnement SET dateVisionnement=CURRENT_DATE, dureeVisionnement='${time}' WHERE noFilm=${movieno} AND idMembre='${memberId}'`);
     }
 
     public async getMembers(): Promise<pg.QueryResult> {
