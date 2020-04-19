@@ -12,8 +12,8 @@
               <h2>{{movie.title}} ({{movie.duration}}mins)</h2>
               <h5>Genre: <h6 class="section">{{movie.genre}}</h6></h5>
               <h5>Production date: <h6 class="section">{{movie.productiondate}}</h6></h5>
-              <button *ngIf="isContinuing()" type="button" class="btn btn-danger my-sm-0" (click)="watch(false)">Resume movie</button>
-              <button *ngIf="isContinuing()" type="button" class="btn btn-danger my-sm-0"  (click)="watch(true)">Start movie from the beginning</button>
+              <button id="resumebtn" *ngIf="isContinuing()" type="button" class="btn btn-danger my-sm-0" (click)="watch(false)">Resume movie</button>
+              <button id="restartbtn" *ngIf="isContinuing()" type="button" class="btn btn-danger my-sm-0"  (click)="watch(true)">Start movie from the beginning</button>
               <button *ngIf="!isContinuing()" type="button" class="btn btn-danger my-sm-0" (click)="watch(false)">Watch movie ({{price}})</button>
             </div>
             <div class="movie-crew">
