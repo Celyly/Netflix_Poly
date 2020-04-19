@@ -162,7 +162,10 @@ export class MemberComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public watch(): void {
+  public watch(restart: boolean): void {
+    if (restart) {
+      this.watchtime = -1;
+    }
     this.router.navigate(["/watch"], { state: { role: "MEMBER", time: this.watchtime, movie: this.movie, member: this.loggedUser.member} });
   }
 }

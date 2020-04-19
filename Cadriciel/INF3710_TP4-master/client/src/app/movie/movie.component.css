@@ -12,13 +12,11 @@
   z-index: 0;
 }
 
-.video-foreground, .video-background iframe {
-  position: absolute;
-  width: 100%;
+#vid {
   height: 100%;
-  top: 0;
-  left: 0;
+  width: 100%;
 }
+
 
 @media (min-aspect-ratio: 16/9) {
   .video-foreground {

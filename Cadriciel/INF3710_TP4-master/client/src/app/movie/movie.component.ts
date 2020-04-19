@@ -36,6 +36,9 @@ export class MovieComponent implements AfterViewInit {
         this.time = data.time * factor;
         this.movie = data.movie;
         this.member = data.member;
+        if (this.time === -1) {
+          this.time = 0;
+        }
         if (this.time !== 0) {
           this.isContinuing = true;
         }
