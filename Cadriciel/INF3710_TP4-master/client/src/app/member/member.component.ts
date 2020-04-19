@@ -30,7 +30,6 @@ export class MemberComponent implements OnInit, AfterViewInit {
   public duration: number;
   public price: string;
 
-  // Affichage
   public roles: string[];
   public crew: Person[];
   public awards: Oscar[];
@@ -155,7 +154,7 @@ export class MemberComponent implements OnInit, AfterViewInit {
     if (member) {
       this.communicationService.checkMonthlyMembership(member.email).subscribe((res: any) => {
         if (res !== 0) {
-          this.price = "FREE";
+          this.price = "FREE"; // Monthly membership
         }
       });
     }

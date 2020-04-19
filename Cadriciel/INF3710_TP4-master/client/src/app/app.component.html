@@ -32,12 +32,8 @@
         <div class="btn_signout" routerLink="" (click)="logout()">
           Sign out
         </div>
-        <!-- <button *ngIf="loggedUser.role !== 'GUEST'" type="button" class="btn btn-danger my-sm-0" style="color:white; width: 8%;" routerLink="" (click)="logout()">
-          Sign out
-        </button> -->
       </div>
     </div>
-   
   </div>
 </nav>
 <div *ngIf="route === ''|| route === '/login'" class="home-bg-img">

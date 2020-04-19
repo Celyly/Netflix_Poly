@@ -7,13 +7,11 @@ import { RegisterMemberService } from "src/app/register-member.service";
   templateUrl: "./register-plan.component.html",
   styleUrls: ["./register-plan.component.css"]
 })
-export class RegisterPlanComponent implements OnInit {
+export class RegisterPlanComponent {
   public loggedUser: LoggedUser;
 
   public constructor(public registerMemberService: RegisterMemberService) {
   }
-
-  public ngOnInit(): void {}
 
   public sendPlan(name: string): void {
     this.registerMemberService.setPlan(name);

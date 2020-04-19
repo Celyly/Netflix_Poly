@@ -201,6 +201,16 @@ export class AdminComponent implements OnInit, AfterViewInit {
     return true;
   }
 
+  public isNumber(event: KeyboardEvent, decimal: boolean): boolean {
+    const numbers: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+    if (decimal) {
+      numbers.push(".");
+    }
+
+    return numbers.includes(event.key);
+  }
+
   public switchToMemberView(value: boolean): void {
     this.viewMember = value;
   }
