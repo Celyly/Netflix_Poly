@@ -1,3 +1,4 @@
+// tslint:disable: no-floating-promises
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Navigation, Router, RouterStateSnapshot } from "@angular/router";
 
@@ -10,8 +11,8 @@ export class AuthGuardService implements CanActivate {
   public canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    // const url: string = state.url;
     const navigation: Navigation = this.router.getCurrentNavigation() as Navigation;
+    // tslint:disable-next-line: typedef
     const data = navigation.extras.state;
     if (data) {
       return this.checkLogin(data.role);

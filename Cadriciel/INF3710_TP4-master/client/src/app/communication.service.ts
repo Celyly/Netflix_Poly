@@ -8,9 +8,6 @@ import { Movie } from "../../../common/Movie";
 import { Oscar } from "../../../common/Oscar";
 import { Person } from "../../../common/Person";
 
-// import {Hotel} from "../../../common/tables/Hotel";
-// import { Room } from "../../../common/tables/Room";
-
 @Injectable()
 export class CommunicationService {
 
@@ -132,34 +129,6 @@ export class CommunicationService {
             catchError(this.handleError<Oscar[]>("getAwards")),
         );
     }
-
-    // public getHotels(): Observable<any[]> {
-    //     return this.http.get<Hotel[]>(this.BASE_URL + "/hotel").pipe(
-    //         catchError(this.handleError<Hotel[]>("getHotels")),
-    //     );
-    // }
-
-    // public getHotelPKs(): Observable<string[]> {
-
-    //     return this.http.get<string[]>(this.BASE_URL + "/hotel/hotelNo").pipe(
-    //         catchError(this.handleError<string[]>("getHotelPKs")),
-    //     );
-    // }
-
-    // public insertHotel(hotel: any): Observable<number> {
-    //     return this.http.post<number>(this.BASE_URL + "/hotel/insert", hotel).pipe(
-    //         catchError(this.handleError<number>("inserHotel")),
-    //     );
-    // }
-
-    // public insertRoom(room: Room): Observable<number> {
-    //     return this.http.post<number>(this.BASE_URL + "/rooms/insert", room).pipe(
-    //         catchError(this.handleError<number>("inserHotel")),
-    //     );
-    // }
-
-    // public deleteHotel(): void {
-    // }
 
     public setUpDatabase(): Observable<any> {
         return concat(this.http.post<any>(this.BASE_URL + "/createSchema", []),

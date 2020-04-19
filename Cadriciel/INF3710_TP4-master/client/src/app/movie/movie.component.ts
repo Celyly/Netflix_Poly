@@ -1,3 +1,6 @@
+// tslint:disable: no-floating-promises
+// tslint:disable: no-any
+// tslint:disable: no-magic-numbers
 import { AfterViewInit, Component, HostListener, ViewChild } from "@angular/core";
 import { Navigation, Router } from "@angular/router";
 import { Member } from "../../../../common/Member";
@@ -30,6 +33,7 @@ export class MovieComponent implements AfterViewInit {
 
   public init(): void {
     if (this.navigation) {
+      // tslint:disable-next-line: typedef
       const data = this.navigation.extras.state;
       if (data) {
         const factor: number = 60;
@@ -48,12 +52,11 @@ export class MovieComponent implements AfterViewInit {
 
   public startTime(): void {
     if (this.navigation) {
+      // tslint:disable-next-line: typedef
       const data = this.navigation.extras.state;
       if (data) {
         if (this.isContinuing) {
-          setTimeout(() => {
-            this.video.nativeElement.currentTime = this.time;
-          }, 0);
+          setTimeout(() => { this.video.nativeElement.currentTime = this.time; }, 0);
         }
       }
     }

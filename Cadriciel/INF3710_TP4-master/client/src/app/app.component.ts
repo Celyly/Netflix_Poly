@@ -1,7 +1,8 @@
+// tslint:disable: no-floating-promises
+// tslint:disable: no-any
 import { Location } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { Hotel } from "../../../common/tables/Hotel";
 import { CommunicationService } from "./communication.service";
 import { LoggedUser } from "./logged-user";
 import { LoggedUserService } from "./logged-user.service";
@@ -23,12 +24,9 @@ export class AppComponent implements OnInit {
         this.loggedService.loggedUser.subscribe((user) => this.loggedUser = user);
     }
 
-    public readonly title: string = "INF3710 TP5";
-    public hotels: Hotel[] = [];
     public ngOnInit(): void {
         this.communicationService.listen().subscribe((m: any) => {
             console.log(m);
-            // this.getHotels();
         });
     }
 
@@ -59,20 +57,4 @@ export class AppComponent implements OnInit {
         this.loggedService.setLoggedUser(this.loggedUser);
         this.router.navigate(["/"], { state: { role: "GUEST" } });
     }
-
-    // public getHotels(): void {
-    //     this.communicationService.getHotels().subscribe((hotels: Hotel[]) => {
-    //         this.hotels = hotels;
-    //     });
-    // }
-
-    // public deleteHotel(): void {
-    //     // TODO
-    // }
-
-    // public createDB(): void {
-    //     this.communicationService.setUpDatabase().subscribe((res: any) => {
-    //         console.log(res);
-    //     });
-    // }
 }
