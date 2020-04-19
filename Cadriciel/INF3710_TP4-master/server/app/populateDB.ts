@@ -12,7 +12,7 @@ INSERT INTO NETFLIXDB.Membre VALUES ('member06', 'Isabella Garcia-Shapiro', 'a8b
 INSERT INTO NETFLIXDB.Membre VALUES ('member07', 'Vanessa Doofenshmirtz', 'ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f', 'youaregoingtobe@busted.com', 'H2K1L7');
 INSERT INTO NETFLIXDB.Membre VALUES ('member08', 'Major Monogram', 'ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f', 'major@topsecret.com', 'H4K1L7');
 INSERT INTO NETFLIXDB.Membre VALUES ('member09', 'Jeremy Johnson', 'ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f', 'guitarlover@hotmail.com', 'H2S1P7');
-INSERT INTO NETFLIXDB.Membre VALUES ('member10', 'Baljeet Tjinder', 'ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f', '123@hotmail.com', 'H2P1L7');
+INSERT INTO NETFLIXDB.Membre VALUES ('member10', 'Baljeet Tjinder', 'ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f', 'namaste@mail.com', 'H2P1L7');
 INSERT INTO NETFLIXDB.Membre VALUES ('member11', 'Buford V. Stomm', 'ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f', 'bully@yahoo.com', 'H2M1L7');
 
 
