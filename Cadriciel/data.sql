@@ -114,10 +114,10 @@ INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 6, 5, 'Director', 180000);
 INSERT INTO NETFLIXDB.Role VALUES (DEFAULT, 6, 7, 'Actor', 180000);
 
 
-INSERT INTO NETFLIXDB.Ceremonie VALUES (DEFAULT, 'Jimmy Fallon', 'Beverly Hills');
-INSERT INTO NETFLIXDB.Ceremonie VALUES (DEFAULT, 'Jimmy Kimmel', 'Beverly Hills');
-INSERT INTO NETFLIXDB.Ceremonie VALUES (DEFAULT, 'Jimmy Neutron', 'Beverly Hills');
-INSERT INTO NETFLIXDB.Ceremonie VALUES (DEFAULT, 'Jimmy Fallon', 'Beverly Hills');
+INSERT INTO NETFLIXDB.Ceremonie VALUES (DEFAULT, 'Jimmy Fallon', '2018-03-04', 'Beverly Hills');
+INSERT INTO NETFLIXDB.Ceremonie VALUES (DEFAULT, 'Jimmy Kimmel', '2017-02-26', 'Beverly Hills');
+INSERT INTO NETFLIXDB.Ceremonie VALUES (DEFAULT, 'Jimmy Neutron', '2020-02-09', 'Beverly Hills');
+INSERT INTO NETFLIXDB.Ceremonie VALUES (DEFAULT, 'Jimmy Fallon', '2019-02-24', 'Beverly Hills');
 
 
 INSERT INTO NETFLIXDB.Oscar VALUES (DEFAULT, 1, 7, 'Best Actor', 'Winner');
