@@ -125,7 +125,7 @@ export class DatabaseService {
         if (plan === 'monthly') {
             queryPlan = `INSERT INTO ${this.DB_NAME}.MembreMensuel VALUES('${memberId}', '${this.PRICE}', CURRENT_DATE, CURRENT_DATE + 30)`;
         } else if (plan === 'payperview') {
-            queryPlan = `INSERT INTO ${this.DB_NAME}.MemberPayPerView VALUES('${memberId}', 0)`;
+            queryPlan = `INSERT INTO ${this.DB_NAME}.MembrePayPerView VALUES('${memberId}', 0)`;
         }
 
         // tslint:disable-next-line: max-line-length
