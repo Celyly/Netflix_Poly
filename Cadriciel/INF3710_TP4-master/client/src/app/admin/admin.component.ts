@@ -1,5 +1,5 @@
 // tslint:disable: no-magic-numbers
-
+// tslint:disable: no-any
 import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from "@angular/core";
 import { Member } from "../../../../common/Member";
 import { Movie } from "../../../../common/Movie";
@@ -134,8 +134,8 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   public formatDate(date: string): string {
     let month: string = "00";
-    const formattedMonth = this.months.get(date.substr(0, 3));
-    formattedMonth ? month = formattedMonth : "00";
+    const formattedMonth: string | undefined = this.months.get(date.substr(0, 3));
+    formattedMonth ? month = formattedMonth : month = "00";
     const day: string = date.substr(4, 2);
     const year: string = date.substr(7, 4);
 

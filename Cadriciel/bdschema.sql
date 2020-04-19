@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS NETFLIXDB.Visionnement (
     noFilm                  SERIAL               NOT NULL,
     idMembre                VARCHAR(50)          NOT NULL,
     dateVisionnement        DATE                 NOT NULL,
-    dureeVisionnement       INT                  NOT NULL,
+    dureeVisionnement       FLOAT(5)             NOT NULL,
     FOREIGN KEY (idMembre) REFERENCES NETFLIXDB.Membre(idMembre)
     ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (noFilm) REFERENCES NETFLIXDB.Film(noFilm)

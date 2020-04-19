@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-// import { CreditCard } from "../../../common/CreditCard";
 import { Member } from "../../../common/Member";
 
 @Injectable({

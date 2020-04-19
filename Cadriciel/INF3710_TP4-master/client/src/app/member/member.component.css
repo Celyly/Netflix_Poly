@@ -129,13 +129,21 @@
 h6.section {
     margin-bottom: 3%;
 }
-
-/* button {
+button#resumebtn{
     position: absolute;
-    right: 0;
-    margin-right: 5%;
-    bottom: 5%;
-} */
+    left: 0;
+    margin-left: 5%;
+    bottom: 25%;
+    width: 35%;
+}
+
+button#restartbtn {
+    position: absolute;
+    left: 0;
+    margin-left: 5%;
+    bottom: 15%;
+    width: 35%;
+}
 button {
     width: 90%;
 }

@@ -1,4 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+// tslint:disable: no-floating-promises
+// tslint:disable: no-any
+import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { sha256 } from "js-sha256";
 import { Member } from "../../../../common/Member";
@@ -11,7 +13,7 @@ import { LoggedUserService } from "../logged-user.service";
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   public email: string;
   public password: string;
   public isWrong: boolean;
@@ -19,14 +21,10 @@ export class LoginComponent implements OnInit {
   public loggedUser: LoggedUser;
 
   public constructor(private communicationService: CommunicationService, public router: Router, public loggedService: LoggedUserService) {
-    // this.loggedUser = new LoggedUser();
     this.loggedService.loggedUser.subscribe((user) => this.loggedUser = user);
     this.isWrong = false;
   }
 
-  public ngOnInit(): void {}
-
-  // tslint:disable-next-line: max-func-body-length
   public login(): void {
     // Encryption
     const encryptedData: string = sha256(this.password);

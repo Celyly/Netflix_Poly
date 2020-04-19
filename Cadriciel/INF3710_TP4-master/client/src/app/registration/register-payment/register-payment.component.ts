@@ -1,4 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+// tslint:disable: no-floating-promises
+// tslint:disable: no-any
+// tslint:disable: no-magic-numbers
+// tslint:disable: max-line-length
+import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { CommunicationService } from "src/app/communication.service";
 import { LoggedUser } from "src/app/logged-user";
@@ -11,7 +15,7 @@ import { Member } from "../../../../../common/Member";
   templateUrl: "./register-payment.component.html",
   styleUrls: ["./register-payment.component.css"]
 })
-export class RegisterPaymentComponent implements OnInit {
+export class RegisterPaymentComponent {
   public plan: string;
   public member: Member;
   public fName: string;
@@ -23,7 +27,6 @@ export class RegisterPaymentComponent implements OnInit {
   public loggedUser: LoggedUser;
   public exist: boolean;
 
-  // tslint:disable-next-line: max-line-length
   public constructor(private communicationService: CommunicationService, public registerMemberService: RegisterMemberService, public router: Router) {
     this.expiration = ["", "", ""];
     this.cardNumber = ["", "", "", ""];
@@ -38,11 +41,6 @@ export class RegisterPaymentComponent implements OnInit {
     this.exist = false;
   }
 
-  public ngOnInit(): void {
-    console.log(this.plan);
-    console.log(this.member);
-  }
-
   public finish(): void {
     this.creditCard.ownerCard = this.fName + " " + this.lName;
     this.creditCard.cardNo = this.cardNumber[0] + "-" + this.cardNumber[1] + "-" + this.cardNumber[2] + "-" + this.cardNumber[3];
@@ -53,8 +51,8 @@ export class RegisterPaymentComponent implements OnInit {
       const id: string = `${+res + 1}`;
       this.member.id = id;
       if (this.verifyInputs()) {
-        this.communicationService.insertMember(this.plan, this.member).subscribe((res: any) => {
-          if (res !== -1) {
+        this.communicationService.insertMember(this.plan, this.member).subscribe((result: any) => {
+          if (result !== -1) {
             alert("The member has been successfully added!");
             this.goToAdmin();
           } else {
@@ -72,7 +70,6 @@ export class RegisterPaymentComponent implements OnInit {
   public verifyInputs(): boolean {
     const validCreditCard: string = this.cardNumber[0] + this.cardNumber[1]
                             + this.cardNumber[2] + this.cardNumber[3];
-    console.log(this.fName, this.lName, this.creditCard.ccv, validCreditCard);
     if (this.fName === "" || this.lName === "" || this.creditCard.ccv.length < 3 || validCreditCard.length < 16) {
       alert("Oops. You missed some required information. Please complete all the fields and try again.");
 

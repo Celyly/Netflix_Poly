@@ -1,5 +1,8 @@
+// tslint:disable: no-floating-promises
+// tslint:disable: no-any
 import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { Router } from "@angular/router";
+import { Member } from "../../../../common/Member";
 import { Movie } from "../../../../common/Movie";
 import { Oscar } from "../../../../common/Oscar";
 import { Person } from "../../../../common/Person";
@@ -152,7 +155,7 @@ export class MemberComponent implements OnInit, AfterViewInit {
   }
 
   public checkMembership(): void {
-    const member = this.loggedUser.member;
+    const member: Member | null = this.loggedUser.member;
     if (member) {
       this.communicationService.checkMonthlyMembership(member.email).subscribe((res: any) => {
         if (res !== 0) {
@@ -162,7 +165,10 @@ export class MemberComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public watch(): void {
-    this.router.navigate(["/watch"], { state: { role: "MEMBER", time: this.watchtime} });
+  public watch(restart: boolean): void {
+    if (restart) {
+      this.watchtime = -1;
+    }
+    this.router.navigate(["/watch"], { state: { role: "MEMBER", time: this.watchtime, movie: this.movie, member: this.loggedUser.member} });
   }
 }

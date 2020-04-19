@@ -1,4 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+// tslint:disable: no-floating-promises
+// tslint:disable: no-any
+import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { sha256 } from "js-sha256";
 import { CommunicationService } from "src/app/communication.service";
@@ -11,7 +13,7 @@ import { Member } from "../../../../../common/Member";
   templateUrl: "./register.component.html",
   styleUrls: ["./register.component.css"]
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
   public fName: string;
   public lName: string;
   public member: Member;
@@ -32,8 +34,6 @@ export class RegisterComponent implements OnInit {
       creditCard: null
     };
    }
-
-  public ngOnInit(): void {}
 
   // Verify if User already exists
   public findDuplicate(): void {
