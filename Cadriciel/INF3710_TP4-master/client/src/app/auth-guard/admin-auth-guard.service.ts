@@ -11,6 +11,7 @@ export class AdminAuthGuardService {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
     const navigation: Navigation = this.router.getCurrentNavigation() as Navigation;
+    // tslint:disable-next-line: typedef
     const data = navigation.extras.state;
     if (data) {
       return this.checkLogin(data.role);
@@ -31,6 +32,7 @@ export class AdminAuthGuardService {
       return true;
     }
     // Navigate to the login page with extras
+    // tslint:disable-next-line: no-floating-promises
     this.router.navigate(["/login"]);
 
     return false;

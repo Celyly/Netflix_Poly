@@ -1,33 +1,11 @@
 * {
     white-space: pre-wrap;
 }
-/* 
-.member-interface {
-    display: flex;
-    top:0%;
-    bottom: 0;
-    left: 0;
-    height: 90.75vh;
-    margin-top: -1.25%;
-    background-color: red;
-} */
-/* 
-.topbar {
-    z-index: -1;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    bottom: 0;
-    top: 0;
-    background-color: rgb(27, 27, 27);
-} */
+
 .member-interface {
     top:0;
     bottom: 0;
     left: 0;
-    /* height: 90.75vh; */
-    /* margin-top: -1.25%; */
-    /* overflow-y: auto; */
 }
 
 .flex-container {
@@ -38,7 +16,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     background-color: rgb(24, 22, 22);
-    /* background-color: rgb(31, 30, 30); */
 }
 
 .flex-container > div {
@@ -75,11 +52,6 @@
   padding: 12px 16px;
 }
 
-/* show popup */
-/* .movie-container:hover .movie-popup {
-    display: block;
-} */
-
 .movie-container:hover {
     outline: 5px solid rgb(223, 55, 71)
 }
@@ -101,7 +73,6 @@
     padding-left: 5%;
     text-align: left;
     width: 50%;
-    /* margin-bottom: 3%; */
 }
 
 .movie-crew {
@@ -130,20 +101,20 @@ h6.section {
     margin-bottom: 3%;
 }
 button#resumebtn{
-    position: absolute;
+    position: relative;
     left: 0;
-    margin-left: 5%;
     bottom: 25%;
-    width: 35%;
+    width: 40%;
 }
 
 button#restartbtn {
-    position: absolute;
+    position: relative;
     left: 0;
     margin-left: 5%;
     bottom: 15%;
-    width: 35%;
+    width: 40%;
 }
+
 button {
     width: 90%;
 }

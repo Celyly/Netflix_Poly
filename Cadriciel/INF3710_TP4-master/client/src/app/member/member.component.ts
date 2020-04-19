@@ -130,15 +130,11 @@ export class MemberComponent implements OnInit, AfterViewInit {
     this.getAwards(title);
   }
 
-  public select(evt: MouseEvent): void {
-    const target: HTMLElement = evt.currentTarget as HTMLElement;
-    const title: HTMLElement = target.firstChild as HTMLElement;
-    if (title.textContent) {
-      this.findInformation(title.textContent);
-      this.checkMembership();
-    }
+  public select(title: string): void {
+    this.findInformation(title);
+    this.checkMembership();
     this.hide();
-    this.popup = this.map.get(title.textContent as string) ? this.map.get(title.textContent as string) : null;
+    this.popup = this.map.get(title) ? this.map.get(title) : null;
     this.show();
   }
 
